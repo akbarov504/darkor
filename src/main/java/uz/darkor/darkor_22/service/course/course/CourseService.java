@@ -9,5 +9,6 @@ import uz.darkor.darkor_22.service.GenericGLService;
 
 import java.util.UUID;
 
-public interface CourseService extends GenericCUDService<CourseCreateDTO, CourseUpdateDTO, CourseGetDTO, UUID>, GenericGLService<CourseGetDTO, CourseCriteria, UUID> {
+public interface CourseService extends GenericCUDService<CourseCreateDTO, CourseUpdateDTO, CourseGetDTO, UUID>,
+        GenericGLService<CourseGetDTO, CourseCriteria, UUID> {
 }

@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseUtils {
+
+    private static String sessionLang;
     public static final String API = "/api";
     public static final String VERSION = "/v1";
     public static final String PATH = API + VERSION;
@@ -14,4 +16,12 @@ public class BaseUtils {
     public static final String DELETE_PATH = "delete/{code}";
     public static final String GET_PATH = "get/{code}";
     public static final String LIST_PATH = "list";
+
+    public static String getSessionLang() {
+        return sessionLang;
+    }
+
+    public static void setSessionLang(String sessionLang) {
+        BaseUtils.sessionLang = sessionLang;
+    }
 }

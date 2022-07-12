@@ -42,11 +42,25 @@ public class Employee extends Auditable {
 
 
     public EmployeeGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return EmployeeGetDTO.builder().fullName(this.fullNameUz).type(this.type).gallery(this.gallery).courses(this.courses).build();
-        } else if (lang.equals("ru")) {
-            return EmployeeGetDTO.builder().fullName(this.fullNameRu).type(this.type).gallery(this.gallery).courses(this.courses).build();
-        }
-        return EmployeeGetDTO.builder().fullName(this.fullNameEn).type(this.type).gallery(this.gallery).courses(this.courses).build();
+        return switch (lang) {
+            case "en" -> EmployeeGetDTO.builder()
+                    .fullName(this.fullNameEn)
+                    .type(this.type)
+                    .gallery(this.gallery)
+                    .courses(this.courses)
+                    .build();
+            case "ru" -> EmployeeGetDTO.builder()
+                    .fullName(this.fullNameRu)
+                    .type(this.type)
+                    .gallery(this.gallery)
+                    .courses(this.courses)
+                    .build();
+            default -> EmployeeGetDTO.builder()
+                    .fullName(this.fullNameUz)
+                    .type(this.type)
+                    .gallery(this.gallery)
+                    .courses(this.courses)
+                    .build();
+        };
     }
 }

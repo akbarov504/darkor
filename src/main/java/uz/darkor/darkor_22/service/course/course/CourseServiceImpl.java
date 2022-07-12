@@ -27,7 +27,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public CourseGetDTO create(CourseCreateDTO DTO) {
-        return repository.save(mapper.toCreateDTO(DTO)).getLocalizationDto("");
+        return repository.save(mapper.fromCreateDTO(DTO)).getLocalizationDto("");
     }
 
     @Override
