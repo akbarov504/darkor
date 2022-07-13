@@ -2,15 +2,9 @@ package uz.darkor.darkor_22.controller.employee.detail;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
-import uz.darkor.darkor_22.criteria.employee.EmployeeCriteria;
-import uz.darkor.darkor_22.criteria.employee.EmployeeDetailCriteria;
-import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;
-import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
-import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailUpdateDTO;
@@ -54,5 +48,11 @@ public class EmployeeDetailControllerImpl extends AbstractController<EmployeeDet
     public ResponseEntity<Data<List<EmployeeDetailGetDTO>>> list(BaseCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.list(criteria)), HttpStatus.OK);
+    }
+
+    @PostMapping("get_by_employee/{code}")
+    public ResponseEntity<Data<EmployeeDetailGetDTO>> getByEmployeeCode(@PathVariable UUID code, @RequestHeader("accept-language") String lang) {
+        BaseUtils.setSessionLang(lang);
+        return new ResponseEntity<>(new Data<>(service.getAllByEmployee(code)), HttpStatus.OK);
     }
 }

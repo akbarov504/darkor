@@ -1,6 +1,7 @@
 package uz.darkor.darkor_22.repository.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
@@ -11,4 +12,6 @@ public interface EmployeeDetailRepository extends JpaRepository<EmployeeDetail, 
     Optional<EmployeeDetail> findByCode(UUID code);
 
     boolean deleteByCode(UUID code);
+
+    Optional<EmployeeDetail> findByEmployee(Employee employee);
 }

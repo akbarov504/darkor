@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.course.Course;
@@ -18,6 +19,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Where(clause = "is_deleted = false")
+@Table(indexes = @Index(name = "employee_detail_index", columnList = "code", unique = true))
 public class EmployeeDetail extends Auditable {
     @Column(nullable = false)
     private String titleDescriptionUz;

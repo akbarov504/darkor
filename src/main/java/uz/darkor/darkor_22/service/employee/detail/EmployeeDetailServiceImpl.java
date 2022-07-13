@@ -1,9 +1,6 @@
 package uz.darkor.darkor_22.service.employee.detail;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestHeader;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
@@ -13,10 +10,12 @@ import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeDetailMapper;
 import uz.darkor.darkor_22.repository.employee.EmployeeDetailRepository;
-import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.AbstractService;
+import uz.darkor.darkor_22.service.employee.EmployeeService;
+import uz.darkor.darkor_22.service.employee.EmployeeServiceImpl;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,9 +23,13 @@ import java.util.UUID;
 public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMapper, EmployeeDetailRepository>
         implements EmployeeDetailService {
 
+    private final EmployeeService employeeService;
+
     public EmployeeDetailServiceImpl(EmployeeDetailMapper mapper,
-                                     EmployeeDetailRepository repository) {
+                                     EmployeeDetailRepository repository,
+                                     EmployeeServiceImpl employeeService) {
         super(mapper, repository);
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -55,37 +58,24 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
 
     @Override
     public List<EmployeeDetailGetDTO> list(BaseCriteria criteria) {
-        return null;
+        List<EmployeeDetail> employeeDetails = repository.findAll();
+        return getLocalizedDtos(employeeDetails);
     }
 
-    public ResponseEntity<Data<List<EmployeeDetailGetDTO>>> getAllByEmployee(Long employeeId) {
-        Employee employee = employeeService.checkExistenceAndGetById(employeeId);
+    public EmployeeDetailGetDTO getAllByEmployee(UUID employeeCode) {
+        Employee employee = employeeService.checkExistenceAndGetByCode(employeeCode);
         EmployeeDetail employeeDetail = repository.findByEmployee(employee)
                 .orElseThrow(() -> new NotFoundException("EMPLOYEE_DETAIL_NOT_FOUND"));
-        EmployeeDetailDto employeeDetailDto = mapper.toDto(employeeDetail);
-        return new ResponseEntity<>(new Data<>(List.of(employeeDetailDto)), HttpStatus.OK);
+        return employeeDetail.getLocalizationDto(BaseUtils.getSessionLang());
     }
 
-    public ResponseEntity<Data<List<EmployeeDetailDto>>> getAll(BaseCriteria criteria) {
-        return null;
-    }
 
-    public ResponseEntity<Data<List<EmployeeDetailDto>>> getAll() {
-        List<EmployeeDetail> employeeDetails = repository.findAll();
-        List<EmployeeDetailDto> employeeDetailDtos = mapper.toDto(employeeDetails);
-        return new ResponseEntity<>(new Data<>(employeeDetailDtos), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Data<Boolean>> update(EmployeeDetailUpdateDto updateDto) {
-        EmployeeDetail target = checkUserDetailsExistenceAndGetByCode(updateDto.getId());
-        EmployeeDetail employeeDetail = mapper.fromUpdateDto(updateDto, target);
-        repository.save(employeeDetail);
-        return new ResponseEntity<>(new Data<>(Boolean.TRUE), HttpStatus.OK);
-    }
-
-    public ResponseEntity<Data<Void>> delete(Long id) {
-        repository.deleteById(id);
-        return new ResponseEntity<>(new Data<>(null), HttpStatus.OK);
+    private List<EmployeeDetailGetDTO> getLocalizedDtos(List<EmployeeDetail> employeeDetails) {
+        List<EmployeeDetailGetDTO> employeeDetailGetDTOs = new ArrayList<>();
+        for (EmployeeDetail ed : employeeDetails) {
+            employeeDetailGetDTOs.add(ed.getLocalizationDto(BaseUtils.getSessionLang()));
+        }
+        return employeeDetailGetDTOs;
     }
 
     private EmployeeDetail checkUserDetailsExistenceAndGetByCode(UUID code) {

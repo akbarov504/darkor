@@ -8,6 +8,7 @@ import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -19,4 +20,5 @@ public interface CourseRepository extends JpaRepository<Course, Long>, BaseRepos
 
     @Query(value = "from Course where isDeleted = false and code = :code")
     Course findByCode(UUID code);
+
 }

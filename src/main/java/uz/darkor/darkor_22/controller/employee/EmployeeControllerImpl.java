@@ -63,4 +63,11 @@ public class EmployeeControllerImpl extends AbstractController<EmployeeService> 
     public ResponseEntity<Data<Boolean>> delete(UUID code) {
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
+
+    @PostMapping("get_by_course/{code}")
+    public ResponseEntity<Data<List<EmployeeGetDTO>>> getByCourseCode(@PathVariable UUID code, String lang) {
+        BaseUtils.setSessionLang(lang);
+        return new ResponseEntity<>(new Data<>(service.getAllByCourseCode(code)), HttpStatus.OK);
+    }
+
 }

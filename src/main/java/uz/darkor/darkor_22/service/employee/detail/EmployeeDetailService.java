@@ -13,4 +13,6 @@ import java.util.UUID;
 public interface EmployeeDetailService
         extends GenericCUDService<EmployeeDetailCreateDTO, EmployeeDetailUpdateDTO, EmployeeDetailGetDTO, UUID>,
         GenericGLService<EmployeeDetailGetDTO, BaseCriteria, UUID>, BaseService {
+
+    EmployeeDetailGetDTO getAllByEmployee(UUID employeeCode);
 }
