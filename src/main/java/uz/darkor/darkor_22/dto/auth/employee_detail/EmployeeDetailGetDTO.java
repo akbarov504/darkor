@@ -15,8 +15,8 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDetailGetDTO extends GenericDTO {
     private String titleDescription;
     private String bodyDescription;

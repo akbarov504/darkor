@@ -7,31 +7,32 @@ import lombok.Setter;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.enums.ContentType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Entity
+@Table(indexes = @Index(name = "gallery_index", columnList = "code", unique = true))
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Gallery extends Auditable {
     @Column(nullable = false)
-    private Double size;
+    private Long size;
 
     @Column(nullable = false)
     private String originalName;
 
     @Column(nullable = false)
-    private String pathName;
+    private String GeneratedName;
 
     @Column(nullable = false)
     private String extension;
 
     @Column(nullable = false)
     private String path;
+
+    @Column(nullable = false)
+    private String url;
 
     @Enumerated(value = EnumType.STRING)
     private ContentType fileType;

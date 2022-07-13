@@ -13,8 +13,8 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeGetDTO extends GenericDTO {
 
     public EmployeeGetDTO(UUID code) {
