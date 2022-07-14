@@ -1,6 +1,8 @@
 package uz.darkor.darkor_22.repository.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.enums.EmployeeType;
@@ -15,5 +17,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, BaseR
 
     boolean deleteByCode(UUID key);
 
-    List<Employee> findAllByCoursesAndType(List<Course> courses, EmployeeType type);
+    @Query("from Employee where courses = :course and type = :type")
+    List<Employee> findAllByCoursesAndType(@Param("course") Course course, @Param("type") String type);
 }
