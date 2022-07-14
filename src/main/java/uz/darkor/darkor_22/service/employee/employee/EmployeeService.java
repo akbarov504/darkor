@@ -1,4 +1,4 @@
-package uz.darkor.darkor_22.service.employee;
+package uz.darkor.darkor_22.service.employee.employee;
 
 import uz.darkor.darkor_22.criteria.employee.EmployeeCriteria;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;

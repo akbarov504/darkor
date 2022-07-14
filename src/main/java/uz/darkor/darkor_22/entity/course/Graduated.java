@@ -19,8 +19,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Graduated extends Auditable {
+
     @ManyToOne
     private Course course;
+
     @OneToMany(cascade = CascadeType.ALL)
     private List<Gallery> galleries;
+
 }

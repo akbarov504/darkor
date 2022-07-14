@@ -10,7 +10,7 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_with_detail.EmployeeWithDetailCreatDTO;
 import uz.darkor.darkor_22.response.Data;
-import uz.darkor.darkor_22.service.employee.EmployeeService;
+import uz.darkor.darkor_22.service.employee.employee.EmployeeService;
 import uz.darkor.darkor_22.service.employee.detail.EmployeeDetailService;
 import uz.darkor.darkor_22.utils.BaseUtils;
 

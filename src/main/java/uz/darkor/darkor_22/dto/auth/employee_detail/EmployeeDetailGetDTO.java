@@ -15,9 +15,13 @@ import java.util.UUID;
 @Setter
 @Builder
 @ToString
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDetailGetDTO extends GenericDTO {
+//    public EmployeeDetailGetDTO(@NotNull(message = "code cannot be null") UUID code) {
+//        super(code);
+//    }
+
     private String titleDescription;
     private String bodyDescription;
     private List<Gallery> galleries;
@@ -25,7 +29,4 @@ public class EmployeeDetailGetDTO extends GenericDTO {
     private List<Skill> skills;
     private Employee employee;
 
-    public EmployeeDetailGetDTO(@NotNull(message = "code cannot be null") UUID code) {
-        super(code);
-    }
 }

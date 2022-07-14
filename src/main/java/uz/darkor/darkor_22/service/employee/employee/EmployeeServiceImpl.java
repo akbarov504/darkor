@@ -1,4 +1,4 @@
-package uz.darkor.darkor_22.service.employee;
+package uz.darkor.darkor_22.service.employee.employee;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -69,7 +69,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     public List<EmployeeGetDTO> getAllByCourseCode(UUID courseCode) {
         Course course = courseRepository.findByCode(courseCode);
         if (Objects.isNull(course)) throw new NotFoundException("COURSE_NOT_FOUND");
-        List<Employee> employees = repository.findAllByCoursesAndType_Expert(course, EmployeeType.EXPERT);
+        List<Employee> employees = repository.findAllByCoursesAndType(List.of(course), EmployeeType.EXPERT);
         return getLocalizedDtos(employees);
     }
 

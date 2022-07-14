@@ -11,8 +11,8 @@ import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeDetailMapper;
 import uz.darkor.darkor_22.repository.employee.EmployeeDetailRepository;
 import uz.darkor.darkor_22.service.AbstractService;
-import uz.darkor.darkor_22.service.employee.EmployeeService;
-import uz.darkor.darkor_22.service.employee.EmployeeServiceImpl;
+import uz.darkor.darkor_22.service.employee.employee.EmployeeService;
+import uz.darkor.darkor_22.service.employee.employee.EmployeeServiceImpl;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
 import java.util.ArrayList;

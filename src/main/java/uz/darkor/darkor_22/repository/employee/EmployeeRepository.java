@@ -15,5 +15,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, BaseR
 
     boolean deleteByCode(UUID key);
 
-    List<Employee> findAllByCoursesAndType_Expert(Course course, EmployeeType expert);
+    List<Employee> findAllByCoursesAndType(List<Course> courses, EmployeeType type);
 }
