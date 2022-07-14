@@ -11,6 +11,7 @@ import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.course.CourseMapper;
 import uz.darkor.darkor_22.repository.course.CourseRepository;
 import uz.darkor.darkor_22.service.AbstractService;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public CourseGetDTO get(UUID key) {
-        return repository.findByCode(key).getLocalizationDto("");
+        return repository.findByCode(key).getLocalizationDto(BaseUtils.getSessionLang());
     }
 
     @Override
@@ -66,7 +67,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Course> courses = repository.findAll(request).stream().toList();
         for (Course c : courses) {
-            courseGetDTOS.add(c.getLocalizationDto(""));
+            courseGetDTOS.add(c.getLocalizationDto(BaseUtils.getSessionLang()));
         }
         return courseGetDTOS;
     }

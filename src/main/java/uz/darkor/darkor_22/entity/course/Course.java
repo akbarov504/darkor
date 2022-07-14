@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.system.Gallery;
@@ -35,13 +37,16 @@ public class Course extends Auditable {
     @Column(nullable = false)
     private String descriptionRu;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
     private List<Gallery> imageUz;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
     private List<Gallery> imageRu;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
     private List<Gallery> imageEn;
 
     public CourseGetDTO getLocalizationDto(String lang) {
