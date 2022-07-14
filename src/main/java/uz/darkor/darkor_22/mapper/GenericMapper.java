@@ -16,11 +16,11 @@ public interface GenericMapper<CD extends BaseDTO, UD extends GenericDTO, GD ext
 
     E fromUpdateDTO(UD updateDTO, @MappingTarget E entity);
 
-//    GD toGetDTO(E entity);
+    GD toGetDTO(E entity);
 
 //    E fromGetDTO(GD DTO);
 
-//    List<GD> toListDTO(List<E> entities);
+    List<GD> toListDTO(List<E> entities);
 
 //    List<E> fromListDTO(List<GD> DTOs);
 }

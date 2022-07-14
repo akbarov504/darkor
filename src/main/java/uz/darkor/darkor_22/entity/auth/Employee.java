@@ -36,8 +36,8 @@ public class Employee extends Auditable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Gallery gallery;
-
-    @ManyToMany(fetch = FetchType.LAZY)
+ 
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Course> courses;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")

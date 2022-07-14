@@ -48,6 +48,7 @@ public class EmployeeDetail extends Auditable {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Gallery> gallery;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Employee employee;
 
