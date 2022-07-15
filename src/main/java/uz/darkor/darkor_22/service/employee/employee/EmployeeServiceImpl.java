@@ -15,7 +15,6 @@ import uz.darkor.darkor_22.mapper.employee.EmployeeMapper;
 import uz.darkor.darkor_22.repository.course.CourseRepository;
 import uz.darkor.darkor_22.repository.employee.EmployeeRepository;
 import uz.darkor.darkor_22.service.AbstractService;
-import uz.darkor.darkor_22.utils.BaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +37,14 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     @Override
     public EmployeeGetDTO create(EmployeeCreateDTO DTO) {
         Employee employee = mapper.fromCreateDTO(DTO);
-        return repository.save(employee).getLocalizationDto(BaseUtils.getSessionLang());
+        return repository.save(employee).getLocalizationDto();
     }
 
     @Override
     public EmployeeGetDTO update(EmployeeUpdateDTO DTO) {
         Employee target = checkExistenceAndGetByCode(DTO.getCode());
         Employee employee = mapper.fromUpdateDTO(DTO, target);
-        return repository.save(employee).getLocalizationDto(BaseUtils.getSessionLang());
+        return repository.save(employee).getLocalizationDto();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
 
     @Override
     public EmployeeGetDTO get(UUID key) {
-        return checkExistenceAndGetByCode(key).getLocalizationDto(BaseUtils.getSessionLang());
+        return checkExistenceAndGetByCode(key).getLocalizationDto();
     }
 
     @Override
@@ -81,7 +80,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     private List<EmployeeGetDTO> getLocalizedDtos(List<Employee> employees) {
         List<EmployeeGetDTO> employeeDtos = new ArrayList<>();
         for (Employee e : employees) {
-            employeeDtos.add(e.getLocalizationDto(BaseUtils.getSessionLang()));
+            employeeDtos.add(e.getLocalizationDto());
         }
         return employeeDtos;
     }

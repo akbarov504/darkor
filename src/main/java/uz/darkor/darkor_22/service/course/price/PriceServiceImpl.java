@@ -12,7 +12,6 @@ import uz.darkor.darkor_22.mapper.price.PriceMapper;
 import uz.darkor.darkor_22.repository.course.detail.CourseDetailRepository;
 import uz.darkor.darkor_22.repository.price.PriceRepository;
 import uz.darkor.darkor_22.service.AbstractService;
-import uz.darkor.darkor_22.utils.BaseUtils;
 
 import java.util.*;
 
@@ -32,14 +31,14 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     public PriceGetDTO create(PriceCreateDTO DTO) {
         Price price = mapper.fromCreateDTO(DTO);
         Price newPrice = repository.save(price);
-        return newPrice.getLocalizationDto(BaseUtils.getSessionLang());
+        return newPrice.getLocalizationDto();
     }
 
     @Override
     public PriceGetDTO update(PriceUpdateDTO DTO) {
         Price target = checkExistenceAndGetaByCode(DTO.getCode());
         Price updatedPrice = mapper.fromUpdateDTO(DTO, target);
-        return updatedPrice.getLocalizationDto(BaseUtils.getSessionLang());
+        return updatedPrice.getLocalizationDto();
     }
 
     @Override
@@ -50,7 +49,7 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     @Override
     public PriceGetDTO get(UUID key) {
         Price price = checkExistenceAndGetaByCode(key);
-        return price.getLocalizationDto(BaseUtils.getSessionLang());
+        return price.getLocalizationDto();
     }
 
     @Override
@@ -59,7 +58,7 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
                 .findByCode(code).orElseThrow(() -> new NotFoundException("COURSE_DETAIL_NOT_FOUND"));
         Price price = repository.findByCourseDetail(courseDetail)
                 .orElse(new Price());
-        return price.getLocalizationDto(BaseUtils.getSessionLang());
+        return price.getLocalizationDto();
     }
 
     @Override
@@ -71,7 +70,7 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     private List<PriceGetDTO> getLocalizedPriceDTOList(List<Price> prices) {
         List<PriceGetDTO> priceGetDTOS = new ArrayList<>();
         for (Price price : prices)
-            priceGetDTOS.add(price.getLocalizationDto(BaseUtils.getSessionLang()));
+            priceGetDTOS.add(price.getLocalizationDto());
         return priceGetDTOS;
     }
 

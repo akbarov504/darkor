@@ -10,6 +10,7 @@ import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.entity.system.Gallery;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,7 +44,7 @@ public class EmployeeDetail extends Auditable {
     @ManyToMany
     private List<Course> courses;
 
-    @OneToMany
+    @ManyToMany
     private List<Skill> skills;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -52,12 +53,36 @@ public class EmployeeDetail extends Auditable {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Employee employee;
 
-    public EmployeeDetailGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return EmployeeDetailGetDTO.builder().titleDescription(this.titleDescriptionUz).bodyDescription(this.bodyDescriptionUz).galleries(this.gallery).courses(this.courses).skills(this.skills).employee(this.employee).build();
-        } else if (lang.equals("ru")) {
-            return EmployeeDetailGetDTO.builder().titleDescription(this.titleDescriptionRu).bodyDescription(this.bodyDescriptionRu).galleries(this.gallery).courses(this.courses).skills(this.skills).employee(this.employee).build();
-        }
-        return EmployeeDetailGetDTO.builder().titleDescription(this.titleDescriptionEn).bodyDescription(this.bodyDescriptionEn).galleries(this.gallery).courses(this.courses).skills(this.skills).employee(this.employee).build();
+    public EmployeeDetailGetDTO getLocalizationDto() {
+        String lang = BaseUtils.getSessionLang();
+        return switch (lang) {
+            case "en" -> EmployeeDetailGetDTO.builder()
+                    .code(this.getCode())
+                    .titleDescription(this.titleDescriptionEn)
+                    .bodyDescription(this.bodyDescriptionEn)
+                    .galleries(this.gallery)
+                    .courses(this.courses)
+                    .skills(this.skills)
+                    .employee(this.employee)
+                    .build();
+            case "ru" -> EmployeeDetailGetDTO.builder()
+                    .code(this.getCode())
+                    .titleDescription(this.titleDescriptionRu)
+                    .bodyDescription(this.bodyDescriptionRu)
+                    .galleries(this.gallery)
+                    .courses(this.courses)
+                    .skills(this.skills)
+                    .employee(this.employee)
+                    .build();
+            default -> EmployeeDetailGetDTO.builder()
+                    .code(this.getCode())
+                    .titleDescription(this.titleDescriptionUz)
+                    .bodyDescription(this.bodyDescriptionUz)
+                    .galleries(this.gallery)
+                    .courses(this.courses)
+                    .skills(this.skills)
+                    .employee(this.employee)
+                    .build();
+        };
     }
 }

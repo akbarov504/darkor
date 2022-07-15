@@ -13,20 +13,32 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class EmployeeDetailGetDTO extends GenericDTO {
-//    public EmployeeDetailGetDTO(@NotNull(message = "code cannot be null") UUID code) {
-//        super(code);
-//    }
 
     private String titleDescription;
     private String bodyDescription;
+
     private List<Gallery> galleries;
     private List<Course> courses;
     private List<Skill> skills;
     private Employee employee;
 
+    @Builder
+    public EmployeeDetailGetDTO(@NotNull(message = "code cannot be null") UUID code,
+                                String titleDescription,
+                                String bodyDescription,
+                                List<Gallery> galleries,
+                                List<Course> courses,
+                                List<Skill> skills,
+                                Employee employee) {
+        super(code);
+        this.titleDescription = titleDescription;
+        this.bodyDescription = bodyDescription;
+        this.galleries = galleries;
+        this.courses = courses;
+        this.skills = skills;
+        this.employee = employee;
+    }
 }
