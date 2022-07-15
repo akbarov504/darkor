@@ -9,6 +9,7 @@ import uz.darkor.darkor_22.entity.Auditable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,9 @@ public class Price extends Auditable {
     private List<String> offersRu;
     @ElementCollection
     private List<String> offersEn;
+
+    @OneToOne(mappedBy = "price")
+    private CourseDetail courseDetail;
 
     public PriceGetDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {

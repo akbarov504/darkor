@@ -59,7 +59,7 @@ public class FileService extends AbstractService<FileMapper, FileRepository> {
 
             Files.copy(file.getInputStream(), path);
 
-            String url = "http://172.105.136.151:8080" + BaseUtils.PATH.concat("/download/".concat(generatedName));
+            String url = "http://localhost:8080" + BaseUtils.PATH.concat("/download/".concat(generatedName));
 
             Gallery gallery = new Gallery(file.getSize(),
                     originalFilename,
