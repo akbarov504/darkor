@@ -44,12 +44,12 @@ public class StatisticsControllerImpl extends AbstractController<StatisticsServi
     @Override
     public ResponseEntity<Data<StatisticsGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code, lang)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<StatisticsGetDTO>>> list(StatisticsCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.list(criteria)),HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.list(criteria, lang)),HttpStatus.OK);
     }
 }

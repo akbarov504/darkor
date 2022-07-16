@@ -70,10 +70,10 @@ public class Course extends Auditable {
 
     public CourseGetDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {
-            return CourseGetDTO.builder().name(this.nameUz).description(this.descriptionUz).galleries(this.imageUz).build();
+            return CourseGetDTO.builder().id(getId()).name(this.nameUz).description(this.descriptionUz).galleries(this.imageUz).build();
         } else if (lang.equals("ru")) {
-            return CourseGetDTO.builder().name(this.nameRu).description(this.descriptionRu).galleries(this.imageRu).build();
+            return CourseGetDTO.builder().id(getId()).name(this.nameRu).description(this.descriptionRu).galleries(this.imageRu).build();
         }
-        return CourseGetDTO.builder().name(this.nameEn).description(this.descriptionEn).galleries(this.imageEn).build();
+        return CourseGetDTO.builder().id(getId()).name(this.nameEn).description(this.descriptionEn).galleries(this.imageEn).build();
     }
 }

@@ -41,12 +41,12 @@ public class PostControllerImpl extends AbstractController<PostServiceImpl> impl
     @Override
     public ResponseEntity<Data<PostGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code)),HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code, lang)),HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<PostGetDTO>>> list(PostCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.list(criteria)),HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.list(criteria, lang)),HttpStatus.OK);
     }
 }

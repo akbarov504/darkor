@@ -46,21 +46,15 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public CourseGetDTO update(CourseUpdateDTO DTO) {
-        Course course = repository.findByCode(DTO.getCode());
+        Optional<Course> courseOptional = repository.findById(DTO.getId());
+        Course course = courseOptional.get();
         if (Objects.isNull(course)) {
             throw new NotFoundException("Course not found");
         }
-        course.setNameUz(DTO.getNameUz());
-        course.setNameRu(DTO.getNameRu());
-        course.setNameEn(DTO.getNameEn());
 
-        course.setDescriptionUz(DTO.getDescriptionUz());
-        course.setDescriptionRu(DTO.getDescriptionRu());
-        course.setDescriptionEn(DTO.getDescriptionEn());
+         course = fromUpdateDto(DTO);
 
-        course.setImageUz(DTO.getImageUz());
-        course.setImageRu(DTO.getImageRu());
-        course.setImageEn(DTO.getImageEn());
+        System.out.println(mapper.fromUpdateDTO(DTO, course));
         return repository.save(course).getLocalizationDto("uz");
     }
 
@@ -99,6 +93,20 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
         );
     }
 
+    private Course fromUpdateDto(CourseUpdateDTO DTO) {
+        return new Course(
+                DTO.getNameUz(),
+                DTO.getNameRu(),
+                DTO.getNameEn(),
+                DTO.getDescriptionUz(),
+                DTO.getDescriptionEn(),
+                DTO.getDescriptionRu(),
+                processGallery(DTO.getImageUz()),
+                processGallery(DTO.getImageRu()),
+                processGallery(DTO.getImageEn())
+        );
+    }
+
     private List<Gallery> processGallery(List<FileDTO> fileDTOS) {
         List<Gallery> galleries = new ArrayList<>();
         for (FileDTO fileDTO : fileDTOS) {
@@ -106,5 +114,11 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
             galleries.add(gallery.get());
         }
         return galleries;
+    }
+
+    public CourseUpdateDTO getForUpdate(Long id) {
+        Optional<Course> byId = repository.findById(id);
+        if (byId.isEmpty()) throw new NotFoundException("Course not found");
+        return mapper.toUpdateDTO(byId.get());
     }
 }

@@ -2,9 +2,11 @@ package uz.darkor.darkor_22.dto.course.course;
 
 import lombok.*;
 import uz.darkor.darkor_22.dto.GenericDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.system.Gallery;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -14,6 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseUpdateDTO extends GenericDTO {
+
+    @NotNull(message = "id cannot be null")
+    private Long id;
+
     @Size(min = 3, max = 255, message = "The length of the name field must be between 3 and 255")
     @NotBlank(message = "name cannot be null")
     private String nameUz;
@@ -39,11 +45,11 @@ public class CourseUpdateDTO extends GenericDTO {
     private String descriptionRu;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageUz;
+    private List<FileDTO> imageUz;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageRu;
+    private List<FileDTO> imageRu;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageEn;
+    private List<FileDTO> imageEn;
 }
