@@ -41,13 +41,13 @@ public class EmployeeDetailControllerImpl extends AbstractController<EmployeeDet
     @Override
     public ResponseEntity<Data<EmployeeDetailGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<EmployeeDetailGetDTO>>> list(BaseCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.list(criteria)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }
 
     @PostMapping("get_by_employee/{code}")

@@ -42,7 +42,7 @@ public class CommentControllerImpl extends AbstractController<CommentServiceImpl
     @Override
     public ResponseEntity<Data<CommentGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @Override

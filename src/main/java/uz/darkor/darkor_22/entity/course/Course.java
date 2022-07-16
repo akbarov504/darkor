@@ -40,7 +40,7 @@ public class Course extends Auditable {
     private String descriptionRu;
 
     @Fetch(FetchMode.SELECT)
-    @ManyToMany(cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_uz_id"}))
     private List<Gallery> imageUz;
 
@@ -54,6 +54,20 @@ public class Course extends Auditable {
     @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_en_id"}))
     private List<Gallery> imageEn;
 
+    public Course(String nameUz,
+                  String nameRu,
+                  String nameEn,
+                  String descriptionUz,
+                  String descriptionEn,
+                  String descriptionRu) {
+        this.nameUz = nameUz;
+        this.nameRu = nameRu;
+        this.nameEn = nameEn;
+        this.descriptionUz = descriptionUz;
+        this.descriptionEn = descriptionEn;
+        this.descriptionRu = descriptionRu;
+    }
+
     public CourseGetDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {
             return CourseGetDTO.builder().name(this.nameUz).description(this.descriptionUz).galleries(this.imageUz).build();
@@ -61,14 +75,5 @@ public class Course extends Auditable {
             return CourseGetDTO.builder().name(this.nameRu).description(this.descriptionRu).galleries(this.imageRu).build();
         }
         return CourseGetDTO.builder().name(this.nameEn).description(this.descriptionEn).galleries(this.imageEn).build();
-    }
-
-    public Course(String nameUz, String nameRu, String nameEn, String descriptionUz, String descriptionEn, String descriptionRu) {
-        this.nameUz = nameUz;
-        this.nameRu = nameRu;
-        this.nameEn = nameEn;
-        this.descriptionUz = descriptionUz;
-        this.descriptionEn = descriptionEn;
-        this.descriptionRu = descriptionRu;
     }
 }

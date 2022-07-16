@@ -42,7 +42,7 @@ public class PartnerControllerImpl extends AbstractController<PartnerServiceImpl
 
     @Override
     public ResponseEntity<Data<PartnerGetDTO>> get(UUID code, String lang) {
-        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @Override

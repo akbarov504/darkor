@@ -41,7 +41,7 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
     @Override
     public ResponseEntity<Data<PriceGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @GetMapping("get_by_course/{code}")
@@ -54,6 +54,6 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
     @Override
     public ResponseEntity<Data<List<PriceGetDTO>>> list(BaseCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.list(criteria)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }
 }
