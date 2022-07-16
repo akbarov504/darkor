@@ -7,7 +7,7 @@ import uz.darkor.darkor_22.enums.ContentType;
 import javax.persistence.*;
 
 @Entity
-@Table(indexes = @Index(name = "gallery_index", columnList = "code", unique = true))
+@Table(indexes = @Index(name = "gallery_index", columnList = "code"))
 @Getter
 @Setter
 

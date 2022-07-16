@@ -14,15 +14,13 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PartnerUpdateDTO extends GenericDTO {
 
-    private Long id;
     @NotNull(message = "logo doesn't be null")
     private FileDTO logo;
     @NotNull(message = "logo doesn't be null")
     private String link;
 
-    public PartnerUpdateDTO(@NotNull(message = "code cannot be null") UUID code, Long id, FileDTO logo, String link) {
+    public PartnerUpdateDTO(@NotNull(message = "code cannot be null") UUID code, FileDTO logo, String link) {
         super(code);
-        this.id = id;
         this.logo = logo;
         this.link = link;
     }

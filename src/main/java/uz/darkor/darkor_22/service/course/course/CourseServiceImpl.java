@@ -33,22 +33,39 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public CourseGetDTO create(CourseCreateDTO DTO) {
-        Course course = mapper.fromCreateDTO(DTO);
+//        Course course = mapper.fromCreateDTO(DTO);
+
+        Course course = new Course(
+                DTO.getNameUz(),
+                DTO.getNameRu(),
+                DTO.getNameEn(),
+                DTO.getDescriptionUz(),
+                DTO.getDescriptionEn(),
+                DTO.getDescriptionRu()
+        );
+
+        List<Gallery> imageUz = new ArrayList<>();
+        List<Gallery> imageRu = new ArrayList<>();
+        List<Gallery> imageEn = new ArrayList<>();
 
         for (FileDTO fileDTO : DTO.getImageUz()) {
             Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            course.getImageUz().add(byId.get());
+            imageUz.add(byId.get());
         }
 
         for (FileDTO fileDTO : DTO.getImageEn()) {
             Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            course.getImageEn().add(byId.get());
+            imageRu.add(byId.get());
         }
 
         for (FileDTO fileDTO : DTO.getImageRu()) {
             Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            course.getImageRu().add(byId.get());
+            imageEn.add(byId.get());
         }
+
+        course.setImageUz(imageUz);
+        course.setImageRu(imageRu);
+        course.setImageEn(imageEn);
 
         Course save = repository.save(course);
         CourseGetDTO uz = save.getLocalizationDto("uz");

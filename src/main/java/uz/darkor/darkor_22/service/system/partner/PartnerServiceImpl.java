@@ -37,7 +37,8 @@ public class PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRe
     @Override
     public PartnerGetDTO update(PartnerUpdateDTO DTO) {
         Partner byCode = repository.findByCode(DTO.getCode());
-        Partner save = repository.save(mapper.fromUpdateDTO(DTO, byCode));
+        Partner partner = mapper.fromUpdateDTO(DTO, byCode);
+        Partner save = repository.save(partner);
         return mapper.toGetDTO(save);
 //        return null;
     }

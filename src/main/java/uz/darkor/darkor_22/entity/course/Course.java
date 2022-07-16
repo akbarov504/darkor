@@ -11,7 +11,9 @@ import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.system.Gallery;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -38,15 +40,15 @@ public class Course extends Auditable {
     private String descriptionRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER)
     private List<Gallery> imageUz;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Gallery> imageRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Gallery> imageEn;
 
     public CourseGetDTO getLocalizationDto(String lang) {
@@ -56,5 +58,14 @@ public class Course extends Auditable {
             return CourseGetDTO.builder().name(this.nameRu).description(this.descriptionRu).galleries(this.imageRu).build();
         }
         return CourseGetDTO.builder().name(this.nameEn).description(this.descriptionEn).galleries(this.imageEn).build();
+    }
+
+    public Course(String nameUz, String nameRu, String nameEn, String descriptionUz, String descriptionEn, String descriptionRu) {
+        this.nameUz = nameUz;
+        this.nameRu = nameRu;
+        this.nameEn = nameEn;
+        this.descriptionUz = descriptionUz;
+        this.descriptionEn = descriptionEn;
+        this.descriptionRu = descriptionRu;
     }
 }
