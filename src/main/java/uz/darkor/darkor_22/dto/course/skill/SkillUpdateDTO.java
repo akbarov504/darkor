@@ -1,12 +1,15 @@
 package uz.darkor.darkor_22.dto.course.skill;
 
+import lombok.Getter;
+import lombok.Setter;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+@Getter
+@Setter
 public class SkillUpdateDTO extends GenericDTO {
 
     @NotBlank(message = "name uz cannot be null or empty")
