@@ -40,15 +40,18 @@ public class Course extends Auditable {
     private String descriptionRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE,  fetch = FetchType.EAGER)
+    @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_uz_id"}))
     private List<Gallery> imageUz;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_ru_id"}))
     private List<Gallery> imageRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_en_id"}))
     private List<Gallery> imageEn;
 
     public CourseGetDTO getLocalizationDto(String lang) {

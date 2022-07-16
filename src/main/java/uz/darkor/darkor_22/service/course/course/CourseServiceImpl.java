@@ -70,6 +70,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
         Course save = repository.save(course);
         CourseGetDTO uz = save.getLocalizationDto("uz");
         return uz;
+
     }
 
     @Override
