@@ -25,7 +25,11 @@ import java.util.*;
 public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepository> implements CourseService {
     private final FileRepository fileRepository;
     private final FileMapper fileMapper;
-    public CourseServiceImpl(CourseMapper mapper, CourseRepository repository, FileRepository fileRepository, FileMapper fileMapper) {
+
+    public CourseServiceImpl(CourseMapper mapper,
+                             CourseRepository repository,
+                             FileRepository fileRepository,
+                             FileMapper fileMapper) {
         super(mapper, repository);
         this.fileRepository = fileRepository;
         this.fileMapper = fileMapper;
@@ -33,40 +37,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public CourseGetDTO create(CourseCreateDTO DTO) {
-//        Course course = mapper.fromCreateDTO(DTO);
-
-        Course course = new Course(
-                DTO.getNameUz(),
-                DTO.getNameRu(),
-                DTO.getNameEn(),
-                DTO.getDescriptionUz(),
-                DTO.getDescriptionEn(),
-                DTO.getDescriptionRu()
-        );
-
-        List<Gallery> imageUz = new ArrayList<>();
-        List<Gallery> imageRu = new ArrayList<>();
-        List<Gallery> imageEn = new ArrayList<>();
-
-        for (FileDTO fileDTO : DTO.getImageUz()) {
-            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            imageUz.add(byId.get());
-        }
-
-        for (FileDTO fileDTO : DTO.getImageEn()) {
-            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            imageRu.add(byId.get());
-        }
-
-        for (FileDTO fileDTO : DTO.getImageRu()) {
-            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
-            imageEn.add(byId.get());
-        }
-
-        course.setImageUz(imageUz);
-        course.setImageRu(imageRu);
-        course.setImageEn(imageEn);
-
+        Course course = fromCreatDto(DTO);
         Course save = repository.save(course);
         CourseGetDTO uz = save.getLocalizationDto("uz");
         return uz;
@@ -112,5 +83,28 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
             courseGetDTOS.add(c.getLocalizationDto(BaseUtils.getSessionLang()));
         }
         return courseGetDTOS;
+    }
+
+    private Course fromCreatDto(CourseCreateDTO DTO) {
+        return new Course(
+                DTO.getNameUz(),
+                DTO.getNameRu(),
+                DTO.getNameEn(),
+                DTO.getDescriptionUz(),
+                DTO.getDescriptionEn(),
+                DTO.getDescriptionRu(),
+                processGallery(DTO.getImageUz()),
+                processGallery(DTO.getImageRu()),
+                processGallery(DTO.getImageEn())
+        );
+    }
+
+    private List<Gallery> processGallery(List<FileDTO> fileDTOS) {
+        List<Gallery> galleries = new ArrayList<>();
+        for (FileDTO fileDTO : fileDTOS) {
+            Optional<Gallery> gallery = fileRepository.findById(fileDTO.getId());
+            galleries.add(gallery.get());
+        }
+        return galleries;
     }
 }
