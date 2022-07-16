@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface GenericGLService<GD extends GenericDTO, CR extends BaseCriteria, K extends Serializable> {
-    GD get(K key);
+    GD get(K key, String language);
 
-    List<GD> list(CR criteria);
+    List<GD> list(CR criteria, String language);
 }

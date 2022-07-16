@@ -61,7 +61,7 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
         course.setImageUz(DTO.getImageUz());
         course.setImageRu(DTO.getImageRu());
         course.setImageEn(DTO.getImageEn());
-        return repository.save(course).getLocalizationDto("");
+        return repository.save(course).getLocalizationDto("uz");
     }
 
     @Override
@@ -70,12 +70,12 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
     }
 
     @Override
-    public CourseGetDTO get(UUID key) {
+    public CourseGetDTO get(UUID key, String language) {
         return repository.findByCode(key).getLocalizationDto(BaseUtils.getSessionLang());
     }
 
     @Override
-    public List<CourseGetDTO> list(CourseCriteria criteria) {
+    public List<CourseGetDTO> list(CourseCriteria criteria, String language) {
         List<CourseGetDTO> courseGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Course> courses = repository.findAll(request).stream().toList();

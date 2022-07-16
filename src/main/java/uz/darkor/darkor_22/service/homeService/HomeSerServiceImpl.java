@@ -54,14 +54,14 @@ public class HomeSerServiceImpl extends AbstractService<HomeServiceMapper, HomeS
     }
 
     @Override
-    public HomeServiceGetDTO get(UUID key) {
+    public HomeServiceGetDTO get(UUID key, String language) {
         HomeService homeService = repository.findByCode(key)
                 .orElseThrow(() -> new NotFoundException("Hech  nima topilmadi"));
         return homeService.getLocalizationDto(BaseUtils.getSessionLang());
     }
 
     @Override
-    public List<HomeServiceGetDTO> list(HomeServiceCriteria criteria) {
+    public List<HomeServiceGetDTO> list(HomeServiceCriteria criteria, String language) {
 
         List<HomeServiceGetDTO> homeServiceGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());

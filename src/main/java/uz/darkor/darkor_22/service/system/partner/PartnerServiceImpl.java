@@ -49,12 +49,12 @@ public class PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRe
     }
 
     @Override
-    public PartnerGetDTO get(UUID key) {
+    public PartnerGetDTO get(UUID key, String language) {
         return mapper.toGetDTO(repository.findByCode(key));
     }
 
     @Override
-    public List<PartnerGetDTO> list(PartnerCriteria criteria) {
+    public List<PartnerGetDTO> list(PartnerCriteria criteria, String language) {
         return null;
     }
 

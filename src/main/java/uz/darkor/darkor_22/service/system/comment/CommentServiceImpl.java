@@ -54,7 +54,7 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
 
 
     @Override
-    public CommentGetDTO get(UUID key) {
+    public CommentGetDTO get(UUID key, String language) {
         Comment byCode = repository.findByCode(key);
         if (!Objects.nonNull(byCode)) {
             throw new NotFoundException("comment not found");
@@ -63,7 +63,7 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
     }
 
     @Override
-    public List<CommentGetDTO> list(CommentCriteria criteria) {
+    public List<CommentGetDTO> list(CommentCriteria criteria, String language) {
 
         List<Comment> all = repository.findAll();
         return getLocalizedDtos(all);

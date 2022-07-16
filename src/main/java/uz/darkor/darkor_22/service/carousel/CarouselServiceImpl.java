@@ -65,14 +65,14 @@ public class CarouselServiceImpl extends AbstractService<CarouselMapper, Carouse
     }
 
     @Override
-    public CarouselGetDTO get(UUID key) {
+    public CarouselGetDTO get(UUID key, String language) {
         Carousel carousel = repository.findByCode(key)
                 .orElseThrow(() -> new NotFoundException("Hech  nima topilmadi"));
         return carousel.getLocalizationDto(BaseUtils.getSessionLang());
     }
 
     @Override
-    public List<CarouselGetDTO> list(CarouselCriteria criteria) {
+    public List<CarouselGetDTO> list(CarouselCriteria criteria, String language) {
         List<CarouselGetDTO> carouselGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Carousel> courses = repository.findAll(request).stream().toList();

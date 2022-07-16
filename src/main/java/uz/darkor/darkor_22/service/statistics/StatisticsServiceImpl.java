@@ -51,7 +51,7 @@ public class StatisticsServiceImpl extends AbstractService<StatisticsMapper, Sta
     }
 
     @Override
-    public StatisticsGetDTO get(UUID key) {
+    public StatisticsGetDTO get(UUID key, String language) {
         Statistics statistics = repository.findByCode(key)
                 .orElseThrow(() -> new NotFoundException("Statistika topilmadi"));
         StatisticsGetDTO Dto = statistics.getLocalizationDto(BaseUtils.getSessionLang());
@@ -59,7 +59,7 @@ public class StatisticsServiceImpl extends AbstractService<StatisticsMapper, Sta
     }
 
     @Override
-    public List<StatisticsGetDTO> list(StatisticsCriteria criteria) {
+    public List<StatisticsGetDTO> list(StatisticsCriteria criteria, String language) {
         List<StatisticsGetDTO> statisticsGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Statistics> courses = repository.findAll(request).stream().toList();

@@ -51,13 +51,13 @@ public class GraduatedServiceImpl extends AbstractService<GraduatedMapper, Gradu
     }
 
     @Override
-    public GraduatedGetDTO get(UUID key) {
+    public GraduatedGetDTO get(UUID key, String language) {
         Graduated graduated = checkExistenceAndGetByCode(key);
         return mapper.toGetDTO(graduated);
     }
 
     @Override
-    public List<GraduatedGetDTO> list(BaseCriteria criteria) {
+    public List<GraduatedGetDTO> list(BaseCriteria criteria, String language) {
         return mapper.toListDTO(repository.findAll());
     }
 

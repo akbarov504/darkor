@@ -65,12 +65,12 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     }
 
     @Override
-    public EmployeeGetDTO get(UUID key) {
+    public EmployeeGetDTO get(UUID key, String language) {
         return checkExistenceAndGetByCode(key).getLocalizationDto();
     }
 
     @Override
-    public List<EmployeeGetDTO> list(EmployeeCriteria criteria) {
+    public List<EmployeeGetDTO> list(EmployeeCriteria criteria, String language) {
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Employee> employees = repository.findAll(pageable).getContent();
         return getLocalizedDtos(employees);

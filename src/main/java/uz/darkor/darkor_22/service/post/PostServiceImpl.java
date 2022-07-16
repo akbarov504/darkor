@@ -57,14 +57,14 @@ public class PostServiceImpl extends AbstractService<PostMapper, PostRepository>
     }
 
     @Override
-    public PostGetDTO get(UUID key) {
+    public PostGetDTO get(UUID key, String language) {
         Post post = repository.findByCode(key)
                 .orElseThrow(() -> new NotFoundException("HomeService topilmadi"));
         return post.getLocalizationDto(BaseUtils.getSessionLang());
     }
 
     @Override
-    public List<PostGetDTO> list(PostCriteria criteria) {
+    public List<PostGetDTO> list(PostCriteria criteria, String language) {
         List<PostGetDTO> postGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Post> posts = repository.findAll(request).stream().toList();

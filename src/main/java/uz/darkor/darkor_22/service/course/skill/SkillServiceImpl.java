@@ -57,13 +57,13 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
     }
 
     @Override
-    public SkillGetDTO get(UUID key) {
+    public SkillGetDTO get(UUID key, String language) {
         Skill skill = checkExistenceAndGetById(key);
         return skill.getLocalizationDto();
     }
 
     @Override
-    public List<SkillGetDTO> list(BaseCriteria criteria) {
+    public List<SkillGetDTO> list(BaseCriteria criteria, String language) {
         List<Skill> skills = repository.findAll();
         return getLocalizedDTOs(skills);
     }
