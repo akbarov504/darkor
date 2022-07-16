@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
 import java.util.List;
@@ -18,5 +17,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, BaseR
     boolean deleteByCode(UUID key);
 
     @Query("from Employee where courses = :course and type = :type")
-    List<Employee> findAllByCoursesAndType(@Param("course") Course course, @Param("type") String type);
+    List<Employee> findAllByCoursesAndType(@Param("course") List<Course> course, @Param("type") String type);
 }

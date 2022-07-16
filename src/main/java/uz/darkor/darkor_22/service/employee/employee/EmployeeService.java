@@ -17,5 +17,5 @@ public interface EmployeeService extends GenericCUDService<EmployeeCreateDTO, Em
 
     Employee checkExistenceAndGetByCode(UUID id);
 
-    List<EmployeeGetDTO> getAllByCourseCode(UUID courseCode);
+    List<EmployeeGetDTO> getAllByCourseCode(EmployeeCriteria criteria, UUID courseCode);
 }

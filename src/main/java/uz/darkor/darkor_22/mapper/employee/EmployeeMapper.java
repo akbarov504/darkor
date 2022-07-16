@@ -10,6 +10,7 @@ import uz.darkor.darkor_22.mapper.GenericMapper;
 import uz.darkor.darkor_22.mapper.course.CourseMapper;
 import uz.darkor.darkor_22.mapper.gallery.GalleryMapper;
 
+@Component
 @Mapper(componentModel = "spring",uses={GalleryMapper.class, CourseMapper.class})
 public interface EmployeeMapper extends GenericMapper<EmployeeCreateDTO, EmployeeUpdateDTO, EmployeeGetDTO, Employee> {
 }
