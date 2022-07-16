@@ -1,9 +1,8 @@
 package uz.darkor.darkor_22.controller.course.graduated;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.dto.course.graduated.GraduatedCreateDTO;
@@ -26,26 +25,34 @@ public class GraduatedControllerImpl extends AbstractController<GraduatedService
 
     @Override
     public ResponseEntity<Data<GraduatedGetDTO>> create(GraduatedCreateDTO DTO) {
-        return null;
+        return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<GraduatedGetDTO>> update(GraduatedUpdateDTO DTO) {
-        return null;
+        return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<Boolean>> delete(UUID code) {
-        return null;
+        return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<GraduatedGetDTO>> get(UUID code, String lang) {
-        return null;
+        BaseUtils.setSessionLang(lang);
+        return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<GraduatedGetDTO>>> list(BaseCriteria criteria, String lang) {
-        return null;
+        BaseUtils.setSessionLang(lang);
+        return new ResponseEntity<>(new Data<>(service.list(criteria)), HttpStatus.OK);
     }
+
+    @GetMapping("get_by_courese/{code}")
+    public ResponseEntity<Data<List<GraduatedGetDTO>>> getByCourse(@PathVariable UUID code) {
+        return new ResponseEntity<>(new Data<>(service.getByCourseCode(code)), HttpStatus.OK);
+    }
+
 }

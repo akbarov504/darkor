@@ -10,6 +10,7 @@ import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,28 +38,32 @@ public class Employee extends Auditable {
     @OneToOne(cascade = CascadeType.ALL)
     private Gallery gallery;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Course> courses;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private EmployeeDetail employeeDetail;
 
 
-    public EmployeeGetDTO getLocalizationDto(String lang) {
+    public EmployeeGetDTO getLocalizationDto() {
+        String lang = BaseUtils.getSessionLang();
         return switch (lang) {
             case "en" -> EmployeeGetDTO.builder()
+                    .code(this.getCode())
                     .fullName(this.fullNameEn)
                     .type(this.type)
                     .gallery(this.gallery)
                     .courses(this.courses)
                     .build();
             case "ru" -> EmployeeGetDTO.builder()
+                    .code(this.getCode())
                     .fullName(this.fullNameRu)
                     .type(this.type)
                     .gallery(this.gallery)
                     .courses(this.courses)
                     .build();
             default -> EmployeeGetDTO.builder()
+                    .code(this.getCode())
                     .fullName(this.fullNameUz)
                     .type(this.type)
                     .gallery(this.gallery)

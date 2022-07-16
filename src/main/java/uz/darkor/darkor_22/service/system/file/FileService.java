@@ -30,9 +30,9 @@ import java.util.Objects;
 @Service
 public class FileService extends AbstractService<FileMapper, FileRepository> {
 
-
     private static String extensions = "{jpg};{png};{PNG};{JPG};{mp4};{MP4};{webm);{WEBM};{flv};{vob};{avi};{gif};{mov}";
-    String uploadDirectory = "E:\\uploads\\";
+    String uploadDirectory = "/root/uploads/";
+
 
 //    @Value("${path.request}")
 //    private String requestt;
@@ -55,13 +55,24 @@ public class FileService extends AbstractService<FileMapper, FileRepository> {
                 throw new RuntimeException("image format not comfortable");
             String generatedName = System.currentTimeMillis() + "." + extension;
             Path path = Paths.get(uploadDirectory + generatedName);
+            System.out.println(path);
+
             Files.copy(file.getInputStream(), path);
-            String url = "http://localhost:8080"+BaseUtils.PATH.concat("/download/".concat(generatedName));
-            Gallery gallery = new Gallery(file.getSize(), originalFilename, generatedName, extension, path.toString(), url, type);
+
+            String url = "http://localhost:8080" + BaseUtils.PATH.concat("/download/".concat(generatedName));
+
+            Gallery gallery = new Gallery(file.getSize(),
+                    originalFilename,
+                    generatedName,
+                    extension,
+                    path.toString(),
+                    url,
+                    type);
             Gallery responseGallery = repository.save(gallery);
 //            Files.copy(file.getInputStream(), path);
             return mapper.toDto(responseGallery);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestException("File saqlanmadi");
         }
     }
@@ -72,7 +83,7 @@ public class FileService extends AbstractService<FileMapper, FileRepository> {
         org.springframework.core.io.Resource resource = null;
 
         try {
-            Path location = Paths.get(uploadDirectory + "\\" + name);
+            Path location = Paths.get(uploadDirectory  + name);
             resource = new UrlResource(location.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;

@@ -11,7 +11,7 @@ import uz.darkor.darkor_22.service.GenericGLService;
 
 import java.util.UUID;
 
-@Service
+
 public interface EmployeeDetailService
         extends GenericCUDService<EmployeeDetailCreateDTO, EmployeeDetailUpdateDTO, EmployeeDetailGetDTO, UUID>,
         GenericGLService<EmployeeDetailGetDTO, BaseCriteria, UUID>, BaseService {

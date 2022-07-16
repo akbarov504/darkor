@@ -13,7 +13,6 @@ import uz.darkor.darkor_22.repository.employee.EmployeeDetailRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 import uz.darkor.darkor_22.service.employee.employee.EmployeeService;
 import uz.darkor.darkor_22.service.employee.employee.EmployeeServiceImpl;
-import uz.darkor.darkor_22.utils.BaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +34,14 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
     @Override
     public EmployeeDetailGetDTO create(EmployeeDetailCreateDTO DTO) {
         EmployeeDetail employeeDetail = mapper.fromCreateDTO(DTO);
-        return repository.save(employeeDetail).getLocalizationDto(BaseUtils.getSessionLang());
+        return repository.save(employeeDetail).getLocalizationDto();
     }
 
     @Override
     public EmployeeDetailGetDTO update(EmployeeDetailUpdateDTO DTO) {
         EmployeeDetail target = checkUserDetailsExistenceAndGetByCode(DTO.getCode());
         EmployeeDetail employeeDetail = mapper.fromUpdateDTO(DTO, target);
-        return repository.save(employeeDetail).getLocalizationDto(BaseUtils.getSessionLang());
+        return repository.save(employeeDetail).getLocalizationDto();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
     @Override
     public EmployeeDetailGetDTO get(UUID key) {
         EmployeeDetail employeeDetail = checkUserDetailsExistenceAndGetByCode(key);
-        return employeeDetail.getLocalizationDto(BaseUtils.getSessionLang());
+        return employeeDetail.getLocalizationDto();
     }
 
     @Override
@@ -66,14 +65,14 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
         Employee employee = employeeService.checkExistenceAndGetByCode(employeeCode);
         EmployeeDetail employeeDetail = repository.findByEmployee(employee)
                 .orElseThrow(() -> new NotFoundException("EMPLOYEE_DETAIL_NOT_FOUND"));
-        return employeeDetail.getLocalizationDto(BaseUtils.getSessionLang());
+        return employeeDetail.getLocalizationDto();
     }
 
 
     private List<EmployeeDetailGetDTO> getLocalizedDtos(List<EmployeeDetail> employeeDetails) {
         List<EmployeeDetailGetDTO> employeeDetailGetDTOs = new ArrayList<>();
         for (EmployeeDetail ed : employeeDetails) {
-            employeeDetailGetDTOs.add(ed.getLocalizationDto(BaseUtils.getSessionLang()));
+            employeeDetailGetDTOs.add(ed.getLocalizationDto());
         }
         return employeeDetailGetDTOs;
     }
