@@ -9,6 +9,5 @@ import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
 
 import java.util.UUID;
 
-public interface CourseController extends GenericCUDController<CourseCreateDTO, CourseUpdateDTO, CourseGetDTO, UUID>,
-        GenericGLController<CourseGetDTO, CourseCriteria, UUID> {
+public interface CourseController extends GenericCUDController<CourseCreateDTO, CourseUpdateDTO, CourseGetDTO, UUID>, GenericGLController<CourseGetDTO, CourseCriteria, UUID> {
 }

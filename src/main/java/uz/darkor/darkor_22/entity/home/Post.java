@@ -8,24 +8,22 @@ import uz.darkor.darkor_22.dto.home.post.PostGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.system.Gallery;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Getter
 @Setter
+@Table(indexes = @Index(name = "post_index", columnList = "code", unique = true))
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Post extends Auditable {
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Gallery galleryUz;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Gallery galleryRu;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Gallery galleryEn;
 
     @Column(nullable = false)
@@ -48,10 +46,10 @@ public class Post extends Auditable {
 
     public PostGetDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {
-            return PostGetDTO.builder().title(this.titleUz).description(this.descriptionUz).gallery(this.galleryUz).build();
+            return PostGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUz).gallery(this.galleryUz).build();
         } else if (lang.equals("ru")) {
-            return PostGetDTO.builder().title(this.titleRu).description(this.descriptionRu).gallery(this.galleryRu).build();
+            return PostGetDTO.builder().code(this.getCode()).title(this.titleRu).description(this.descriptionRu).gallery(this.galleryRu).build();
         }
-        return PostGetDTO.builder().title(this.titleEn).description(this.descriptionEn).gallery(this.galleryEn).build();
+        return PostGetDTO.builder().code(this.getCode()).title(this.titleEn).description(this.descriptionEn).gallery(this.galleryEn).build();
     }
 }
