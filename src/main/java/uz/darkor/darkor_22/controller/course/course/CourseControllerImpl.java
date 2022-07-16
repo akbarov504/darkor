@@ -42,6 +42,7 @@ public class CourseControllerImpl extends AbstractController<CourseServiceImpl> 
     public ResponseEntity<Data<CourseGetDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.get(code)), HttpStatus.OK);
+
     }
 
     @Override

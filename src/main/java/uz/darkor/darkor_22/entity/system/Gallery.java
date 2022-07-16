@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Table(indexes = @Index(name = "gallery_index", columnList = "code"))
 @Getter
 @Setter
-
 @AllArgsConstructor
 @NoArgsConstructor
 public class Gallery extends Auditable {
@@ -26,10 +25,10 @@ public class Gallery extends Auditable {
     @Column(nullable = false)
     private String extension;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String path;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String url;
 
     @Enumerated(value = EnumType.STRING)
