@@ -1,9 +1,6 @@
 package uz.darkor.darkor_22.entity.system;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.enums.ContentType;
 
@@ -13,6 +10,7 @@ import javax.persistence.*;
 @Table(indexes = @Index(name = "gallery_index", columnList = "code", unique = true))
 @Getter
 @Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
 public class Gallery extends Auditable {
@@ -36,4 +34,5 @@ public class Gallery extends Auditable {
 
     @Enumerated(value = EnumType.STRING)
     private ContentType fileType;
+
 }

@@ -6,29 +6,53 @@ import uz.darkor.darkor_22.criteria.course.CourseCriteria;
 import uz.darkor.darkor_22.dto.course.course.CourseCreateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.course.Course;
+import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.course.CourseMapper;
+import uz.darkor.darkor_22.mapper.system.file.FileMapper;
 import uz.darkor.darkor_22.repository.course.CourseRepository;
+import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
 public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepository> implements CourseService {
-    public CourseServiceImpl(CourseMapper mapper, CourseRepository repository) {
+    private final FileRepository fileRepository;
+    private final FileMapper fileMapper;
+    public CourseServiceImpl(CourseMapper mapper, CourseRepository repository, FileRepository fileRepository, FileMapper fileMapper) {
         super(mapper, repository);
+        this.fileRepository = fileRepository;
+        this.fileMapper = fileMapper;
     }
 
     @Override
     public CourseGetDTO create(CourseCreateDTO DTO) {
-        return repository.save(mapper.fromCreateDTO(DTO)).getLocalizationDto("");
+        Course course = mapper.fromCreateDTO(DTO);
+
+        for (FileDTO fileDTO : DTO.getImageUz()) {
+            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
+            course.getImageUz().add(byId.get());
+        }
+
+        for (FileDTO fileDTO : DTO.getImageEn()) {
+            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
+            course.getImageEn().add(byId.get());
+        }
+
+        for (FileDTO fileDTO : DTO.getImageRu()) {
+            Optional<Gallery> byId = fileRepository.findById(fileDTO.getId());
+            course.getImageRu().add(byId.get());
+        }
+
+        Course save = repository.save(course);
+        CourseGetDTO uz = save.getLocalizationDto("uz");
+        return uz;
     }
 
     @Override

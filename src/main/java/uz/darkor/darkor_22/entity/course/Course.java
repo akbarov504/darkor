@@ -38,15 +38,15 @@ public class Course extends Auditable {
     private String descriptionRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
     private List<Gallery> imageUz;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Gallery> imageRu;
 
     @Fetch(FetchMode.SELECT)
-    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gallery.class, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Gallery> imageEn;
 
     public CourseGetDTO getLocalizationDto(String lang) {

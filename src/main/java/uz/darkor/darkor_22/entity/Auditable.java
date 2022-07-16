@@ -47,4 +47,9 @@ public abstract class Auditable implements BaseEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private Long updatedBy;
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }
