@@ -13,9 +13,11 @@ import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.system.file.FileService;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 @RestController
+@Transactional
 public class FileController extends AbstractController<FileService> {
 
     public FileController(FileService service) {

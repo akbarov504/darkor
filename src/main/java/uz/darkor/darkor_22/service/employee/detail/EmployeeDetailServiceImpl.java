@@ -50,13 +50,13 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
     }
 
     @Override
-    public EmployeeDetailGetDTO get(UUID key) {
+    public EmployeeDetailGetDTO get(UUID key, String language) {
         EmployeeDetail employeeDetail = checkUserDetailsExistenceAndGetByCode(key);
         return employeeDetail.getLocalizationDto();
     }
 
     @Override
-    public List<EmployeeDetailGetDTO> list(BaseCriteria criteria) {
+    public List<EmployeeDetailGetDTO> list(BaseCriteria criteria, String language) {
         List<EmployeeDetail> employeeDetails = repository.findAll();
         return getLocalizedDtos(employeeDetails);
     }

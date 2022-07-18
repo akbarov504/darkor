@@ -1,5 +1,7 @@
 package uz.darkor.darkor_22.dto.course.price;
 
+import lombok.Getter;
+import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
 
 import javax.validation.constraints.NotBlank;
@@ -7,7 +9,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.util.List;
-
+@Getter
+@Setter
 public class PriceCreateDTO implements BaseDTO {
 
     @NotBlank(message = "price cannot be null or empty")

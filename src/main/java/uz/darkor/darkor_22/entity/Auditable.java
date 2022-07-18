@@ -25,7 +25,7 @@ public abstract class Auditable implements BaseEntity {
     @Column(name = "id", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "code", unique = true, nullable = false, updatable = false, columnDefinition = "uuid")
+    @Column(name = "code", nullable = false, updatable = false, columnDefinition = "uuid")
     private UUID code = UUID.randomUUID();
 
     @Column(name = "is_deleted")
@@ -47,4 +47,9 @@ public abstract class Auditable implements BaseEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private Long updatedBy;
+
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }

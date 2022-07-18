@@ -2,6 +2,7 @@ package uz.darkor.darkor_22.dto.course.course;
 
 import lombok.*;
 import uz.darkor.darkor_22.dto.BaseDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.system.Gallery;
 
 import javax.validation.constraints.NotBlank;
@@ -39,11 +40,11 @@ public class CourseCreateDTO implements BaseDTO {
     private String descriptionRu;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageUz;
+    private List<FileDTO> imageUz;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageRu;
+    private List<FileDTO> imageRu;
 
     @NotBlank(message = "images list cannot be null")
-    private List<Gallery> imageEn;
+    private List<FileDTO> imageEn;
 }

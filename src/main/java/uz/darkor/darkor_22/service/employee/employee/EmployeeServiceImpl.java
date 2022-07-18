@@ -1,6 +1,5 @@
 package uz.darkor.darkor_22.service.employee.employee;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -12,11 +11,13 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
+import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeMapper;
 import uz.darkor.darkor_22.repository.course.CourseRepository;
 import uz.darkor.darkor_22.repository.employee.EmployeeRepository;
+import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 
 import java.util.ArrayList;
@@ -28,18 +29,26 @@ import java.util.UUID;
 public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, EmployeeRepository>
         implements EmployeeService {
 
+    private final FileRepository fileRepository;
     private final CourseRepository courseRepository;
+
 
     public EmployeeServiceImpl(EmployeeMapper mapper,
                                EmployeeRepository repository,
+                               FileRepository fileRepository,
                                CourseRepository courseRepository) {
         super(mapper, repository);
+        this.fileRepository = fileRepository;
         this.courseRepository = courseRepository;
     }
 
     @Override
     public EmployeeGetDTO create(EmployeeCreateDTO DTO) {
+        Gallery gallery = fileRepository.findAllByCode(DTO.getGallery().getCode())
+                .orElseThrow(() -> new NotFoundException("GALLERY_NOT_FOUND"));
+
         Employee employee = mapper.fromCreateDTO(DTO);
+        employee.setGallery(gallery);
         return repository.save(employee).getLocalizationDto();
     }
 
@@ -56,12 +65,12 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     }
 
     @Override
-    public EmployeeGetDTO get(UUID key) {
+    public EmployeeGetDTO get(UUID key, String language) {
         return checkExistenceAndGetByCode(key).getLocalizationDto();
     }
 
     @Override
-    public List<EmployeeGetDTO> list(EmployeeCriteria criteria) {
+    public List<EmployeeGetDTO> list(EmployeeCriteria criteria, String language) {
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Employee> employees = repository.findAll(pageable).getContent();
         return getLocalizedDtos(employees);

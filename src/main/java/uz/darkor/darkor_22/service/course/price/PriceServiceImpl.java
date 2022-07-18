@@ -47,7 +47,7 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     }
 
     @Override
-    public PriceGetDTO get(UUID key) {
+    public PriceGetDTO get(UUID key, String language) {
         Price price = checkExistenceAndGetaByCode(key);
         return price.getLocalizationDto();
     }
@@ -62,7 +62,7 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     }
 
     @Override
-    public List<PriceGetDTO> list(BaseCriteria criteria) {
+    public List<PriceGetDTO> list(BaseCriteria criteria, String language) {
         List<Price> prices = repository.findAll();
         return getLocalizedPriceDTOList(prices);
     }

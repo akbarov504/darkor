@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseGetDTO extends GenericDTO {
+    private Long id;
     private String name;
     private String description;
     private List<Gallery> galleries;
