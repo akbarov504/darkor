@@ -26,17 +26,20 @@ public class SkillControllerImpl extends AbstractController<SkillService>
     }
 
     @Override
-    public ResponseEntity<Data<SkillGetDTO>> create(SkillCreateDTO DTO) {
+    public ResponseEntity<Data<SkillGetDTO>> create(SkillCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<SkillGetDTO>> update(SkillUpdateDTO DTO) {
+    public ResponseEntity<Data<SkillGetDTO>> update(SkillUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

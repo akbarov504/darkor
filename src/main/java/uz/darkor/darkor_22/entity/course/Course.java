@@ -7,13 +7,19 @@ import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.system.gallery.GalleryDTO;
 import uz.darkor.darkor_22.entity.Auditable;
+import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.system.Gallery;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static uz.darkor.darkor_22.entity.system.Gallery.getListFileDTO;
 
 @Entity
 @Getter
@@ -54,6 +60,7 @@ public class Course extends Auditable {
     @JoinTable(uniqueConstraints = @UniqueConstraint(columnNames = {"course_id", "image_en_id"}))
     private List<Gallery> imageEn;
 
+
     public Course(String nameUz,
                   String nameRu,
                   String nameEn,
@@ -70,10 +77,34 @@ public class Course extends Auditable {
 
     public CourseGetDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {
-            return CourseGetDTO.builder().id(getId()).name(this.nameUz).description(this.descriptionUz).galleries(this.imageUz).build();
+            return CourseGetDTO.builder()
+                    .id(getId())
+                    .name(this.nameUz)
+                    .description(this.descriptionUz)
+                    .galleries(getListFileDTO(this.imageUz))
+                    .build();
         } else if (lang.equals("ru")) {
-            return CourseGetDTO.builder().id(getId()).name(this.nameRu).description(this.descriptionRu).galleries(this.imageRu).build();
+            return CourseGetDTO.builder()
+                    .id(getId())
+                    .name(this.nameRu)
+                    .description(this.descriptionRu)
+                    .galleries(getListFileDTO(this.imageRu))
+                    .build();
         }
-        return CourseGetDTO.builder().id(getId()).name(this.nameEn).description(this.descriptionEn).galleries(this.imageEn).build();
+        return CourseGetDTO.builder()
+                .id(getId())
+                .name(this.nameEn)
+                .description(this.descriptionEn)
+                .galleries(getListFileDTO(this.imageEn))
+                .build();
     }
+
+    public List<CourseGetDTO> getListLocalizedDtos(List<Course> courses) {
+        List<CourseGetDTO> courseGetDTOS = new ArrayList<>();
+        for (Course cours : courses) {
+            courseGetDTOS.add(cours.getLocalizationDto(BaseUtils.getSessionLang()));
+        }
+        return courseGetDTOS;
+    }
+
 }

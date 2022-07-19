@@ -24,17 +24,20 @@ public class GraduatedControllerImpl extends AbstractController<GraduatedService
     }
 
     @Override
-    public ResponseEntity<Data<GraduatedGetDTO>> create(GraduatedCreateDTO DTO) {
+    public ResponseEntity<Data<GraduatedGetDTO>> create(GraduatedCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<GraduatedGetDTO>> update(GraduatedUpdateDTO DTO) {
+    public ResponseEntity<Data<GraduatedGetDTO>> update(GraduatedUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

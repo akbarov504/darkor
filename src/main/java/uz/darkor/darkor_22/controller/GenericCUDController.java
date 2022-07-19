@@ -1,10 +1,7 @@
 package uz.darkor.darkor_22.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.response.Data;
@@ -15,11 +12,11 @@ import java.io.Serializable;
 
 public interface GenericCUDController<CD extends BaseDTO, UD extends GenericDTO, GD extends GenericDTO, K extends Serializable> {
     @RequestMapping(value = BaseUtils.CREATE_PATH, method = RequestMethod.POST)
-    ResponseEntity<Data<GD>> create(@Valid @RequestBody CD DTO);
+    ResponseEntity<Data<GD>> create(@Valid @RequestBody CD DTO,@RequestHeader("accept-language") String lang);
 
     @RequestMapping(value = BaseUtils.UPDATE_PATH, method = RequestMethod.PUT)
-    ResponseEntity<Data<GD>> update(@Valid @RequestBody UD DTO);
+    ResponseEntity<Data<GD>> update(@Valid @RequestBody UD DTO,@RequestHeader("accept-language") String lang);
 
     @RequestMapping(value = BaseUtils.DELETE_PATH, method = RequestMethod.DELETE)
-    ResponseEntity<Data<Boolean>> delete(@PathVariable K code);
+    ResponseEntity<Data<Boolean>> delete(@PathVariable K code,@RequestHeader("accept-language") String lang);
 }

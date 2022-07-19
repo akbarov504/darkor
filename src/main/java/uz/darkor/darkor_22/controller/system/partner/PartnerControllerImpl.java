@@ -25,17 +25,17 @@ public class PartnerControllerImpl extends AbstractController<PartnerServiceImpl
     }
 
     @Override
-    public ResponseEntity<Data<PartnerGetDTO>> create(PartnerCreateDTO DTO) {
+    public ResponseEntity<Data<PartnerGetDTO>> create(PartnerCreateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<PartnerGetDTO>> update(PartnerUpdateDTO DTO) {
+    public ResponseEntity<Data<PartnerGetDTO>> update(PartnerUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

@@ -24,17 +24,19 @@ public class EmployeeDetailControllerImpl extends AbstractController<EmployeeDet
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeDetailGetDTO>> create(EmployeeDetailCreateDTO DTO) {
+    public ResponseEntity<Data<EmployeeDetailGetDTO>> create(EmployeeDetailCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeDetailGetDTO>> update(EmployeeDetailUpdateDTO DTO) {
+    public ResponseEntity<Data<EmployeeDetailGetDTO>> update(EmployeeDetailUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

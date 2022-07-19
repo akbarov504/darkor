@@ -24,17 +24,17 @@ public class PostControllerImpl extends AbstractController<PostServiceImpl> impl
     }
 
     @Override
-    public ResponseEntity<Data<PostGetDTO>> create(PostCreateDTO DTO) {
+    public ResponseEntity<Data<PostGetDTO>> create(PostCreateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Data<PostGetDTO>> update(PostUpdateDTO DTO) {
+    public ResponseEntity<Data<PostGetDTO>> update(PostUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)),HttpStatus.OK);
     }
 

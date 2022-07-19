@@ -24,17 +24,20 @@ public class CourseControllerImpl extends AbstractController<CourseServiceImpl> 
     }
 
     @Override
-    public ResponseEntity<Data<CourseGetDTO>> create(CourseCreateDTO DTO) {
+    public ResponseEntity<Data<CourseGetDTO>> create(CourseCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Data<CourseGetDTO>> update(CourseUpdateDTO DTO) {
+    public ResponseEntity<Data<CourseGetDTO>> update(CourseUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

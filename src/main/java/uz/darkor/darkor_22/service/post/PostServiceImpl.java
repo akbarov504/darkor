@@ -32,7 +32,6 @@ public class PostServiceImpl extends AbstractService<PostMapper, PostRepository>
 
     @Override
     public PostGetDTO create(PostCreateDTO DTO) {
-
         return repository.save(mapper.fromCreateDTO(DTO)).getLocalizationDto("uz");
 
     }

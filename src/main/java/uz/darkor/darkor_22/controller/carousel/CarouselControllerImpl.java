@@ -25,19 +25,22 @@ public class CarouselControllerImpl extends AbstractController<CarouselServiceIm
     }
 
     @Override
-    public ResponseEntity<Data<CarouselGetDTO>> create(CarouselCreateDTO DTO) {
+    public ResponseEntity<Data<CarouselGetDTO>> create(CarouselCreateDTO DTO,String lang) {
 
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.CREATED);
 
     }
 
     @Override
-    public ResponseEntity<Data<CarouselGetDTO>> update(CarouselUpdateDTO DTO) {
+    public ResponseEntity<Data<CarouselGetDTO>> update(CarouselUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)),HttpStatus.OK);
     }
 

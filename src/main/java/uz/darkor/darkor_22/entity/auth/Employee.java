@@ -35,15 +35,28 @@ public class Employee extends Auditable {
     @Enumerated(EnumType.STRING)
     private EmployeeType type;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Gallery gallery;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     private List<Course> courses;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private EmployeeDetail employeeDetail;
 
+    public Employee(String fullNameUz,
+                    String fullNameRu,
+                    String fullNameEn,
+                    EmployeeType type,
+                    Gallery gallery,
+                    List<Course> courses) {
+        this.fullNameUz = fullNameUz;
+        this.fullNameRu = fullNameRu;
+        this.fullNameEn = fullNameEn;
+        this.type = type;
+        this.gallery = gallery;
+        this.courses = courses;
+    }
 
     public EmployeeGetDTO getLocalizationDto() {
         String lang = BaseUtils.getSessionLang();

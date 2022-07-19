@@ -31,7 +31,7 @@ import java.util.Objects;
 public class FileService extends AbstractService<FileMapper, FileRepository> {
 
     private static String extensions = "{jpg};{png};{PNG};{JPG};{mp4};{MP4};{webm);{WEBM};{flv};{vob};{avi};{gif};{mov}";
-    String uploadDirectory = "E:\\uploads\\";
+    String uploadDirectory = "/home/nodir/uploads/";
 
 
 //    @Value("${path.request}")

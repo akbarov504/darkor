@@ -12,8 +12,8 @@ public interface FileMapper extends BaseMapper {
 
     FileDTO toDto(Gallery entity);
 
-    Gallery fromDto(FileDTO dto);
-
     List<Gallery> fromListDto(List<FileDTO> dto);
+
+    Gallery fromDto(FileDTO entity);
 
 }

@@ -27,17 +27,17 @@ public class StatisticsControllerImpl extends AbstractController<StatisticsServi
 
 
     @Override
-    public ResponseEntity<Data<StatisticsGetDTO>> create(StatisticsCreateDTO DTO) {
+    public ResponseEntity<Data<StatisticsGetDTO>> create(StatisticsCreateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<StatisticsGetDTO>> update(StatisticsUpdateDTO DTO) {
+    public ResponseEntity<Data<StatisticsGetDTO>> update(StatisticsUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)),HttpStatus.OK);
     }
 

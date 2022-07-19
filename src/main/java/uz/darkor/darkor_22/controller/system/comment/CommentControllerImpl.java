@@ -25,17 +25,19 @@ public class CommentControllerImpl extends AbstractController<CommentServiceImpl
     }
 
     @Override
-    public ResponseEntity<Data<CommentGetDTO>> create(CommentCreateDTO DTO) {
+    public ResponseEntity<Data<CommentGetDTO>> create(CommentCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<CommentGetDTO>> update(CommentUpdateDTO DTO) {
+    public ResponseEntity<Data<CommentGetDTO>> update(CommentUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return null;
     }
 

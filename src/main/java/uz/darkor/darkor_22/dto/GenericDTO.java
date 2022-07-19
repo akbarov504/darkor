@@ -11,6 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GenericDTO implements BaseDTO {
-    @NotNull(message = "code cannot be null")
+//    @NotNull(message = "code cannot be null")
     private UUID code;
 }

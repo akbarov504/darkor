@@ -24,17 +24,17 @@ public class HomeServiceControllerImpl extends AbstractController<HomeSerService
     }
 
     @Override
-    public ResponseEntity<Data<HomeServiceGetDTO>> create(HomeServiceCreateDTO DTO) {
+    public ResponseEntity<Data<HomeServiceGetDTO>> create(HomeServiceCreateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Data<HomeServiceGetDTO>> update(HomeServiceUpdateDTO DTO) {
+    public ResponseEntity<Data<HomeServiceGetDTO>> update(HomeServiceUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)),HttpStatus.OK);
     }
 

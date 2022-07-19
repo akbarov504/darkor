@@ -24,17 +24,17 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
     }
 
     @Override
-    public ResponseEntity<Data<PriceGetDTO>> create(PriceCreateDTO DTO) {
+    public ResponseEntity<Data<PriceGetDTO>> create(PriceCreateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<PriceGetDTO>> update(PriceUpdateDTO DTO) {
+    public ResponseEntity<Data<PriceGetDTO>> update(PriceUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

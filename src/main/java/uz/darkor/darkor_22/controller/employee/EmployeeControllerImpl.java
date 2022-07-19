@@ -39,12 +39,14 @@ public class EmployeeControllerImpl extends AbstractController<EmployeeService> 
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeGetDTO>> create(EmployeeCreateDTO DTO) {
+    public ResponseEntity<Data<EmployeeGetDTO>> create(EmployeeCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeGetDTO>> update(EmployeeUpdateDTO DTO) {
+    public ResponseEntity<Data<EmployeeGetDTO>> update(EmployeeUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
@@ -61,7 +63,8 @@ public class EmployeeControllerImpl extends AbstractController<EmployeeService> 
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 

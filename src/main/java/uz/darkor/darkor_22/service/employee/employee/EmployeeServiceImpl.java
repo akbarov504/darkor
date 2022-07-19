@@ -9,9 +9,9 @@ import uz.darkor.darkor_22.criteria.employee.EmployeeCriteria;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeMapper;
@@ -20,10 +20,8 @@ import uz.darkor.darkor_22.repository.employee.EmployeeRepository;
 import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, EmployeeRepository>
@@ -44,13 +42,12 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
 
     @Override
     public EmployeeGetDTO create(EmployeeCreateDTO DTO) {
-        Gallery gallery = fileRepository.findAllByCode(DTO.getGallery().getCode())
-                .orElseThrow(() -> new NotFoundException("GALLERY_NOT_FOUND"));
-
-        Employee employee = mapper.fromCreateDTO(DTO);
-        employee.setGallery(gallery);
-        return repository.save(employee).getLocalizationDto();
+        Employee employee = fromCreateDTO(DTO);
+        Employee save = repository.save(employee);
+        return save.getLocalizationDto();
     }
+
+
 
     @Override
     public EmployeeGetDTO update(EmployeeUpdateDTO DTO) {
@@ -60,8 +57,11 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     }
 
     @Override
+    @Transactional
     public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
+        Employee employee = checkExistenceAndGetByCode(key);
+        repository.delete(employee);
+        return Boolean.TRUE;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
         Course course = courseRepository.findByCode(courseCode);
         if (Objects.isNull(course)) throw new NotFoundException("COURSE_NOT_FOUND");
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
-        List<Employee> list = repository.findAllByCoursesAndType(List.of(course), EmployeeType.EXPERT.name());
+        List<Employee> list = repository.findAllByCoursesAndType(List.of(course),EmployeeType.EXPERT);
         Page<Employee> employees = new PageImpl<>(list, pageable, repository.count());
         return getLocalizedDtos(employees.getContent());
     }
@@ -89,6 +89,27 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     public List<EmployeeGetDTO> getAll() {
         List<Employee> employees = repository.findAll();
         return getLocalizedDtos(employees);
+    }
+
+    private List<Course> getCourses(List<CourseGetDTO> DTOs) {
+        List<Course> courses = new ArrayList<>();
+        for (CourseGetDTO course : DTOs) {
+            Course byCode = courseRepository.findById(course.getId()).orElseThrow(() -> new NotFoundException("Coures not found"));
+            courses.add(byCode);
+        }
+        return courses;
+    }
+
+
+    private Employee fromCreateDTO(EmployeeCreateDTO DTO) {
+        return new Employee(DTO.getFullNameUz(),
+                DTO.getFullNameRu(),
+                DTO.getFullNameEn(),
+                EmployeeType.valueOf(DTO.getType()),
+                fileRepository.findAllByCode(DTO.getGallery().getCode())
+                        .orElseThrow(() -> new NotFoundException("GALLERY_NOT_FOUND")),
+                getCourses(DTO.getCourses())
+        );
     }
 
     private List<EmployeeGetDTO> getLocalizedDtos(List<Employee> employees) {

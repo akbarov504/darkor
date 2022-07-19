@@ -1,6 +1,8 @@
 package uz.darkor.darkor_22.dto.auth.employee;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
@@ -14,6 +16,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmployeeUpdateDTO extends GenericDTO {
     public EmployeeUpdateDTO(UUID code) {
         super(code);
