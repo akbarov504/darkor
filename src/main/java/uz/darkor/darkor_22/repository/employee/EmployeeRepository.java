@@ -20,6 +20,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, BaseR
     @Query(value = "delete from Employee where code = :key")
     void deleteByCode(@Param("key") UUID key);
 
-    List<Employee> findAllByCoursesAndType(List<Course> courses, EmployeeType type);
-
+    @Query(value = "select * from employee  e" +
+            "    inner join employee_courses ec" +
+            "        on  ec.courses_id = :course" +
+            "            and e.type = 'EXPERT'",nativeQuery = true)
+    List<Employee> findAllByCourses(@Param("course")Long courseId);
 }

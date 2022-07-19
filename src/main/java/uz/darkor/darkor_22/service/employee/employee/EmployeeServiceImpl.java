@@ -81,7 +81,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
         Course course = courseRepository.findByCode(courseCode);
         if (Objects.isNull(course)) throw new NotFoundException("COURSE_NOT_FOUND");
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
-        List<Employee> list = repository.findAllByCoursesAndType(List.of(course),EmployeeType.EXPERT);
+        List<Employee> list = repository.findAllByCourses(course.getId());
         Page<Employee> employees = new PageImpl<>(list, pageable, repository.count());
         return getLocalizedDtos(employees.getContent());
     }
