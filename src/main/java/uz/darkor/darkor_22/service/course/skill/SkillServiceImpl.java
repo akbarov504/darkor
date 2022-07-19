@@ -2,11 +2,13 @@ package uz.darkor.darkor_22.service.course.skill;
 
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
+import uz.darkor.darkor_22.criteria.skill.SkillCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
 import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.entity.course.Course;
+import uz.darkor.darkor_22.entity.course.Price;
 import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.skill.SkillMapper;
@@ -25,22 +27,19 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
         implements SkillService {
 
     private final CourseRepository courseRepository;
-    private final EmployeeDetailRepository employeeDetailRepository;
 
     public SkillServiceImpl(SkillMapper mapper,
                             SkillRepository repository,
-                            CourseRepository courseRepository,
-                            EmployeeDetailRepository employeeDetailRepository) {
+                            CourseRepository courseRepository) {
         super(mapper, repository);
         this.courseRepository = courseRepository;
-        this.employeeDetailRepository = employeeDetailRepository;
     }
 
     @Override
     public SkillGetDTO create(SkillCreateDTO DTO) {
         Skill skill = mapper.fromCreateDTO(DTO);
-        Skill newSkill = repository.save(skill);
-        return mapper.toGetDTO(newSkill);
+        Skill save = repository.save(skill);
+        return save.getLocalizationDto();
     }
 
     @Override
@@ -53,7 +52,16 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
 
     @Override
     public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
+        try {
+            Skill skill = repository.findByCode(key).orElseThrow(() -> {
+                throw new NotFoundException("Skill not found !");
+            });
+            skill.setDeleted(true);
+            repository.save(skill);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
@@ -63,7 +71,7 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
     }
 
     @Override
-    public List<SkillGetDTO> list(BaseCriteria criteria, String language) {
+    public List<SkillGetDTO> list(SkillCriteria criteria, String language) {
         List<Skill> skills = repository.findAll();
         return getLocalizedDTOs(skills);
     }
@@ -74,14 +82,6 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
         if (Objects.isNull(course))
             throw new NotFoundException("COURSE_NOT_FOUND");
         List<Skill> skills = repository.findByCourse(course);
-        return getLocalizedDTOs(skills);
-    }
-
-    @Override
-    public List<SkillGetDTO> getByEmployeeDetail(UUID code) {
-        EmployeeDetail employeeDetail = employeeDetailRepository.findByCode(code)
-                .orElseThrow(() -> new NotFoundException("EMPLOYEE_DETAIL_NOT_FOUND"));
-        List<Skill> skills = repository.findByEmployeeDetails(employeeDetail);
         return getLocalizedDTOs(skills);
     }
 

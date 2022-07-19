@@ -10,10 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-public interface PriceRepository extends JpaRepository<Price, UUID>, BaseRepository {
+public interface PriceRepository extends JpaRepository<Price, Long>, BaseRepository {
     Optional<Price> findByCode(UUID code);
 
     Boolean deleteByCode(UUID key);
-
-    Optional<Price> findByCourseDetail(CourseDetail courseDetail);
 }

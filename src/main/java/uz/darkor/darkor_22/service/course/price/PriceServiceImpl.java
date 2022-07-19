@@ -1,30 +1,26 @@
 package uz.darkor.darkor_22.service.course.price;
 
 import org.springframework.stereotype.Service;
-import uz.darkor.darkor_22.criteria.BaseCriteria;
+import uz.darkor.darkor_22.criteria.price.PriceCriteria;
 import uz.darkor.darkor_22.dto.course.price.PriceCreateDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceGetDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceUpdateDTO;
-import uz.darkor.darkor_22.entity.course.CourseDetail;
 import uz.darkor.darkor_22.entity.course.Price;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.price.PriceMapper;
-import uz.darkor.darkor_22.repository.course.detail.CourseDetailRepository;
 import uz.darkor.darkor_22.repository.price.PriceRepository;
 import uz.darkor.darkor_22.service.AbstractService;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PriceServiceImpl extends AbstractService<PriceMapper, PriceRepository> implements PriceService {
 
-    private final CourseDetailRepository courseDetailRepository;
-
-    public PriceServiceImpl(PriceMapper mapper,
-                            PriceRepository repository,
-                            CourseDetailRepository courseDetailRepository) {
+    public PriceServiceImpl(PriceMapper mapper, PriceRepository repository) {
         super(mapper, repository);
-        this.courseDetailRepository = courseDetailRepository;
     }
 
     @Override
@@ -38,31 +34,34 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     public PriceGetDTO update(PriceUpdateDTO DTO) {
         Price target = checkExistenceAndGetaByCode(DTO.getCode());
         Price updatedPrice = mapper.fromUpdateDTO(DTO, target);
+        repository.save(updatedPrice);
         return updatedPrice.getLocalizationDto();
     }
 
     @Override
     public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
+        try {
+            Price price = repository.findByCode(key).orElseThrow(() -> {
+                throw new NotFoundException("Price not found !");
+            });
+            price.setDeleted(true);
+            repository.save(price);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public PriceGetDTO get(UUID key, String language) {
+        BaseUtils.setSessionLang(language);
         Price price = checkExistenceAndGetaByCode(key);
         return price.getLocalizationDto();
     }
 
     @Override
-    public PriceGetDTO getByCourseCode(UUID code) {
-        CourseDetail courseDetail = courseDetailRepository
-                .findByCode(code).orElseThrow(() -> new NotFoundException("COURSE_DETAIL_NOT_FOUND"));
-        Price price = repository.findByCourseDetail(courseDetail)
-                .orElse(new Price());
-        return price.getLocalizationDto();
-    }
-
-    @Override
-    public List<PriceGetDTO> list(BaseCriteria criteria, String language) {
+    public List<PriceGetDTO> list(PriceCriteria criteria, String language) {
+        BaseUtils.setSessionLang(language);
         List<Price> prices = repository.findAll();
         return getLocalizedPriceDTOList(prices);
     }
@@ -75,7 +74,6 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     }
 
     private Price checkExistenceAndGetaByCode(UUID code) {
-        return repository.findByCode(code)
-                .orElseThrow(() -> new NotFoundException("PRICE_NOT_FOUND"));
+        return repository.findByCode(code).orElseThrow(() -> new NotFoundException("PRICE_NOT_FOUND"));
     }
 }

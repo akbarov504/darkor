@@ -10,9 +10,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class GraduatedUpdateDTO extends GenericDTO {
-    public GraduatedUpdateDTO( UUID code) {
-        super(code);
-    }
 
     private CourseGetDTO course;
 

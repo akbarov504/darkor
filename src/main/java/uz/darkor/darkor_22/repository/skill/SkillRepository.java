@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface SkillRepository extends JpaRepository<Skill, UUID>, BaseRepository {
+public interface SkillRepository extends JpaRepository<Skill, Long>, BaseRepository {
     Optional<Skill> findByCode(UUID code);
 
     Boolean deleteByCode(UUID key);
 
     List<Skill> findByCourse(Course course);
-
-    List<Skill> findByEmployeeDetails(EmployeeDetail employeeDetail);
 }

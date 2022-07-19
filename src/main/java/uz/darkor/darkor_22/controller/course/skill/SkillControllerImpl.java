@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
+import uz.darkor.darkor_22.criteria.skill.SkillCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
@@ -50,7 +51,7 @@ public class SkillControllerImpl extends AbstractController<SkillService>
     }
 
     @Override
-    public ResponseEntity<Data<List<SkillGetDTO>>> list(BaseCriteria criteria, String lang) {
+    public ResponseEntity<Data<List<SkillGetDTO>>> list(SkillCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }
@@ -61,12 +62,4 @@ public class SkillControllerImpl extends AbstractController<SkillService>
        BaseUtils.setSessionLang(lang);
        return new ResponseEntity<>(new Data<>(service.getByCourseCode(code)),HttpStatus.OK);
     }
-
-    @GetMapping("get_by_employee_detail/{code}")
-    public ResponseEntity<Data<List<SkillGetDTO>>> getByEmployeeDetail(@PathVariable UUID code,
-                                                               @RequestHeader("accept-language") String lang){
-       BaseUtils.setSessionLang(lang);
-       return new ResponseEntity<>(new Data<>(service.getByEmployeeDetail(code)),HttpStatus.OK);
-    }
-
 }

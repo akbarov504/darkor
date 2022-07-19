@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
+import uz.darkor.darkor_22.criteria.price.PriceCriteria;
 import uz.darkor.darkor_22.dto.course.price.PriceCreateDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceGetDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceUpdateDTO;
@@ -44,15 +45,8 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
         return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
-    @GetMapping("get_by_course/{code}")
-    public ResponseEntity<Data<PriceGetDTO>> getByCourseCode(@PathVariable UUID code,
-                                                             @RequestHeader("accept-language") String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.getByCourseCode(code)), HttpStatus.OK);
-    }
-
     @Override
-    public ResponseEntity<Data<List<PriceGetDTO>>> list(BaseCriteria criteria, String lang) {
+    public ResponseEntity<Data<List<PriceGetDTO>>> list(PriceCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }

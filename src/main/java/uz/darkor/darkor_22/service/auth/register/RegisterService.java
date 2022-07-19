@@ -54,12 +54,12 @@ public class RegisterService extends AbstractService<RegisterMapper, RegisterRep
         }
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet();
-            sheet.setColumnWidth(0, 1000);
-            sheet.setColumnWidth(1, 5000);
-            sheet.setColumnWidth(2, 5000);
-            sheet.setColumnWidth(3, 5000);
-            sheet.setColumnWidth(4, 5000);
-            sheet.setColumnWidth(5, 5000);
+            sheet.setColumnWidth(0, 2000);
+            sheet.setColumnWidth(1, 6000);
+            sheet.setColumnWidth(2, 6000);
+            sheet.setColumnWidth(3, 6000);
+            sheet.setColumnWidth(4, 6000);
+            sheet.setColumnWidth(5, 6000);
             Row row0 = sheet.createRow(0);
             Cell cell0 = row0.createCell(0, CellType.STRING);
             cell0.setCellValue("N");

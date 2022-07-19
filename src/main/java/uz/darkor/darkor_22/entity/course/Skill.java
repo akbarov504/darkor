@@ -7,11 +7,13 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
-import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -38,14 +40,12 @@ public class Skill extends Auditable {
     @Column(nullable = false)
     private String descriptionEn;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Course course;
-
-    @ManyToMany(mappedBy = "skills")
-    private List<EmployeeDetail>  employeeDetails;
 
     public SkillGetDTO getLocalizationDto() {
         String lang = BaseUtils.getSessionLang();
+        if (Objects.isNull(lang)) lang = "en";
         return switch (lang) {
             case "en" -> SkillGetDTO.builder()
                     .code(this.getCode())
