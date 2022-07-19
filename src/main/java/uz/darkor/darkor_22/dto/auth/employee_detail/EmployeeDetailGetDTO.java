@@ -2,6 +2,10 @@ package uz.darkor.darkor_22.dto.auth.employee_detail;
 
 import lombok.*;
 import uz.darkor.darkor_22.dto.GenericDTO;
+import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.course.Skill;
@@ -20,19 +24,19 @@ public class EmployeeDetailGetDTO extends GenericDTO {
     private String titleDescription;
     private String bodyDescription;
 
-    private List<Gallery> galleries;
-    private List<Course> courses;
-    private List<Skill> skills;
-    private Employee employee;
+    private List<FileDTO> galleries;
+    private List<CourseGetDTO> courses;
+    private List<SkillGetDTO> skills;
+    private EmployeeGetDTO employee;
 
     @Builder
-    public EmployeeDetailGetDTO(@NotNull(message = "code cannot be null") UUID code,
+    public EmployeeDetailGetDTO(UUID code,
                                 String titleDescription,
                                 String bodyDescription,
-                                List<Gallery> galleries,
-                                List<Course> courses,
-                                List<Skill> skills,
-                                Employee employee) {
+                                List<FileDTO> galleries,
+                                List<CourseGetDTO> courses,
+                                List<SkillGetDTO> skills,
+                                EmployeeGetDTO employee) {
         super(code);
         this.titleDescription = titleDescription;
         this.bodyDescription = bodyDescription;

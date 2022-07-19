@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static uz.darkor.darkor_22.entity.system.Gallery.getListFileDTO;
 
 @Entity
 @Getter
@@ -76,26 +75,27 @@ public class Course extends Auditable {
     }
 
     public CourseGetDTO getLocalizationDto(String lang) {
+        Gallery gallery =new Gallery();
         if (lang.equals("uz")) {
             return CourseGetDTO.builder()
                     .id(getId())
                     .name(this.nameUz)
                     .description(this.descriptionUz)
-                    .galleries(getListFileDTO(this.imageUz))
+                    .galleries(gallery.getListFileDTO(this.imageUz))
                     .build();
         } else if (lang.equals("ru")) {
             return CourseGetDTO.builder()
                     .id(getId())
                     .name(this.nameRu)
                     .description(this.descriptionRu)
-                    .galleries(getListFileDTO(this.imageRu))
+                    .galleries(gallery.getListFileDTO(this.imageRu))
                     .build();
         }
         return CourseGetDTO.builder()
                 .id(getId())
                 .name(this.nameEn)
                 .description(this.descriptionEn)
-                .galleries(getListFileDTO(this.imageEn))
+                .galleries(gallery.getListFileDTO(this.imageEn))
                 .build();
     }
 
