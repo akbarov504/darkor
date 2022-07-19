@@ -85,6 +85,16 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
         return getLocalizedDTOs(skills);
     }
 
+    @Override
+    public List<Skill> create(List<SkillCreateDTO> skills) {
+        List<Skill> skillss = new ArrayList<>();
+        for (SkillCreateDTO s : skills) {
+            Skill skill = mapper.fromCreateDTO(s);
+            skillss.add(repository.save(skill));
+        }
+        return skillss;
+    }
+
     private List<SkillGetDTO> getLocalizedDTOs(List<Skill> skills) {
         List<SkillGetDTO> skillGetDTOS = new ArrayList<>();
         for (Skill skill : skills) {

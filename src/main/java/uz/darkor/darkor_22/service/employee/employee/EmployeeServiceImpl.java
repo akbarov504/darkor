@@ -10,8 +10,10 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
+import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeMapper;
@@ -119,6 +121,7 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
         }
         return employeeDtos;
     }
+
 
     public Employee checkExistenceAndGetByCode(UUID code) {
         return repository.findByCode(code)

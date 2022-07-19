@@ -4,6 +4,7 @@ import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
+import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.service.BaseService;
 import uz.darkor.darkor_22.service.GenericCUDService;
 import uz.darkor.darkor_22.service.GenericGLService;
@@ -16,4 +17,6 @@ public interface SkillService extends GenericCUDService<SkillCreateDTO, SkillUpd
     List<SkillGetDTO> getByCourseCode(UUID code);
 
     List<SkillGetDTO> getByEmployeeDetail(UUID code);
+
+    List<Skill> create(List<SkillCreateDTO> skills);
 }

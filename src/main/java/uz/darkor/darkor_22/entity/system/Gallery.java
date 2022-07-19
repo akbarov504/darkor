@@ -38,7 +38,7 @@ public class Gallery extends Auditable {
     @Enumerated(value = EnumType.STRING)
     private ContentType fileType;
 
-    public FileDTO getFileDTO() {
+    public  FileDTO getFileDTO() {
         return FileDTO.builder()
                 .id(this.getId())
                 .code(this.getCode())
@@ -51,7 +51,7 @@ public class Gallery extends Auditable {
                 .build();
     }
 
-    public static List<FileDTO> getListFileDTO(List<Gallery> galleries) {
+    public  List<FileDTO> getListFileDTO(List<Gallery> galleries) {
         List<FileDTO> fileDTOS = new ArrayList<>();
         for (Gallery gallery : galleries) {
             fileDTOS.add(gallery.getFileDTO());

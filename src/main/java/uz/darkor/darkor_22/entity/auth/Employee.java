@@ -41,7 +41,7 @@ public class Employee extends Auditable {
     @ManyToMany(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER)
     private List<Course> courses;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, mappedBy = "employee")
     private EmployeeDetail employeeDetail;
 
     public Employee(String fullNameUz,

@@ -11,6 +11,7 @@ import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -66,5 +67,13 @@ public class Skill extends Auditable {
                     .course(this.course)
                     .build();
         };
+    }
+
+    public List<SkillGetDTO> ListLocalizedDtos(List<Skill> skills) {
+          List<SkillGetDTO> skillGetDTOS = new ArrayList<>();
+        for (Skill skill : skills) {
+            skillGetDTOS.add(skill.getLocalizationDto());
+        }
+        return skillGetDTOS;
     }
 }

@@ -1,5 +1,6 @@
 package uz.darkor.darkor_22.mapper;
 
+import org.hibernate.annotations.Target;
 import org.mapstruct.MappingTarget;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.GenericDTO;
@@ -9,7 +10,6 @@ import java.util.List;
 
 public interface GenericMapper<CD extends BaseDTO, UD extends GenericDTO, GD extends GenericDTO, E extends BaseEntity> extends BaseMapper {
 //    CD toCreateDTO(E entity);
-
     E fromCreateDTO(CD createDTO);
 
 //    UD toUpdateDTO(E entity);
