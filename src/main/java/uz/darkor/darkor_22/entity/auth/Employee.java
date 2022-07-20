@@ -58,30 +58,4 @@ public class Employee extends Auditable {
         this.courses = courses;
     }
 
-    public EmployeeGetDTO getLocalizationDto() {
-        String lang = BaseUtils.getSessionLang();
-        return switch (lang) {
-            case "en" -> EmployeeGetDTO.builder()
-                    .code(this.getCode())
-                    .fullName(this.fullNameEn)
-                    .type(this.type)
-                    .gallery(this.gallery)
-                    .courses(this.courses)
-                    .build();
-            case "ru" -> EmployeeGetDTO.builder()
-                    .code(this.getCode())
-                    .fullName(this.fullNameRu)
-                    .type(this.type)
-                    .gallery(this.gallery)
-                    .courses(this.courses)
-                    .build();
-            default -> EmployeeGetDTO.builder()
-                    .code(this.getCode())
-                    .fullName(this.fullNameUz)
-                    .type(this.type)
-                    .gallery(this.gallery)
-                    .courses(this.courses)
-                    .build();
-        };
-    }
 }

@@ -48,65 +48,10 @@ public class EmployeeDetail extends Auditable {
     private List<Course> courses;
 
     @Fetch(FetchMode.SELECT)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private List<Skill> skills;
-
-    @Fetch(FetchMode.SELECT)
     @OneToMany(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Gallery> gallery;
     @Fetch(FetchMode.SELECT)
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Employee employee;
 
-    public EmployeeDetailGetDTO getLocalizationDto() {
-        String lang = BaseUtils.getSessionLang();
-      return switch (lang) {
-            case "en" -> EmployeeDetailGetDTO.builder()
-                    .code(this.getCode())
-                    .titleDescription(this.titleDescriptionEn)
-                    .bodyDescription(this.bodyDescriptionEn)
-                    .employee(this.employee.getLocalizationDto())
-                    .courses(this.courses.stream()
-                            .map(course1 -> course1.getLocalizationDto(lang))
-                            .toList())
-                    .galleries(this.gallery.stream()
-                            .map(Gallery::getFileDTO)
-                            .toList())
-                    .skills(this.skills.stream()
-                            .map(Skill::getLocalizationDto)
-                            .toList())
-                    .build();
-            case "ru" -> EmployeeDetailGetDTO.builder()
-                    .code(this.getCode())
-                    .titleDescription(this.titleDescriptionRu)
-                    .bodyDescription(this.bodyDescriptionRu)
-                    .employee(this.employee.getLocalizationDto())
-                    .courses(this.courses.stream()
-                            .map(course1 -> course1.getLocalizationDto(lang))
-                            .toList())
-                    .galleries(this.gallery.stream()
-                            .map(Gallery::getFileDTO)
-                            .toList())
-                    .skills(this.skills.stream()
-                            .map(Skill::getLocalizationDto)
-                            .toList())
-                    .build();
-            default -> EmployeeDetailGetDTO.builder()
-                    .code(this.getCode())
-                    .titleDescription(this.titleDescriptionUz)
-                    .bodyDescription(this.bodyDescriptionUz)
-                    .employee(this.employee.getLocalizationDto())
-                    .courses(this.courses.stream()
-                            .map(course1 -> course1.getLocalizationDto(lang))
-                            .toList())
-                    .galleries(this.gallery.stream()
-                            .map(Gallery::getFileDTO)
-                            .toList())
-                    .skills(this.skills.stream()
-                            .map(Skill::getLocalizationDto)
-                            .toList())
-                    .build();
-
-        };
-    }
 }

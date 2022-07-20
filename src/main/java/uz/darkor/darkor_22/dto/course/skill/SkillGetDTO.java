@@ -17,14 +17,18 @@ public class SkillGetDTO extends GenericDTO {
     private Long id;
     private String name;
     private String description;
-    private CourseGetDTO course;
+    private Course course;
 
     @Builder
-    public SkillGetDTO(@NotNull(message = "code cannot be null") UUID code, Long id, String name, String description, Course course) {
+    public SkillGetDTO(UUID code, Long id, String name, String description, Course course) {
         super(code);
         this.id = id;
         this.name = name;
         this.description = description;
-        this.course = course.getLocalizationDto(BaseUtils.getSessionLang());
+        this.course = course;
+    }
+
+    public SkillLocalizedDTO getLocalizationDto() {
+        return null;
     }
 }

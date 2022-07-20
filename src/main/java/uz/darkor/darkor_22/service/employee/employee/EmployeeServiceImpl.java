@@ -7,13 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.employee.EmployeeCriteria;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;
-import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
+import uz.darkor.darkor_22.dto.auth.employee.EmployeeLocalizedDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
-import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.employee.EmployeeMapper;
@@ -43,19 +42,19 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     }
 
     @Override
-    public EmployeeGetDTO create(EmployeeCreateDTO DTO) {
+    public EmployeeLocalizedDTO create(EmployeeCreateDTO DTO) {
         Employee employee = fromCreateDTO(DTO);
         Employee save = repository.save(employee);
-        return save.getLocalizationDto();
+        return mapper.toGetDTO(save).getLocalizationDto();
     }
 
 
-
     @Override
-    public EmployeeGetDTO update(EmployeeUpdateDTO DTO) {
+    public EmployeeLocalizedDTO update(EmployeeUpdateDTO DTO) {
         Employee target = checkExistenceAndGetByCode(DTO.getCode());
         Employee employee = mapper.fromUpdateDTO(DTO, target);
-        return repository.save(employee).getLocalizationDto();
+        Employee updatedEmployee = repository.save(employee);
+        return mapper.toGetDTO(updatedEmployee).getLocalizationDto();
     }
 
     @Override
@@ -67,19 +66,20 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
     }
 
     @Override
-    public EmployeeGetDTO get(UUID key, String language) {
-        return checkExistenceAndGetByCode(key).getLocalizationDto();
+    public EmployeeLocalizedDTO get(UUID key, String language) {
+        Employee employee = checkExistenceAndGetByCode(key);
+        return mapper.toGetDTO(employee).getLocalizationDto();
     }
 
     @Override
-    public List<EmployeeGetDTO> list(EmployeeCriteria criteria, String language) {
+    public List<EmployeeLocalizedDTO> list(EmployeeCriteria criteria, String language) {
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Employee> employees = repository.findAll(pageable).getContent();
         return getLocalizedDtos(employees);
     }
 
 
-    public List<EmployeeGetDTO> getAllByCourseCode(EmployeeCriteria criteria, UUID courseCode) {
+    public List<EmployeeLocalizedDTO> getAllByCourseCode(EmployeeCriteria criteria, UUID courseCode) {
         Course course = courseRepository.findByCode(courseCode);
         if (Objects.isNull(course)) throw new NotFoundException("COURSE_NOT_FOUND");
         Pageable pageable = PageRequest.of(criteria.getPage(), criteria.getSize());
@@ -88,14 +88,14 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
         return getLocalizedDtos(employees.getContent());
     }
 
-    public List<EmployeeGetDTO> getAll() {
+    public List<EmployeeLocalizedDTO> getAll() {
         List<Employee> employees = repository.findAll();
         return getLocalizedDtos(employees);
     }
 
-    private List<Course> getCourses(List<CourseGetDTO> DTOs) {
+    private List<Course> getCourses(List<CourseLocalizationDTO> DTOs) {
         List<Course> courses = new ArrayList<>();
-        for (CourseGetDTO course : DTOs) {
+        for (CourseLocalizationDTO course : DTOs) {
             Course byCode = courseRepository.findById(course.getId()).orElseThrow(() -> new NotFoundException("Coures not found"));
             courses.add(byCode);
         }
@@ -114,10 +114,10 @@ public class EmployeeServiceImpl extends AbstractService<EmployeeMapper, Employe
         );
     }
 
-    private List<EmployeeGetDTO> getLocalizedDtos(List<Employee> employees) {
-        List<EmployeeGetDTO> employeeDtos = new ArrayList<>();
+    private List<EmployeeLocalizedDTO> getLocalizedDtos(List<Employee> employees) {
+        List<EmployeeLocalizedDTO> employeeDtos = new ArrayList<>();
         for (Employee e : employees) {
-            employeeDtos.add(e.getLocalizationDto());
+            employeeDtos.add(mapper.toGetDTO(e).getLocalizationDto());
         }
         return employeeDtos;
     }

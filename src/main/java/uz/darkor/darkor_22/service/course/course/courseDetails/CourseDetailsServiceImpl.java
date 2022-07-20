@@ -3,6 +3,7 @@ package uz.darkor.darkor_22.service.course.course.courseDetails;
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.course.CourseDetailCriteria;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
+import uz.darkor.darkor_22.dto.auth.employee.EmployeeLocalizedDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.course_detail.CourseDetailCreateDTO;
 import uz.darkor.darkor_22.dto.course.course_detail.CourseDetailLocalizationDTO;
@@ -117,9 +118,9 @@ public class CourseDetailsServiceImpl extends AbstractService<CourseDetailsMappe
         return galleries;
     }
 
-    private List<Employee> processEmployee(List<EmployeeGetDTO> employeesDTO) {
+    private List<Employee> processEmployee(List<EmployeeLocalizedDTO> employeesDTO) {
         List<Employee> employees = new ArrayList<>();
-        for (EmployeeGetDTO employeeDto : employeesDTO) {
+        for (EmployeeLocalizedDTO employeeDto : employeesDTO) {
             Optional<Employee> skill = employeeRepository.findById(employeeDto.getId());
             employees.add(skill.get());
         }

@@ -53,21 +53,18 @@ public class CourseDetailControllerImpl extends AbstractController<CourseDetails
         return new ResponseEntity<>(new Data<>(list), HttpStatus.OK);
     }
 
-
-
-
     @Override
-    public ResponseEntity<Data<CourseDetailGetDTO>> create(CourseDetailCreateDTO DTO) {
+    public ResponseEntity<Data<CourseDetailGetDTO>> create(CourseDetailCreateDTO DTO, String lang) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<CourseDetailGetDTO>> update(CourseDetailUpdateDTO DTO) {
+    public ResponseEntity<Data<CourseDetailGetDTO>> update(CourseDetailUpdateDTO DTO, String lang) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(Long code) {
+    public ResponseEntity<Data<Boolean>> delete(Long code, String lang) {
         return null;
     }
 

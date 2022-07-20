@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 
 import javax.validation.constraints.NotBlank;
@@ -38,6 +39,6 @@ public class EmployeeCreateDTO implements BaseDTO {
     private FileDTO gallery;
 
     @NotNull(message = "course cannot be null")
-    private List<CourseGetDTO> courses;
+    private List<CourseLocalizationDTO> courses;
 
 }

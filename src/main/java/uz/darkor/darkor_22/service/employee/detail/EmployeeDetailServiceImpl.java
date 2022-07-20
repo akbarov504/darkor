@@ -4,8 +4,10 @@ import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
+import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailLocalizedDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailUpdateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
 import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
@@ -49,16 +51,18 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
     }
 
     @Override
-    public EmployeeDetailGetDTO create(EmployeeDetailCreateDTO DTO) {
+    public EmployeeDetailLocalizedDTO create(EmployeeDetailCreateDTO DTO) {
         EmployeeDetail employeeDetail = fromCreateDTO(DTO);
-        return repository.save(employeeDetail).getLocalizationDto();
+        EmployeeDetail save = repository.save(employeeDetail);
+        return mapper.toGetDTO(save).getLocalizationDto();
     }
 
     @Override
-    public EmployeeDetailGetDTO update(EmployeeDetailUpdateDTO DTO) {
+    public EmployeeDetailLocalizedDTO update(EmployeeDetailUpdateDTO DTO) {
         EmployeeDetail target = checkUserDetailsExistenceAndGetByCode(DTO.getCode());
         EmployeeDetail employeeDetail = mapper.fromUpdateDTO(DTO, target);
-        return repository.save(employeeDetail).getLocalizationDto();
+        EmployeeDetail save = repository.save(employeeDetail);
+        return mapper.toGetDTO(save).getLocalizationDto();
     }
 
     @Override
@@ -67,31 +71,32 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
     }
 
     @Override
-    public EmployeeDetailGetDTO get(UUID key, String language) {
+    public EmployeeDetailLocalizedDTO get(UUID key, String language) {
         EmployeeDetail employeeDetail = checkUserDetailsExistenceAndGetByCode(key);
-        return employeeDetail.getLocalizationDto();
+        return mapper.toGetDTO(employeeDetail).getLocalizationDto();
     }
 
     @Override
-    public List<EmployeeDetailGetDTO> list(BaseCriteria criteria, String language) {
+    public List<EmployeeDetailLocalizedDTO> list(BaseCriteria criteria, String language) {
         List<EmployeeDetail> employeeDetails = repository.findAll();
         return getLocalizedDtos(employeeDetails);
     }
 
-    public EmployeeDetailGetDTO getAllByEmployee(UUID employeeCode) {
+    public EmployeeDetailLocalizedDTO getAllByEmployee(UUID employeeCode) {
         Employee employee = employeeService.checkExistenceAndGetByCode(employeeCode);
         EmployeeDetail employeeDetail = repository.findByEmployee(employee)
                 .orElseThrow(() -> new NotFoundException("EMPLOYEE_DETAIL_NOT_FOUND"));
-        return employeeDetail.getLocalizationDto();
+        return mapper.toGetDTO(employeeDetail).getLocalizationDto();
     }
 
 
-    private List<EmployeeDetailGetDTO> getLocalizedDtos(List<EmployeeDetail> employeeDetails) {
-        List<EmployeeDetailGetDTO> employeeDetailGetDTOs = new ArrayList<>();
-        for (EmployeeDetail ed : employeeDetails) {
-            employeeDetailGetDTOs.add(ed.getLocalizationDto());
+    private List<EmployeeDetailLocalizedDTO> getLocalizedDtos(List<EmployeeDetail> employeeDetails) {
+        List<EmployeeDetailLocalizedDTO> employeeDetailLocalizedDTOS = new ArrayList<>();
+        List<EmployeeDetailGetDTO> employeeDetailGetDTOS = mapper.toListDTO(employeeDetails);
+        for (EmployeeDetailGetDTO dto : employeeDetailGetDTOS) {
+            employeeDetailLocalizedDTOS.add(dto.getLocalizationDto());
         }
-        return employeeDetailGetDTOs;
+        return employeeDetailLocalizedDTOS;
     }
 
     private EmployeeDetail fromCreateDTO(EmployeeDetailCreateDTO dto) {
@@ -102,7 +107,6 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
                 dto.getBodyDescriptionRu(),
                 dto.getBodyDescriptionEn(),
                 getCourses(dto.getEmployee().getCourses()),
-                skillService.create(dto.getSkills()),
                 processGallery(dto.getGalleries()),
                 employeeService.checkExistenceAndGetByCode(dto.getEmployee().getCode()));
     }
@@ -116,9 +120,9 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
         return galleries;
     }
 
-    private List<Course> getCourses(List<CourseGetDTO> DTOs) {
+    private List<Course> getCourses(List<CourseLocalizationDTO> DTOs) {
         List<Course> courses = new ArrayList<>();
-        for (CourseGetDTO course : DTOs) {
+        for (CourseLocalizationDTO course : DTOs) {
             Course byCode = courseRepository.findById(course.getId()).orElseThrow(() -> new NotFoundException("Coures not found"));
             courses.add(byCode);
         }

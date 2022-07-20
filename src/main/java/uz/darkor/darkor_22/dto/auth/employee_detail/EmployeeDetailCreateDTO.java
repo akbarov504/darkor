@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
+import uz.darkor.darkor_22.dto.auth.employee.EmployeeLocalizedDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
@@ -49,15 +51,12 @@ public class EmployeeDetailCreateDTO implements BaseDTO {
     private String bodyDescriptionEn;
 
     @NotNull(message = "course cannot be null")
-    private List<CourseGetDTO> courses;
-
-    @NotBlank(message = "skill cannot be null")
-    private List<SkillCreateDTO> skills;
+    private List<CourseLocalizationDTO> courses;
 
     @NotBlank(message = "gallery cannot be null")
     private List<FileDTO> galleries;
 
     @NotNull(message = "employee cannot be null")
-    private EmployeeGetDTO employee;
+    private EmployeeLocalizedDTO employee;
 
 }
