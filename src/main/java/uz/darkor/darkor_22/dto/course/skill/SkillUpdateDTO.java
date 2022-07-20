@@ -15,7 +15,7 @@ public class SkillUpdateDTO extends GenericDTO {
     @NotBlank(message = "name uz cannot be null or empty")
     @Size(min = 3, max = 255,
             message = "The length of the name field must be between 3 and 255")
-    private String nameUZ;
+    private String nameUz;
 
     @NotBlank(message = "name ru cannot be null or empty")
     @Size(min = 3, max = 255,

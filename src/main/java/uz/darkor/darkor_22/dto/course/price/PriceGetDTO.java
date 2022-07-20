@@ -13,6 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 public class PriceGetDTO extends GenericDTO {
+    private Long id;
     private Double price;
 
     private List<String> offersUz;
@@ -21,17 +22,20 @@ public class PriceGetDTO extends GenericDTO {
 
     private List<String> offersEn;
 
-    public PriceLocalizationDTO getLocalizationDto(String lang) {
+    public PriceLocalizedDTO getLocalizationDto(String lang) {
         return switch (lang) {
-            case "en" -> PriceLocalizationDTO.builder().code(this.getCode()).
+            case "en" -> PriceLocalizedDTO.builder().code(this.getCode()).
+                    id(this.id).
                     price(this.price)
                     .offers(this.offersEn)
                     .build();
-            case "ru" -> PriceLocalizationDTO.builder().code(this.getCode()).
+            case "ru" -> PriceLocalizedDTO.builder().code(this.getCode()).
+                    id(this.id).
                     price(this.price)
                     .offers(this.offersRu)
                     .build();
-            default -> PriceLocalizationDTO.builder().code(this.getCode()).
+            default -> PriceLocalizedDTO.builder().code(this.getCode()).
+                    id(this.id).
                     price(this.price)
                     .offers(this.offersUz)
                     .build();

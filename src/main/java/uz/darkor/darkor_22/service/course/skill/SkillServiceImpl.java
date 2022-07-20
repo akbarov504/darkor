@@ -1,19 +1,15 @@
 package uz.darkor.darkor_22.service.course.skill;
 
 import org.springframework.stereotype.Service;
-import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.criteria.skill.SkillCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
-import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
+import uz.darkor.darkor_22.dto.course.skill.SkillLocalizedDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
-import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.entity.course.Price;
 import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.skill.SkillMapper;
 import uz.darkor.darkor_22.repository.course.CourseRepository;
-import uz.darkor.darkor_22.repository.employee.EmployeeDetailRepository;
 import uz.darkor.darkor_22.repository.skill.SkillRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 
@@ -36,18 +32,18 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
     }
 
     @Override
-    public SkillGetDTO create(SkillCreateDTO DTO) {
+    public SkillLocalizedDTO create(SkillCreateDTO DTO) {
         Skill skill = mapper.fromCreateDTO(DTO);
         Skill save = repository.save(skill);
-        return save.getLocalizationDto();
+        return mapper.toGetDTO(save).getLocalizationDto("uz");
     }
 
     @Override
-    public SkillGetDTO update(SkillUpdateDTO DTO) {
+    public SkillLocalizedDTO update(SkillUpdateDTO DTO) {
         Skill target = checkExistenceAndGetById(DTO.getCode());
         Skill skill = mapper.fromUpdateDTO(DTO, target);
         Skill updateSkill = repository.save(skill);
-        return updateSkill.getLocalizationDto();
+        return mapper.toGetDTO(updateSkill).getLocalizationDto("uz");
     }
 
     @Override
@@ -65,32 +61,32 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
     }
 
     @Override
-    public SkillGetDTO get(UUID key, String language) {
+    public SkillLocalizedDTO get(UUID key, String language) {
         Skill skill = checkExistenceAndGetById(key);
-        return skill.getLocalizationDto();
+        return mapper.toGetDTO(skill).getLocalizationDto(language);
     }
 
     @Override
-    public List<SkillGetDTO> list(SkillCriteria criteria, String language) {
+    public List<SkillLocalizedDTO> list(SkillCriteria criteria, String language) {
         List<Skill> skills = repository.findAll();
-        return getLocalizedDTOs(skills);
+        return getLocalizedDTOs(skills, language);
     }
 
     @Override
-    public List<SkillGetDTO> getByCourseCode(UUID code) {
+    public List<SkillLocalizedDTO> getByCourseCode(UUID code, String lang) {
         Course course = courseRepository.findByCode(code);
         if (Objects.isNull(course))
             throw new NotFoundException("COURSE_NOT_FOUND");
         List<Skill> skills = repository.findByCourse(course);
-        return getLocalizedDTOs(skills);
+        return getLocalizedDTOs(skills, lang);
     }
 
-    private List<SkillGetDTO> getLocalizedDTOs(List<Skill> skills) {
-        List<SkillGetDTO> skillGetDTOS = new ArrayList<>();
+    private List<SkillLocalizedDTO> getLocalizedDTOs(List<Skill> skills, String lang) {
+        List<SkillLocalizedDTO> SkillLocalizedDTOS = new ArrayList<>();
         for (Skill skill : skills) {
-            skillGetDTOS.add(skill.getLocalizationDto());
+            SkillLocalizedDTOS.add(mapper.toGetDTO(skill).getLocalizationDto(lang));
         }
-        return skillGetDTOS;
+        return SkillLocalizedDTOS;
     }
 
     private Skill checkExistenceAndGetById(UUID code) {

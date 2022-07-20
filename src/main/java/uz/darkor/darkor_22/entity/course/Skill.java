@@ -22,49 +22,24 @@ import java.util.Objects;
 @NoArgsConstructor
 @Where(clause = "is_deleted = false")
 public class Skill extends Auditable {
-    @Column(nullable = false)
-    private String nameUZ;
+    @Column(nullable = false, name = "name_uz")
+    private String nameUz;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "name_ru")
     private String nameRu;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "name_en")
     private String nameEn;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "description_uz")
     private String descriptionUz;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "description_ru")
     private String descriptionRu;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "description_en")
     private String descriptionEn;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Course course;
-
-    public SkillGetDTO getLocalizationDto() {
-        String lang = BaseUtils.getSessionLang();
-        if (Objects.isNull(lang)) lang = "en";
-        return switch (lang) {
-            case "en" -> SkillGetDTO.builder()
-                    .code(this.getCode())
-                    .name(this.nameEn)
-                    .description(this.descriptionEn)
-                    .course(this.course)
-                    .build();
-            case "ru" -> SkillGetDTO.builder()
-                    .code(this.getCode())
-                    .name(this.nameRu)
-                    .description(this.descriptionRu)
-                    .course(this.course)
-                    .build();
-            default -> SkillGetDTO.builder()
-                    .code(this.getCode())
-                    .name(this.nameUZ)
-                    .description(this.descriptionUz)
-                    .course(this.course)
-                    .build();
-        };
-    }
 }

@@ -8,6 +8,7 @@ import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.criteria.skill.SkillCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
+import uz.darkor.darkor_22.dto.course.skill.SkillLocalizedDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
 import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.course.skill.SkillService;
@@ -27,13 +28,13 @@ public class SkillControllerImpl extends AbstractController<SkillService>
     }
 
     @Override
-    public ResponseEntity<Data<SkillGetDTO>> create(SkillCreateDTO DTO,String lang) {
+    public ResponseEntity<Data<SkillLocalizedDTO>> create(SkillCreateDTO DTO, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<SkillGetDTO>> update(SkillUpdateDTO DTO,String lang) {
+    public ResponseEntity<Data<SkillLocalizedDTO>> update(SkillUpdateDTO DTO,String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
@@ -45,21 +46,21 @@ public class SkillControllerImpl extends AbstractController<SkillService>
     }
 
     @Override
-    public ResponseEntity<Data<SkillGetDTO>> get(UUID code, String lang) {
+    public ResponseEntity<Data<SkillLocalizedDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<List<SkillGetDTO>>> list(SkillCriteria criteria, String lang) {
+    public ResponseEntity<Data<List<SkillLocalizedDTO>>> list(SkillCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }
 
     @GetMapping("get_by_course/{code}")
-    public ResponseEntity<Data<List<SkillGetDTO>>> getByCourse(@PathVariable UUID code,
+    public ResponseEntity<Data<List<SkillLocalizedDTO>>> getByCourse(@PathVariable UUID code,
                                                                @RequestHeader("accept-language") String lang){
        BaseUtils.setSessionLang(lang);
-       return new ResponseEntity<>(new Data<>(service.getByCourseCode(code)),HttpStatus.OK);
+       return new ResponseEntity<>(new Data<>(service.getByCourseCode(code, lang)),HttpStatus.OK);
     }
 }
