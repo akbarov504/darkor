@@ -55,7 +55,7 @@ public class CourseDetail extends Auditable {
     @OneToOne
     private Price price;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Course course;
 
 }

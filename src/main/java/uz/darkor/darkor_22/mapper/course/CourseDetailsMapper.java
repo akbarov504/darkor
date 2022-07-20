@@ -15,4 +15,6 @@ public interface CourseDetailsMapper extends GenericMapper<CourseDetailCreateDTO
 
     CourseDetailUpdateDTO toUpdateDTO(CourseDetail entity);
 
+    CourseDetail fromCreateDTO(CourseDetailCreateDTO dto);
+
 }
