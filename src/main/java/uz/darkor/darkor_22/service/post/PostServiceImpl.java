@@ -1,52 +1,73 @@
 package uz.darkor.darkor_22.service.post;
 
-import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 import uz.darkor.darkor_22.criteria.post.PostCriteria;
 import uz.darkor.darkor_22.dto.home.post.PostCreateDTO;
 import uz.darkor.darkor_22.dto.home.post.PostGetDTO;
+import uz.darkor.darkor_22.dto.home.post.PostLocalizedDTO;
 import uz.darkor.darkor_22.dto.home.post.PostUpdateDTO;
-import uz.darkor.darkor_22.dto.home.statistics.StatisticsGetDTO;
-import uz.darkor.darkor_22.entity.home.HomeService;
 import uz.darkor.darkor_22.entity.home.Post;
-import uz.darkor.darkor_22.entity.home.Statistics;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.post.PostMapper;
 import uz.darkor.darkor_22.repository.post.PostRepository;
+import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PostServiceImpl extends AbstractService<PostMapper, PostRepository> implements PostService {
-
-    public PostServiceImpl(PostMapper mapper, PostRepository repository) {
+public class PostServiceImpl extends AbstractService<PostMapper, PostRepository>  {
+    final FileRepository fileRepository;
+    public PostServiceImpl(PostMapper mapper, PostRepository repository, FileRepository fileRepository) {
         super(mapper, repository);
+        this.fileRepository = fileRepository;
     }
 
-    @Override
-    public PostGetDTO create(PostCreateDTO DTO) {
-        return repository.save(mapper.fromCreateDTO(DTO)).getLocalizationDto("uz");
+
+    public PostLocalizedDTO create(PostCreateDTO DTO,String lang) {
+
+        Post post = new Post(
+                fileRepository.findById(DTO.getGalleryEn().getId()).get(),
+                fileRepository.findById(DTO.getGalleryRu().getId()).get(),
+                fileRepository.findById(DTO.getGalleryUz().getId()).get(),
+                DTO.getTitleUz(),
+                DTO.getTitleRU(),
+                DTO.getTitleEn(),
+                DTO.getDescriptionUz(),
+                DTO.getDescriptionRu(),
+                DTO.getDescriptionEn()
+        );
+
+        repository.save(post);
+        return mapper.toGetDTO(post).getLocalizationDto(lang);
 
     }
 
-    @Override
-    public PostGetDTO update(PostUpdateDTO DTO) {
+
+    public PostLocalizedDTO update(PostUpdateDTO DTO,String lang) {
         Post post = repository.findByCode(DTO.getCode())
                 .orElseThrow(() -> new NotFoundException("HomeService topilmadi"));
-        return repository.save(mapper.fromUpdateDTO(DTO,post)).getLocalizationDto("uz");
+        post.setGalleryEn(fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setGalleryRu(fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setGalleryUz(fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setTitleEn(DTO.getTitleEn());
+        post.setTitleRu(DTO.getTitleRU());
+        post.setTitleUz(DTO.getTitleUz());
+        post.setDescriptionEn(DTO.getDescriptionEn());
+        post.setDescriptionRu(DTO.getDescriptionRu());
+        post.setDescriptionUz(DTO.getDescriptionUZ());
+        repository.save(post);
+        return mapper.toGetDTO(post).getLocalizationDto(lang);
     }
 
-    @Override
-    public Boolean delete(UUID key) {
+
+    public Boolean delete(Long id) {
         try {
-            repository.deleteByCode(key);
+            repository.deleteById(id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,20 +76,21 @@ public class PostServiceImpl extends AbstractService<PostMapper, PostRepository>
 
     }
 
-    @Override
-    public PostGetDTO get(UUID key, String language) {
-        Post post = repository.findByCode(key)
+
+    public PostLocalizedDTO get(Long id, String language) {
+        Post post = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("HomeService topilmadi"));
-        return post.getLocalizationDto(BaseUtils.getSessionLang());
+
+        return mapper.toGetDTO(post).getLocalizationDto(language);
     }
 
-    @Override
-    public List<PostGetDTO> list(PostCriteria criteria, String language) {
-        List<PostGetDTO> postGetDTOS = new ArrayList<>();
+
+    public List<PostLocalizedDTO> list(PostCriteria criteria, String language) {
+        List<PostLocalizedDTO> postGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Post> posts = repository.findAll(request).stream().toList();
         for (Post c : posts) {
-            postGetDTOS.add(c.getLocalizationDto(BaseUtils.getSessionLang()));
+            postGetDTOS.add(mapper.toGetDTO(c).getLocalizationDto(language));
         }
         return postGetDTOS;
     }

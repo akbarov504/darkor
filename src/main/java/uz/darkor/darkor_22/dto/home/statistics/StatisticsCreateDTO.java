@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
-
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,7 +16,6 @@ public class StatisticsCreateDTO implements BaseDTO {
 
     @NotNull(message = "number not be null")
     private String number;
-
 
     @NotNull(message = "number not be null")
     @Size(min = 3,max =250 )
@@ -40,4 +37,8 @@ public class StatisticsCreateDTO implements BaseDTO {
 
     @NotNull(message = "number not be null")
     private String descriptionEn;
+
+    @NotNull(message = "type not be null")
+    private String statisticsType;
+
 }

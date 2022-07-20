@@ -1,19 +1,24 @@
 package uz.darkor.darkor_22.dto.home.home_service;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
-import uz.darkor.darkor_22.entity.system.Gallery;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.UUID;
+
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HomeServiceUpdateDTO extends GenericDTO {
 
+
+    @NotNull(message = "id cannot be null")
+    private Long id;
     @NotNull(message = "GalleryUz not be null")
     private FileDTO galleryUz;
 
@@ -48,16 +53,4 @@ public class HomeServiceUpdateDTO extends GenericDTO {
     @Size(min = 3)
     private String descriptionEn;
 
-    public HomeServiceUpdateDTO(@NotNull(message = "code cannot be null") UUID code, FileDTO galleryUz, FileDTO galleryRu, FileDTO galleryEn, String titleUz, String titleRU, String titleEn, String descriptionUZ, String descriptionRu, String descriptionEn) {
-        super(code);
-        this.galleryUz = galleryUz;
-        this.galleryRu = galleryRu;
-        this.galleryEn = galleryEn;
-        this.titleUz = titleUz;
-        this.titleRU = titleRU;
-        this.titleEn = titleEn;
-        this.descriptionUZ = descriptionUZ;
-        this.descriptionRu = descriptionRu;
-        this.descriptionEn = descriptionEn;
-    }
 }

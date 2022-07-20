@@ -7,11 +7,9 @@ import lombok.Setter;
 import org.hibernate.annotations.Where;
 import uz.darkor.darkor_22.dto.home.statistics.StatisticsGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
+import uz.darkor.darkor_22.enums.StatisticsType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -42,13 +40,8 @@ public class Statistics extends Auditable {
     @Column(nullable = false)
     private String descriptionEn;
 
-    public StatisticsGetDTO getLocalizationDto(String lang) {
+    @Enumerated(value = EnumType.STRING)
+    private StatisticsType statisticsType;
 
-        if (lang.equals("uz")) {
-            return StatisticsGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUz).number(this.number).build();
-        } else if (lang.equals("ru")) {
-            return StatisticsGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUz).number(this.number).build();
-        }
-        return StatisticsGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUz).number(this.number).build();
-    }
+
 }

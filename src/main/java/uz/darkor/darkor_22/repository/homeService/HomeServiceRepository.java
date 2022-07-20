@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface HomeServiceRepository extends JpaRepository<HomeService, UUID>, BaseRepository {
+public interface HomeServiceRepository extends JpaRepository<HomeService, Long>, BaseRepository {
     @Transactional
     @Modifying
     @Query(value = "delete from Course where isDeleted = false and code = :code")

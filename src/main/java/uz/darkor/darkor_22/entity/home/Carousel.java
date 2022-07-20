@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import uz.darkor.darkor_22.dto.home.carousel.CarouselGetDTO;
+import uz.darkor.darkor_22.dto.home.carousel.CarouselLocalizedDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.system.Gallery;
 
@@ -19,13 +21,14 @@ import javax.persistence.*;
 @Where(clause = "is_deleted=false")
 @Entity
 public class Carousel extends Auditable {
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryUz;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryRu;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryEn;
 
     @Column(nullable = false)
@@ -37,12 +40,4 @@ public class Carousel extends Auditable {
     @Column(nullable = false)
     private String linkEn;
 
-    public CarouselGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return CarouselGetDTO.builder().code(this.getCode()).gallery(this.galleryUz).link(this.linkUz).build();
-        } else if (lang.equals("ru")) {
-            return CarouselGetDTO.builder().code(this.getCode()).gallery(this.galleryRu).link(this.linkRu).build();
-        }
-        return CarouselGetDTO.builder().code(this.getCode()).gallery(this.galleryEn).link(this.linkEn).build();
-    }
 }

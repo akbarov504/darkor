@@ -17,13 +17,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class Post extends Auditable {
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryUz;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryRu;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryEn;
 
     @Column(nullable = false)
@@ -44,12 +45,4 @@ public class Post extends Auditable {
     @Column(nullable = false)
     private String descriptionEn;
 
-    public PostGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return PostGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUz).gallery(this.galleryUz).build();
-        } else if (lang.equals("ru")) {
-            return PostGetDTO.builder().code(this.getCode()).title(this.titleRu).description(this.descriptionRu).gallery(this.galleryRu).build();
-        }
-        return PostGetDTO.builder().code(this.getCode()).title(this.titleEn).description(this.descriptionEn).gallery(this.galleryEn).build();
-    }
 }

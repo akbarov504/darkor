@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
-import uz.darkor.darkor_22.entity.system.Gallery;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

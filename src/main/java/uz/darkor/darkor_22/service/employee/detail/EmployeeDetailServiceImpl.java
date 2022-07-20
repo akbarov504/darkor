@@ -6,7 +6,6 @@ import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailLocalizedDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailUpdateDTO;
-import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.auth.Employee;
@@ -19,7 +18,6 @@ import uz.darkor.darkor_22.repository.course.CourseRepository;
 import uz.darkor.darkor_22.repository.employee.EmployeeDetailRepository;
 import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
-import uz.darkor.darkor_22.service.course.skill.SkillService;
 import uz.darkor.darkor_22.service.employee.employee.EmployeeService;
 import uz.darkor.darkor_22.service.employee.employee.EmployeeServiceImpl;
 
@@ -34,19 +32,16 @@ public class EmployeeDetailServiceImpl extends AbstractService<EmployeeDetailMap
 
     private final EmployeeService employeeService;
     private final CourseRepository courseRepository;
-    private final SkillService skillService;
     private final FileRepository fileRepository;
 
     public EmployeeDetailServiceImpl(EmployeeDetailMapper mapper,
                                      EmployeeDetailRepository repository,
                                      EmployeeServiceImpl employeeService,
                                      CourseRepository courseRepository,
-                                     SkillService skillService,
                                      FileRepository fileRepository) {
         super(mapper, repository);
         this.employeeService = employeeService;
         this.courseRepository = courseRepository;
-        this.skillService = skillService;
         this.fileRepository = fileRepository;
     }
 

@@ -1,6 +1,8 @@
 package uz.darkor.darkor_22.dto.home.carousel;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
@@ -15,8 +17,13 @@ import java.util.UUID;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CarouselUpdateDTO extends GenericDTO {
 
+    @NotNull(message = "id cannot be null")
+    private Long id;
+    
     @NotNull(message = "gallery bosh bolishi mumkin emas")
     private FileDTO galleryUz;
 
@@ -38,13 +45,4 @@ public class CarouselUpdateDTO extends GenericDTO {
     @Size(min = 3,max = 200)
     private String linkEn;
 
-    public CarouselUpdateDTO(@NotNull(message = "code cannot be null") UUID code, FileDTO galleryUz, FileDTO galleryRu, FileDTO galleryEn, String linkUz, String linkRu, String linkEn) {
-        super(code);
-        this.galleryUz = galleryUz;
-        this.galleryRu = galleryRu;
-        this.galleryEn = galleryEn;
-        this.linkUz = linkUz;
-        this.linkRu = linkRu;
-        this.linkEn = linkEn;
-    }
 }

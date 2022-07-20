@@ -19,13 +19,14 @@ import javax.persistence.*;
 @Where(clause = "is_deleted=false")
 @Entity
 public class HomeService extends Auditable {
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryUz;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryRu;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Gallery galleryEn;
 
     @Column(nullable = false)
@@ -46,12 +47,5 @@ public class HomeService extends Auditable {
     @Column(nullable = false)
     private String descriptionEn;
 
-    public HomeServiceGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return HomeServiceGetDTO.builder().code(this.getCode()).title(this.titleUz).description(this.descriptionUZ).gallery(this.galleryUz).build();
-        } else if (lang.equals("ru")) {
-            return HomeServiceGetDTO.builder().code(this.getCode()).title(this.titleRU).description(this.descriptionRu).gallery(this.galleryRu).build();
-        }
-        return HomeServiceGetDTO.builder().code(this.getCode()).title(this.titleEn).description(this.descriptionEn).gallery(this.galleryEn).build();
-    }
+
 }

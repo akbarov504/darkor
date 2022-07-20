@@ -2,61 +2,69 @@ package uz.darkor.darkor_22.service.carousel;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 import uz.darkor.darkor_22.criteria.carousel.CarouselCriteria;
-import uz.darkor.darkor_22.criteria.course.CourseCriteria;
-import uz.darkor.darkor_22.dto.course.course.CourseCreateDTO;
-import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
-import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
 import uz.darkor.darkor_22.dto.home.carousel.CarouselCreateDTO;
-import uz.darkor.darkor_22.dto.home.carousel.CarouselGetDTO;
+import uz.darkor.darkor_22.dto.home.carousel.CarouselLocalizedDTO;
 import uz.darkor.darkor_22.dto.home.carousel.CarouselUpdateDTO;
-import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.home.Carousel;
-import uz.darkor.darkor_22.entity.home.HomeService;
 import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.carousel.CarouselMapper;
-import uz.darkor.darkor_22.mapper.course.CourseMapper;
 import uz.darkor.darkor_22.repository.carousel.CarouselRepository;
-import uz.darkor.darkor_22.repository.course.CourseRepository;
+import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.service.AbstractService;
-import uz.darkor.darkor_22.service.BaseService;
-import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
-public class CarouselServiceImpl extends AbstractService<CarouselMapper, CarouselRepository> implements CarouselService {
+public class CarouselServiceImpl extends AbstractService<CarouselMapper, CarouselRepository>{
+    final FileRepository fileRepository;
 
-
-    public CarouselServiceImpl(CarouselMapper mapper, CarouselRepository repository) {
+    public CarouselServiceImpl(CarouselMapper mapper, CarouselRepository repository, FileRepository fileRepository) {
         super(mapper, repository);
+        this.fileRepository = fileRepository;
     }
 
 
-    @Override
-    public CarouselGetDTO create(CarouselCreateDTO DTO) {
-        return repository.save(mapper.fromCreateDTO(DTO)).getLocalizationDto("uz");
+
+    @PostMapping
+    public CarouselLocalizedDTO create(CarouselCreateDTO DTO,String lang) {
+        Carousel carousel = new Carousel(
+                fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")),
+                fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")),
+                fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")),
+                DTO.getLinkUz(),
+                DTO.getLinkRu(),
+                DTO.getLinkEn()
+        );
+        repository.save(carousel);
+        return mapper.toGetDTO(carousel).getLocalizationDto(lang);
 
     }
 
-    @Override
-    public CarouselGetDTO update(CarouselUpdateDTO DTO) {
 
-        Carousel carousel = repository.findByCode(DTO.getCode())
-                .orElseThrow(() -> new NotFoundException("Carousel topilmadi"));
+    public CarouselLocalizedDTO update(CarouselUpdateDTO DTO,String lang) {
 
-        return repository.save(mapper.fromUpdateDTO(DTO,carousel)).getLocalizationDto("uz");
+        Carousel carousel = repository.findById(DTO.getId()).orElseThrow(() -> new NotFoundException("Not null"));
+        carousel.setGalleryEn(fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setGalleryRu(fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setGalleryUz( fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setLinkEn(DTO.getLinkEn());
+        carousel.setLinkRu(DTO.getLinkRu());
+        carousel.setLinkUz(DTO.getLinkUz());
+        repository.save(carousel);
+
+        return mapper.toGetDTO(carousel).getLocalizationDto(lang);
 
     }
 
-    @Override
-    public Boolean delete(UUID key) {
+
+    public Boolean delete(Long id) {
         try {
-            repository.deleteByCode(key);
+            repository.deleteById(id);
             return  true;
         }catch (Exception e){
             e.printStackTrace();
@@ -64,20 +72,19 @@ public class CarouselServiceImpl extends AbstractService<CarouselMapper, Carouse
         }
     }
 
-    @Override
-    public CarouselGetDTO get(UUID key, String language) {
-        Carousel carousel = repository.findByCode(key)
+
+    public CarouselLocalizedDTO getCarousel(Long id, String language) {
+        Carousel carousel = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Hech  nima topilmadi"));
-        return carousel.getLocalizationDto(BaseUtils.getSessionLang());
+        return mapper.toGetDTO(carousel).getLocalizationDto(language);
     }
 
-    @Override
-    public List<CarouselGetDTO> list(CarouselCriteria criteria, String language) {
-        List<CarouselGetDTO> carouselGetDTOS = new ArrayList<>();
+    public List<CarouselLocalizedDTO> listMy(CarouselCriteria criteria, String language) {
+        List<CarouselLocalizedDTO> carouselGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Carousel> courses = repository.findAll(request).stream().toList();
         for (Carousel c : courses) {
-            carouselGetDTOS.add(c.getLocalizationDto(BaseUtils.getSessionLang()));
+            carouselGetDTOS.add(mapper.toGetDTO(c).getLocalizationDto(language));
         }
         return carouselGetDTOS;
     }

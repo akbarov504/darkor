@@ -41,7 +41,7 @@ public class PostCreateDTO implements BaseDTO {
 
     @NotNull(message = "descriptionUz not be null")
     @Size(min = 3)
-    private String descriptionUZ;
+    private String descriptionUz;
 
     @NotNull(message = "descriptionRu not be null")
     @Size(min = 3)
