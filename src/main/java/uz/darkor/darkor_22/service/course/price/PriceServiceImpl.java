@@ -3,7 +3,7 @@ package uz.darkor.darkor_22.service.course.price;
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.price.PriceCriteria;
 import uz.darkor.darkor_22.dto.course.price.PriceCreateDTO;
-import uz.darkor.darkor_22.dto.course.price.PriceGetDTO;
+import uz.darkor.darkor_22.dto.course.price.PriceLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceUpdateDTO;
 import uz.darkor.darkor_22.entity.course.Price;
 import uz.darkor.darkor_22.exception.NotFoundException;
@@ -24,18 +24,18 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     }
 
     @Override
-    public PriceGetDTO create(PriceCreateDTO DTO) {
+    public PriceLocalizationDTO create(PriceCreateDTO DTO) {
         Price price = mapper.fromCreateDTO(DTO);
         Price newPrice = repository.save(price);
-        return newPrice.getLocalizationDto();
+        return mapper.toGetDTO(newPrice).getLocalizationDto("uz");
     }
 
     @Override
-    public PriceGetDTO update(PriceUpdateDTO DTO) {
+    public PriceLocalizationDTO update(PriceUpdateDTO DTO) {
         Price target = checkExistenceAndGetaByCode(DTO.getCode());
         Price updatedPrice = mapper.fromUpdateDTO(DTO, target);
-        repository.save(updatedPrice);
-        return updatedPrice.getLocalizationDto();
+        Price save = repository.save(updatedPrice);
+        return mapper.toGetDTO(save).getLocalizationDto("uz");
     }
 
     @Override
@@ -53,24 +53,22 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     }
 
     @Override
-    public PriceGetDTO get(UUID key, String language) {
-        BaseUtils.setSessionLang(language);
+    public PriceLocalizationDTO get(UUID key, String language) {
         Price price = checkExistenceAndGetaByCode(key);
-        return price.getLocalizationDto();
+        return mapper.toGetDTO(price).getLocalizationDto(language);
     }
 
     @Override
-    public List<PriceGetDTO> list(PriceCriteria criteria, String language) {
-        BaseUtils.setSessionLang(language);
+    public List<PriceLocalizationDTO> list(PriceCriteria criteria, String language) {
         List<Price> prices = repository.findAll();
-        return getLocalizedPriceDTOList(prices);
+        return getLocalizedPriceDTOList(prices, language);
     }
 
-    private List<PriceGetDTO> getLocalizedPriceDTOList(List<Price> prices) {
-        List<PriceGetDTO> priceGetDTOS = new ArrayList<>();
+    private List<PriceLocalizationDTO> getLocalizedPriceDTOList(List<Price> prices, String lang) {
+        List<PriceLocalizationDTO> PriceLocalizationDTOS = new ArrayList<>();
         for (Price price : prices)
-            priceGetDTOS.add(price.getLocalizationDto());
-        return priceGetDTOS;
+            PriceLocalizationDTOS.add(mapper.toGetDTO(price).getLocalizationDto(lang));
+        return PriceLocalizationDTOS;
     }
 
     private Price checkExistenceAndGetaByCode(UUID code) {

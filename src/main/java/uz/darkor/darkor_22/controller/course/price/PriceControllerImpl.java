@@ -8,6 +8,7 @@ import uz.darkor.darkor_22.criteria.BaseCriteria;
 import uz.darkor.darkor_22.criteria.price.PriceCriteria;
 import uz.darkor.darkor_22.dto.course.price.PriceCreateDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceGetDTO;
+import uz.darkor.darkor_22.dto.course.price.PriceLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceUpdateDTO;
 import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.course.price.PriceService;
@@ -25,12 +26,12 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
     }
 
     @Override
-    public ResponseEntity<Data<PriceGetDTO>> create(PriceCreateDTO DTO,String lang) {
+    public ResponseEntity<Data<PriceLocalizationDTO>> create(PriceCreateDTO DTO, String lang) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<PriceGetDTO>> update(PriceUpdateDTO DTO,String lang) {
+    public ResponseEntity<Data<PriceLocalizationDTO>> update(PriceUpdateDTO DTO,String lang) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
@@ -40,13 +41,12 @@ public class PriceControllerImpl extends AbstractController<PriceService> implem
     }
 
     @Override
-    public ResponseEntity<Data<PriceGetDTO>> get(UUID code, String lang) {
-        BaseUtils.setSessionLang(lang);
+    public ResponseEntity<Data<PriceLocalizationDTO>> get(UUID code, String lang) {
         return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<List<PriceGetDTO>>> list(PriceCriteria criteria, String lang) {
+    public ResponseEntity<Data<List<PriceLocalizationDTO>>> list(PriceCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
     }

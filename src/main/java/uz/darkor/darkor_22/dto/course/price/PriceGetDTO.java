@@ -1,27 +1,40 @@
 package uz.darkor.darkor_22.dto.course.price;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import uz.darkor.darkor_22.dto.GenericDTO;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class PriceGetDTO extends GenericDTO {
-    private Long id;
     private Double price;
-    private List<String> offers;
 
-    @Builder
+    private List<String> offersUz;
 
-    public PriceGetDTO(@NotNull(message = "code cannot be null") UUID code, Long id, Double price, List<String> offers) {
-        super(code);
-        this.id = id;
-        this.price = price;
-        this.offers = offers;
+    private List<String> offersRu;
+
+    private List<String> offersEn;
+
+    public PriceLocalizationDTO getLocalizationDto(String lang) {
+        return switch (lang) {
+            case "en" -> PriceLocalizationDTO.builder().code(this.getCode()).
+                    price(this.price)
+                    .offers(this.offersEn)
+                    .build();
+            case "ru" -> PriceLocalizationDTO.builder().code(this.getCode()).
+                    price(this.price)
+                    .offers(this.offersRu)
+                    .build();
+            default -> PriceLocalizationDTO.builder().code(this.getCode()).
+                    price(this.price)
+                    .offers(this.offersUz)
+                    .build();
+        };
     }
 }
