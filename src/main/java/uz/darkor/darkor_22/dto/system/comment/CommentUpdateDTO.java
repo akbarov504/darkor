@@ -16,10 +16,7 @@ import java.util.UUID;
 @Setter
 public class CommentUpdateDTO extends GenericDTO {
 
-    public CommentUpdateDTO( UUID code) {
-        super(code);
-    }
-
+    private Long id;
     private Byte stars;
     private String body;
     private String fullName;

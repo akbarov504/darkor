@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public class PriceUpdateDTO extends GenericDTO {
 
+    private Long id;
+
     @NotBlank(message = "price cannot be null or empty")
     @PositiveOrZero(message = "price must be equal to 0 or positive")
     @Pattern(regexp = "\\d", message = "input can include only digits")

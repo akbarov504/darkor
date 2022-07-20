@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.course.CourseCriteria;
 import uz.darkor.darkor_22.dto.course.course.CourseCreateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import uz.darkor.darkor_22.entity.course.Course;
@@ -36,48 +37,58 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
     }
 
     @Override
-    public CourseGetDTO create(CourseCreateDTO DTO) {
+    public CourseLocalizationDTO create(CourseCreateDTO DTO) {
         Course course = fromCreatDto(DTO);
         Course save = repository.save(course);
-        CourseGetDTO uz = save.getLocalizationDto("uz");
-        return uz;
+        return mapper.toGetDTO(save).getLocalizationDto("uz");
 
     }
 
     @Override
-    public CourseGetDTO update(CourseUpdateDTO DTO) {
+    public CourseLocalizationDTO update(CourseUpdateDTO DTO) {
         Optional<Course> courseOptional = repository.findById(DTO.getId());
         Course course = courseOptional.get();
         if (Objects.isNull(course)) {
             throw new NotFoundException("Course not found");
         }
-
          course = fromUpdateDto(DTO);
+        return mapper.toGetDTO(repository.save(course)).getLocalizationDto("uz");
+    }
 
-        System.out.println(mapper.fromUpdateDTO(DTO, course));
-        return repository.save(course).getLocalizationDto("uz");
+    public Boolean delete(Long id) {
+        try{
+            repository.deleteById(id);
+            return true;
+        }catch (NotFoundException e){
+            throw new NotFoundException("Notfound");
+        }
+    }
+
+    @Override
+    public CourseLocalizationDTO get(UUID key, String language) {
+        return null;
     }
 
     @Override
     public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
+        return null;
     }
 
-    @Override
-    public CourseGetDTO get(UUID key, String language) {
-        return repository.findByCode(key).getLocalizationDto(BaseUtils.getSessionLang());
-    }
 
     @Override
-    public List<CourseGetDTO> list(CourseCriteria criteria, String language) {
-        List<CourseGetDTO> courseGetDTOS = new ArrayList<>();
+    public List<CourseLocalizationDTO> list(CourseCriteria criteria, String language) {
+        List<CourseLocalizationDTO> courseGetDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Course> courses = repository.findAll(request).stream().toList();
         for (Course c : courses) {
-            courseGetDTOS.add(c.getLocalizationDto(BaseUtils.getSessionLang()));
+            courseGetDTOS.add(mapper.toGetDTO(c).getLocalizationDto(language));
         }
         return courseGetDTOS;
     }
+
+
+
+    /*Yordamchi metodlara*/
 
     private Course fromCreatDto(CourseCreateDTO DTO) {
         return new Course(
@@ -120,5 +131,22 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
         Optional<Course> byId = repository.findById(id);
         if (byId.isEmpty()) throw new NotFoundException("Course not found");
         return mapper.toUpdateDTO(byId.get());
+    }
+
+
+    public Course updateForEveryService(CourseUpdateDTO DTO) {
+        Optional<Course> courseOptional = repository.findById(DTO.getId());
+        Course course = courseOptional.get();
+        if (Objects.isNull(course)) {
+            throw new NotFoundException("Course not found");
+        }
+        return repository.save(course);
+    }
+
+    public Course createForEveryService(CourseCreateDTO DTO) {
+        Course course = fromCreatDto(DTO);
+        Course save = repository.save(course);
+     return save;
+
     }
 }

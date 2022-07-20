@@ -7,7 +7,8 @@ import uz.darkor.darkor_22.dto.course.skill.SkillUpdateDTO;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.mapper.GenericMapper;
+import uz.darkor.darkor_22.mapper.course.CourseMapper;
 
-@Mapper(componentModel = "spring", uses = Course.class)
+@Mapper(componentModel = "spring", uses = CourseMapper.class)
 public interface SkillMapper extends GenericMapper<SkillCreateDTO, SkillUpdateDTO, SkillGetDTO, Skill> {
 }

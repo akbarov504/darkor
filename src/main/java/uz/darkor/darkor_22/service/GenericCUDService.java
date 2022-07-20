@@ -5,7 +5,7 @@ import uz.darkor.darkor_22.dto.GenericDTO;
 
 import java.io.Serializable;
 
-public interface GenericCUDService<CD extends BaseDTO, UD extends GenericDTO, GD extends GenericDTO, K extends Serializable> {
+public interface GenericCUDService<CD extends BaseDTO, UD extends GenericDTO, GD extends BaseDTO, K extends Serializable> {
     GD create(CD DTO);
 
     GD update(UD DTO);

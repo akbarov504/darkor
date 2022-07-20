@@ -9,7 +9,9 @@ import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.mapper.GenericMapper;
 import uz.darkor.darkor_22.mapper.system.file.FileMapper;
 
-@Mapper(componentModel = "spring"/*, uses = {FileMapper.class}*/)
+@Mapper(componentModel = "spring", uses = {FileMapper.class})
 public interface CourseMapper extends GenericMapper<CourseCreateDTO, CourseUpdateDTO, CourseGetDTO, Course> {
     CourseUpdateDTO toUpdateDTO(Course entity);
+
+    Course fromGetDto(CourseGetDTO dto);
 }

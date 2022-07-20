@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentCreateDTO implements BaseDTO {
+    private Long id;
     @NotNull(message="stars number doesn't be null")
     private Byte stars;
     @NotNull(message="body uz doesn't be null")
@@ -31,6 +32,6 @@ public class CommentCreateDTO implements BaseDTO {
     private String fullNameEn;
     @NotNull(message="gallery doesn't be null")
     private FileDTO gallery;
-    @NotNull(message="course doesn't be null")
+
     private CourseGetDTO course;
 }

@@ -76,4 +76,10 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
     private Price checkExistenceAndGetaByCode(UUID code) {
         return repository.findByCode(code).orElseThrow(() -> new NotFoundException("PRICE_NOT_FOUND"));
     }
+
+    public Price createForEveryService(PriceCreateDTO DTO) {
+        Price price = mapper.fromCreateDTO(DTO);
+        return repository.save(price);
+    }
+
 }

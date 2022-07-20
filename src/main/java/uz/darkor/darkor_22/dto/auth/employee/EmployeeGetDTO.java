@@ -3,7 +3,6 @@ package uz.darkor.darkor_22.dto.auth.employee;
 import lombok.*;
 import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
-import uz.darkor.darkor_22.dto.home.carousel.CarouselGetDTO;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;
@@ -19,18 +18,16 @@ import java.util.UUID;
 @AllArgsConstructor
 public class EmployeeGetDTO extends GenericDTO {
 
+    private Long id;
     private String fullName;
     private EmployeeType type;
     private Gallery gallery;
     private List<CourseGetDTO> courses;
 
     @Builder
-    public EmployeeGetDTO(@NotNull(message = "code cannot be null") UUID code,
-                          String fullName,
-                          EmployeeType type,
-                          Gallery gallery,
-                          List<Course> courses) {
+    public EmployeeGetDTO(@NotNull(message = "code cannot be null") UUID code, Long id, String fullName, EmployeeType type, Gallery gallery, List<Course> courses) {
         super(code);
+        this.id = id;
         this.fullName = fullName;
         this.type = type;
         this.gallery = gallery;

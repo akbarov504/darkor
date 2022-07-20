@@ -7,6 +7,7 @@ import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.system.comment.CommentCriteria;
 import uz.darkor.darkor_22.dto.system.comment.CommentCreateDTO;
 import uz.darkor.darkor_22.dto.system.comment.CommentGetDTO;
+import uz.darkor.darkor_22.dto.system.comment.CommentLocalizationDTO;
 import uz.darkor.darkor_22.dto.system.comment.CommentUpdateDTO;
 import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.system.comment.CommentServiceImpl;
@@ -52,9 +53,9 @@ public class CommentControllerImpl extends AbstractController<CommentServiceImpl
        return null;
     }
 
-    @GetMapping("getAllByCourse/{code}")
-    public ResponseEntity<Data<List<CommentGetDTO>>> getAllByCourse(@PathVariable UUID code, @RequestHeader("accept-language") String lang){
+    @GetMapping("getAllByCourse/{id}")
+    public ResponseEntity<Data<List<CommentLocalizationDTO>>> getAllByCourse(@PathVariable Long id, @RequestHeader("accept-language") String lang){
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.getByCourse(code), service.getSize()), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.getByCourse(id), service.getSize()), HttpStatus.OK);
     }
 }

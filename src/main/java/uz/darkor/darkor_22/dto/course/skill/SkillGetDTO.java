@@ -14,16 +14,15 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 public class SkillGetDTO extends GenericDTO {
+    private Long id;
     private String name;
     private String description;
     private CourseGetDTO course;
 
     @Builder
-    public SkillGetDTO(@NotNull(message = "code cannot be null") UUID code,
-                       String name,
-                       String description,
-                       Course course) {
+    public SkillGetDTO(@NotNull(message = "code cannot be null") UUID code, Long id, String name, String description, Course course) {
         super(code);
+        this.id = id;
         this.name = name;
         this.description = description;
         this.course = course.getLocalizationDto(BaseUtils.getSessionLang());

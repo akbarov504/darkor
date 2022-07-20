@@ -7,6 +7,7 @@ import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.course.CourseCriteria;
 import uz.darkor.darkor_22.dto.course.course.CourseCreateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.response.Data;
@@ -23,39 +24,62 @@ public class CourseControllerImpl extends AbstractController<CourseServiceImpl> 
         super(service);
     }
 
-    @Override
-    public ResponseEntity<Data<CourseGetDTO>> create(CourseCreateDTO DTO,String lang) {
-        BaseUtils.setSessionLang(lang);
+
+    @PostMapping("create/")
+    public ResponseEntity<Data<CourseLocalizationDTO>> createMy(@RequestBody CourseCreateDTO DTO) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.CREATED);
     }
 
-    @Override
-    public ResponseEntity<Data<CourseGetDTO>> update(CourseUpdateDTO DTO,String lang) {
-        BaseUtils.setSessionLang(lang);
+    @PutMapping("update/")
+    public ResponseEntity<Data<CourseLocalizationDTO>> updateMy(@RequestBody CourseUpdateDTO DTO) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
+    @DeleteMapping("delet/{id}")
+    public ResponseEntity<Data<Boolean>> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(new Data<>(service.delete(id)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<CourseGetDTO>> get(UUID code, String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code, lang)), HttpStatus.OK);
+//    @GetMapping("get/")
+//    public ResponseEntity<Data<CourseLocalizationDTO>> getMy(@pathVariable Long id, @RequestHeader("accept-language") String lang) {
+//        return new ResponseEntity<>(new Data<>(service.get(id, lang)), HttpStatus.OK);
+//
+//    }
 
-    }
-
-    @Override
-    public ResponseEntity<Data<List<CourseGetDTO>>> list(CourseCriteria criteria, String lang) {
-        BaseUtils.setSessionLang(lang);
+    @GetMapping("list/")
+    public ResponseEntity<Data<List<CourseLocalizationDTO>>> listMy(@RequestBody CourseCriteria criteria, @RequestHeader("accept-language") String lang) {
         return new ResponseEntity<>(new Data<>(service.list(criteria, lang)), HttpStatus.OK);
     }
 
     @GetMapping("forUpdate/{id}")
     public ResponseEntity<Data<CourseUpdateDTO>> getForUpdateCourse(@PathVariable Long id){
         return new ResponseEntity<>(new Data<>(service.getForUpdate(id)),HttpStatus.OK);
+    }
+
+
+
+
+    @Override
+    public ResponseEntity<Data<CourseGetDTO>> create(CourseCreateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
+        return null;
+    }
+    @Override
+    public ResponseEntity<Data<CourseGetDTO>> update(CourseUpdateDTO DTO,String lang) {
+        BaseUtils.setSessionLang(lang);
+        return null;
+    }
+    @Override
+    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+        BaseUtils.setSessionLang(lang);
+        return null;
+    }
+    @Override
+    public ResponseEntity<Data<CourseGetDTO>> get(UUID code, String lang) {
+        return null;
+    }
+    @Override
+    public ResponseEntity<Data<List<CourseGetDTO>>> list(CourseCriteria criteria, String lang) {
+        return null;
     }
 }

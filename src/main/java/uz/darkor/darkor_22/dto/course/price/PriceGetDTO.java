@@ -12,14 +12,15 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 public class PriceGetDTO extends GenericDTO {
+    private Long id;
     private Double price;
     private List<String> offers;
 
     @Builder
-    public PriceGetDTO(@NotNull(message = "code cannot be null") UUID code,
-                       Double price,
-                       List<String> offers) {
+
+    public PriceGetDTO(@NotNull(message = "code cannot be null") UUID code, Long id, Double price, List<String> offers) {
         super(code);
+        this.id = id;
         this.price = price;
         this.offers = offers;
     }

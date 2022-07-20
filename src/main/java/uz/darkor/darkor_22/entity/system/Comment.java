@@ -43,15 +43,6 @@ public class Comment extends Auditable {
     @OneToOne
     private Gallery image;
 
-    @ManyToOne
+    @ManyToOne()
     private Course course;
-
-    public CommentGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return CommentGetDTO.builder().stars(this.stars).body(this.bodyUz).fullName(this.fullNameUz).gallery(this.image).course(this.course).build();
-        } else if (lang.equals("ru")) {
-            return CommentGetDTO.builder().stars(this.stars).body(this.bodyRu).fullName(this.fullNameRu).gallery(this.image).course(this.course).build();
-        }
-        return CommentGetDTO.builder().stars(this.stars).body(this.bodyEn).fullName(this.fullNameEn).gallery(this.image).course(this.course).build();
-    }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import uz.darkor.darkor_22.entity.course.Course;
+import uz.darkor.darkor_22.entity.course.CourseDetail;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
 import javax.transaction.Transactional;
@@ -20,5 +21,6 @@ public interface CourseRepository extends JpaRepository<Course, Long>, BaseRepos
 
     @Query(value = "from Course where isDeleted = false and code = :code")
     Course findByCode(UUID code);
+
 
 }
