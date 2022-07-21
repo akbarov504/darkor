@@ -4,9 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import uz.darkor.darkor_22.entity.auth.Employee;
+import uz.darkor.darkor_22.entity.employee.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
 import java.util.List;

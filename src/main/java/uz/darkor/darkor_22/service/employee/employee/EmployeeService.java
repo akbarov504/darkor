@@ -5,7 +5,7 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeCreateDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeLocalizedDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
-import uz.darkor.darkor_22.entity.auth.Employee;
+import uz.darkor.darkor_22.entity.employee.Employee;
 import uz.darkor.darkor_22.service.BaseService;
 import uz.darkor.darkor_22.service.GenericCUDService;
 import uz.darkor.darkor_22.service.GenericGLService;

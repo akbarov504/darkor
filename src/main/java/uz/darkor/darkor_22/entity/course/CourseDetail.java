@@ -8,7 +8,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import uz.darkor.darkor_22.dto.course.course_detail.CourseDetailGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
-import uz.darkor.darkor_22.entity.auth.Employee;
+import uz.darkor.darkor_22.entity.employee.Employee;
 import uz.darkor.darkor_22.entity.system.Comment;
 import uz.darkor.darkor_22.entity.system.FAQ;
 import uz.darkor.darkor_22.entity.system.Gallery;

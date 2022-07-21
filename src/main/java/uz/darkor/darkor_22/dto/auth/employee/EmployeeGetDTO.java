@@ -5,7 +5,6 @@ import uz.darkor.darkor_22.dto.GenericDTO;
 import uz.darkor.darkor_22.dto.auth.employee_detail.EmployeeDetailGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
-import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.enums.EmployeeType;

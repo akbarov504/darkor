@@ -3,6 +3,7 @@ package uz.darkor.darkor_22.controller.employee;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.employee.EmployeeCriteria;
@@ -39,37 +40,38 @@ public class EmployeeControllerImpl extends AbstractController<EmployeeService> 
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeLocalizedDTO>> create(EmployeeCreateDTO DTO,String lang) {
+    public ResponseEntity<Data<EmployeeLocalizedDTO>> create(EmployeeCreateDTO DTO, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<EmployeeLocalizedDTO>> update(EmployeeUpdateDTO DTO,String lang) {
+    public ResponseEntity<Data<EmployeeLocalizedDTO>> update(EmployeeUpdateDTO DTO, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Data<EmployeeLocalizedDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.get(code, lang)), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Data<List<EmployeeLocalizedDTO>>> list(EmployeeCriteria criteria, String lang) {
         BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.list(criteria,lang)), HttpStatus.OK);
+        return new ResponseEntity<>(new Data<>(service.list(criteria, lang)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
+    public ResponseEntity<Data<Boolean>> delete(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
     }
 
     @GetMapping("get_by_course/{code}")
-    public ResponseEntity<Data<List<EmployeeLocalizedDTO>>> getByCourseCode(EmployeeCriteria criteria,@PathVariable UUID code, String lang) {
+    public ResponseEntity<Data<List<EmployeeLocalizedDTO>>> getByCourseCode(EmployeeCriteria criteria, @PathVariable UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.getAllByCourseCode(criteria, code)), HttpStatus.OK);
     }

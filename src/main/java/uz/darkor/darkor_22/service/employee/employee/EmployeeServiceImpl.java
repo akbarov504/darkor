@@ -11,7 +11,7 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeLocalizedDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeUpdateDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
-import uz.darkor.darkor_22.entity.auth.Employee;
+import uz.darkor.darkor_22.entity.employee.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.enums.EmployeeType;
 import uz.darkor.darkor_22.exception.NotFoundException;

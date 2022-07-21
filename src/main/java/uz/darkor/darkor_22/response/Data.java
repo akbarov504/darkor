@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Data<T> {
+public class  Data<T> {
     protected T body;
     protected Long totalCount;
     protected boolean isSuccess;

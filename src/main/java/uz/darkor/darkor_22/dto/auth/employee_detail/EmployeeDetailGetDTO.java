@@ -8,7 +8,7 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.skill.SkillGetDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
-import uz.darkor.darkor_22.entity.auth.Employee;
+import uz.darkor.darkor_22.entity.employee.Employee;
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.course.Skill;
 import uz.darkor.darkor_22.entity.system.Gallery;

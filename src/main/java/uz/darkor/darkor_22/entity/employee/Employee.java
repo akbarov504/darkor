@@ -1,4 +1,4 @@
-package uz.darkor.darkor_22.entity.auth;
+package uz.darkor.darkor_22.entity.employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -7,7 +7,7 @@ import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceUpdateDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
-import uz.darkor.darkor_22.entity.auth.Employee;
+
 import uz.darkor.darkor_22.entity.course.Course;
 import uz.darkor.darkor_22.entity.course.Price;
 import uz.darkor.darkor_22.entity.course.Skill;

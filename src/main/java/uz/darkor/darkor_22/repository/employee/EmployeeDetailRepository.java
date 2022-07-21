@@ -1,8 +1,8 @@
 package uz.darkor.darkor_22.repository.employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import uz.darkor.darkor_22.entity.auth.Employee;
-import uz.darkor.darkor_22.entity.auth.EmployeeDetail;
+import uz.darkor.darkor_22.entity.employee.Employee;
+import uz.darkor.darkor_22.entity.employee.EmployeeDetail;
 import uz.darkor.darkor_22.repository.BaseRepository;
 
 import java.util.Optional;
