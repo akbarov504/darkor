@@ -2,8 +2,7 @@ package uz.darkor.darkor_22.controller.system.partner;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.system.partner.PartnerCriteria;
 import uz.darkor.darkor_22.dto.system.partner.PartnerCreateDTO;
@@ -13,40 +12,41 @@ import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.system.partner.PartnerService;
 import uz.darkor.darkor_22.service.system.partner.PartnerServiceImpl;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/partner/*")
-public class PartnerControllerImpl extends AbstractController<PartnerServiceImpl> implements PartnerController {
+public class PartnerControllerImpl extends AbstractController<PartnerServiceImpl>{
 
     public PartnerControllerImpl(PartnerServiceImpl service) {
         super(service);
     }
 
-    @Override
-    public ResponseEntity<Data<PartnerGetDTO>> create(PartnerCreateDTO DTO,String lang) {
+    @PostMapping("/add")
+    public ResponseEntity<Data<PartnerGetDTO>> create(@RequestBody PartnerCreateDTO DTO) {
         return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<PartnerGetDTO>> update(PartnerUpdateDTO DTO,String lang) {
+    @PutMapping("/updated")
+    public ResponseEntity<Data<PartnerGetDTO>> update(@RequestBody PartnerUpdateDTO DTO) {
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
-        return new ResponseEntity<>(new Data<>(service.delete(code)), HttpStatus.OK);
+    @DeleteMapping("/deleted/{id}")
+    public ResponseEntity<Data<Boolean>> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(new Data<>(service.delete(id)), HttpStatus.OK);
     }
 
 
-    @Override
-    public ResponseEntity<Data<PartnerGetDTO>> get(UUID code, String lang) {
-        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
+   @GetMapping("/getOne/{id}")
+    public ResponseEntity<Data<PartnerGetDTO>> get(@PathVariable Long id) {
+        return new ResponseEntity<>(new Data<>(service.get(id)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<List<PartnerGetDTO>>> list(PartnerCriteria criteria, String lang) {
+    @GetMapping("/list")
+    public ResponseEntity<Data<List<PartnerGetDTO>>> list() {
         return new ResponseEntity<>(new Data<>(service.getAll()), HttpStatus.OK);
     }
 }

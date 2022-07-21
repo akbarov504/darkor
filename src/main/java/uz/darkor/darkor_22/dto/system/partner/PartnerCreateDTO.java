@@ -15,8 +15,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PartnerCreateDTO implements BaseDTO {
+
     @NotNull(message = "logo doesn't be null")
     private FileDTO logo;
-    @NotNull(message = "logo doesn't be null")
+    @NotNull(message = "link doesn't be null")
     private String link;
 }

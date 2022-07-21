@@ -7,6 +7,7 @@ import uz.darkor.darkor_22.dto.system.partner.PartnerGetDTO;
 import uz.darkor.darkor_22.dto.system.partner.PartnerUpdateDTO;
 import uz.darkor.darkor_22.entity.system.Gallery;
 import uz.darkor.darkor_22.entity.system.Partner;
+import uz.darkor.darkor_22.exception.NotFoundException;
 import uz.darkor.darkor_22.mapper.system.partner.PartnerMapper;
 import uz.darkor.darkor_22.repository.system.file.FileRepository;
 import uz.darkor.darkor_22.repository.system.partner.PartnerRepository;
@@ -17,7 +18,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRepository> implements PartnerService {
+public class
+PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRepository> {
     private final FileRepository fileRepository;
 
     public PartnerServiceImpl(PartnerMapper mapper, PartnerRepository repository, FileRepository fileRepository) {
@@ -25,7 +27,7 @@ public class PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRe
         this.fileRepository = fileRepository;
     }
 
-    @Override
+
     public PartnerGetDTO create(PartnerCreateDTO DTO) {
         Optional<Gallery> byId = fileRepository.findById(DTO.getLogo().getId());
         Partner partner = mapper.fromCreateDTO(DTO);
@@ -34,29 +36,38 @@ public class PartnerServiceImpl extends AbstractService<PartnerMapper, PartnerRe
         return mapper.toGetDTO(save);
     }
 
-    @Override
+
     public PartnerGetDTO update(PartnerUpdateDTO DTO) {
-        Partner byCode = repository.findByCode(DTO.getCode());
+        Partner byCode = repository.findById(DTO.getId()).orElseThrow(() ->  new NotFoundException("Not Found"));
         Partner partner = mapper.fromUpdateDTO(DTO, byCode);
         Partner save = repository.save(partner);
         return mapper.toGetDTO(save);
-//        return null;
+
     }
 
-    @Override
-    public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
+
+    public Boolean delete(Long id ){
+        try {
+            repository.deleteById(id);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    @Override
-    public PartnerGetDTO get(UUID key, String language) {
-        return mapper.toGetDTO(repository.findByCode(key));
+
+    public PartnerGetDTO get(Long id) {
+        try {
+            return mapper.toGetDTO(repository.findById(id).get());
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
-    @Override
-    public List<PartnerGetDTO> list(PartnerCriteria criteria, String language) {
-        return null;
-    }
+
 
     public List<PartnerGetDTO> getAll() {
         return mapper.toListDTO(repository.findAll());
