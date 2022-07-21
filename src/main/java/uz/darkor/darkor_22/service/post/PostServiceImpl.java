@@ -30,17 +30,17 @@ public class PostServiceImpl extends AbstractService<PostMapper, PostRepository>
 
     public PostLocalizedDTO create(PostCreateDTO DTO,String lang) {
 
-        Post post = new Post(
-                fileRepository.findById(DTO.getGalleryEn().getId()).get(),
-                fileRepository.findById(DTO.getGalleryRu().getId()).get(),
-                fileRepository.findById(DTO.getGalleryUz().getId()).get(),
-                DTO.getTitleUz(),
-                DTO.getTitleRU(),
-                DTO.getTitleEn(),
-                DTO.getDescriptionUz(),
-                DTO.getDescriptionRu(),
-                DTO.getDescriptionEn()
-        );
+        Post post = new Post();
+        post.setGalleryEn(fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setGalleryRu(fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setGalleryUz(fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        post.setTitleEn(DTO.getTitleEn());
+        post.setTitleRu(DTO.getTitleRU());
+        post.setTitleUz(DTO.getTitleUz());
+        post.setDescriptionEn(DTO.getDescriptionEn());
+        post.setDescriptionRu(DTO.getDescriptionRu());
+        post.setDescriptionUz(DTO.getDescriptionUz());
+
 
         repository.save(post);
         return mapper.toGetDTO(post).getLocalizationDto(lang);

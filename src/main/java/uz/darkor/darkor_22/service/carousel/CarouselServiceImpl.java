@@ -32,14 +32,13 @@ public class CarouselServiceImpl extends AbstractService<CarouselMapper, Carouse
 
     @PostMapping
     public CarouselLocalizedDTO create(CarouselCreateDTO DTO,String lang) {
-        Carousel carousel = new Carousel(
-                fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                DTO.getLinkUz(),
-                DTO.getLinkRu(),
-                DTO.getLinkEn()
-        );
+        Carousel carousel = new Carousel();
+        carousel.setGalleryEn(fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setGalleryRu(fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setGalleryUz( fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        carousel.setLinkEn(DTO.getLinkEn());
+        carousel.setLinkRu(DTO.getLinkRu());
+        carousel.setLinkUz(DTO.getLinkUz());
         repository.save(carousel);
         return mapper.toGetDTO(carousel).getLocalizationDto(lang);
 

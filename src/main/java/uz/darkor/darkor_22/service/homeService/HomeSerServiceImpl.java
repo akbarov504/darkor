@@ -30,17 +30,16 @@ public class HomeSerServiceImpl extends AbstractService<HomeServiceMapper, HomeS
 
 
     public HomeServiceLocalizedDTO create(HomeServiceCreateDTO DTO, String lang) {
-        HomeService homeService = new HomeService(
-                fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")),
-                DTO.getTitleUz(),
-                DTO.getTitleRU(),
-                DTO.getTitleEn(),
-                DTO.getDescriptionUZ(),
-                DTO.getDescriptionRu(),
-                DTO.getDescriptionEn()
-        );
+        HomeService homeService = new HomeService();
+        homeService.setGalleryEn(fileRepository.findById(DTO.getGalleryEn().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        homeService.setGalleryRu(fileRepository.findById(DTO.getGalleryRu().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        homeService.setGalleryEn(fileRepository.findById(DTO.getGalleryUz().getId()).orElseThrow(() -> new NotFoundException("Not null")));
+        homeService.setTitleEn(DTO.getTitleEn());
+        homeService.setTitleRU(DTO.getTitleRU());
+        homeService.setTitleUz(DTO.getTitleUz());
+        homeService.setDescriptionEn(DTO.getDescriptionEn());
+        homeService.setDescriptionRu(DTO.getDescriptionRu());
+        homeService.setDescriptionUZ(DTO.getDescriptionUZ());
         repository.save(homeService);
         return mapper.toGetDTO(homeService).getLocalizationDto(lang);
     }
