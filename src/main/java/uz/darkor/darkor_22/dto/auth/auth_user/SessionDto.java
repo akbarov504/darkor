@@ -1,4 +1,4 @@
-package uz.darkor.darkor_22.entity.auth;
+package uz.darkor.darkor_22.dto.auth.auth_user;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -7,6 +7,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SessionDto {

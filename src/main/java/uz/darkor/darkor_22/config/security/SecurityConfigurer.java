@@ -27,8 +27,7 @@ public class SecurityConfigurer extends GlobalMethodSecurityConfiguration {
 
     public static final String[] WHITE_LIST = {
             BaseUtils.PATH + "/auth/login",
-            BaseUtils.PATH + "/auth/register",
-            BaseUtils.PATH + "/token",
+            BaseUtils.PATH + "/auth/token",
             "/swagger-ui/**",
             "/api-docs/**",
             BaseUtils.PATH + "/auth/accept/**"

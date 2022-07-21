@@ -2,6 +2,7 @@ package uz.darkor.darkor_22.controller.employee.detail;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.BaseCriteria;
@@ -41,6 +42,7 @@ public class EmployeeDetailControllerImpl extends AbstractController<EmployeeDet
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Data<EmployeeDetailLocalizedDTO>> get(UUID code, String lang) {
         BaseUtils.setSessionLang(lang);
         return new ResponseEntity<>(new Data<>(service.get(code, lang)), HttpStatus.OK);

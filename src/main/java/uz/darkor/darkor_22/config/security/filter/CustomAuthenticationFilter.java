@@ -13,10 +13,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import uz.darkor.darkor_22.config.security.jwt.JWTUtils;
 import uz.darkor.darkor_22.entity.auth.security_utils.CustomUserDetails;
-import uz.darkor.darkor_22.entity.auth.security_utils.LoginDto;
-import uz.darkor.darkor_22.entity.auth.SessionDto;
+import uz.darkor.darkor_22.dto.auth.auth_user.LoginDto;
+import uz.darkor.darkor_22.dto.auth.auth_user.SessionDto;
 import uz.darkor.darkor_22.response.APIErrorDTO;
 import uz.darkor.darkor_22.response.Data;
+import uz.darkor.darkor_22.utils.BaseUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -33,7 +34,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     public CustomAuthenticationFilter(AuthenticationManager manager) {
         this.authenticationManager = manager;
-        super.setFilterProcessesUrl("/api/login");
+        super.setFilterProcessesUrl(BaseUtils.PATH+"/login");
     }
 
     @Override
