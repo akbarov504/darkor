@@ -1,6 +1,7 @@
 package uz.darkor.darkor_22.mapper.system.comment;
 
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 import uz.darkor.darkor_22.dto.system.comment.CommentCreateDTO;
 import uz.darkor.darkor_22.dto.system.comment.CommentGetDTO;
 import uz.darkor.darkor_22.dto.system.comment.CommentUpdateDTO;

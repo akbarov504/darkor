@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/courseDetails/*")
-public class CourseDetailControllerImpl extends AbstractController<CourseDetailsServiceImpl>{
+public class CourseDetailControllerImpl extends AbstractController<CourseDetailsServiceImpl> implements CourseDetailController {
 
     public CourseDetailControllerImpl(CourseDetailsServiceImpl service) {
         super(service);
@@ -51,5 +51,30 @@ public class CourseDetailControllerImpl extends AbstractController<CourseDetails
     public ResponseEntity<Data<List<CourseDetailLocalizationDTO>>> listMy(@RequestBody CourseDetailCriteria criteria, @RequestHeader("accept-language") String lang) {
         List<CourseDetailLocalizationDTO> list = service.list(criteria, lang);
         return new ResponseEntity<>(new Data<>(list), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Data<CourseDetailGetDTO>> create(CourseDetailCreateDTO DTO, String lang) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Data<CourseDetailGetDTO>> update(CourseDetailUpdateDTO DTO, String lang) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Data<Boolean>> delete(Long code, String lang) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Data<CourseDetailGetDTO>> get(Long code, String lang) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Data<List<CourseDetailGetDTO>>> list(CourseDetailCriteria criteria, String lang) {
+        return null;
     }
 }

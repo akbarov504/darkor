@@ -19,6 +19,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentGetDTO extends GenericDTO {
+
+    private Long id;
     private Byte stars;
 
     private String bodyUz;
@@ -39,6 +41,7 @@ public class CommentGetDTO extends GenericDTO {
 
 
     public CommentLocalizationDTO getLocalizationDto(String lang) {
+
         if (lang.equals("uz")) {
             return CommentLocalizationDTO.builder().stars(this.stars).body(this.bodyUz).fullName(this.fullNameUz).gallery(this.image).course(this.course.getLocalizationDto("uz")).build();
         } else if (lang.equals("ru")) {

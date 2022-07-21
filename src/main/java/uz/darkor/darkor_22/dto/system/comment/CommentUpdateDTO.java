@@ -5,22 +5,39 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.GenericDTO;
-import uz.darkor.darkor_22.entity.course.Course;
-import uz.darkor.darkor_22.entity.system.Gallery;
-
+import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseUpdateDTO;
+import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
+
 
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CommentUpdateDTO extends GenericDTO {
 
     private Long id;
+    @NotNull(message="stars number doesn't be null")
     private Byte stars;
-    private String body;
-    private String fullName;
-    private Gallery gallery;
-    private Course course;
+    @NotNull(message="body uz doesn't be null")
+    private String bodyUz;
+    @NotNull(message="body ru doesn't be null")
+    private String bodyRu;
+    @NotNull(message="body en doesn't be null")
+    private String bodyEn;
+    @NotNull(message="fullName uz doesn't be null")
+    private String fullNameUz;
+    @NotNull(message="fullName ru doesn't be null")
+    private String fullNameRu;
+    @NotNull(message="fullName en doesn't be null")
+    private String fullNameEn;
+
+    @NotNull(message="gallery doesn't be null")
+    private FileDTO gallery;
+
+    @NotNull(message="course doesn't be null")
+    private CourseUpdateDTO course;
 
 }

@@ -8,10 +8,7 @@ import uz.darkor.darkor_22.dto.system.comment.CommentGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.course.Course;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -40,7 +37,7 @@ public class Comment extends Auditable {
     @Column(nullable = false)
     private String fullNameEn;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Gallery image;
 
     @ManyToOne()

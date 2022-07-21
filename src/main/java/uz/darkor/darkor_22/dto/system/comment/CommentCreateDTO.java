@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
+import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentCreateDTO implements BaseDTO {
+
     private Long id;
     @NotNull(message="stars number doesn't be null")
     private Byte stars;
@@ -30,8 +32,10 @@ public class CommentCreateDTO implements BaseDTO {
     private String fullNameRu;
     @NotNull(message="fullName en doesn't be null")
     private String fullNameEn;
+
     @NotNull(message="gallery doesn't be null")
     private FileDTO gallery;
 
+    @NotNull(message="course doesn't be null")
     private CourseGetDTO course;
 }

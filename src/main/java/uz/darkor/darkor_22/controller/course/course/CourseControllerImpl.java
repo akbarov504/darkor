@@ -36,7 +36,7 @@ public class CourseControllerImpl extends AbstractController<CourseServiceImpl> 
         return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
     }
 
-    @DeleteMapping("delet/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<Data<Boolean>> delete(@PathVariable Long id) {
         return new ResponseEntity<>(new Data<>(service.delete(id)), HttpStatus.OK);
     }

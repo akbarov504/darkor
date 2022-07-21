@@ -13,44 +13,42 @@ import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.system.comment.CommentServiceImpl;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/comment/")
-public class CommentControllerImpl extends AbstractController<CommentServiceImpl> implements CommentController {
+public class CommentControllerImpl extends AbstractController<CommentServiceImpl> {
 
     public CommentControllerImpl(CommentServiceImpl service) {
         super(service);
     }
 
-    @Override
-    public ResponseEntity<Data<CommentGetDTO>> create(CommentCreateDTO DTO,String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.create(DTO)), HttpStatus.OK);
+    @PostMapping("/addComment")
+    public ResponseEntity<Data<CommentLocalizationDTO>> create(@RequestBody CommentCreateDTO DTO,@RequestHeader("accept-language") String lang) {
+        return new ResponseEntity<>(new Data<>(service.createMy(DTO,lang)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<CommentGetDTO>> update(CommentUpdateDTO DTO,String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.update(DTO)), HttpStatus.OK);
+    @PutMapping("/updated")
+    public ResponseEntity<Data<CommentLocalizationDTO>> update(@RequestBody CommentUpdateDTO DTO,@RequestHeader("accept-language") String lang) {
+        return new ResponseEntity<>(new Data<>(service.updateMy(DTO,lang)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<Boolean>> delete(UUID code,String lang) {
-        return null;
+    @DeleteMapping("/deleted/{id}")
+    public ResponseEntity<Data<Boolean>> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(new Data<>(service.deleteMy(id)),HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<CommentGetDTO>> get(UUID code, String lang) {
-        BaseUtils.setSessionLang(lang);
-        return new ResponseEntity<>(new Data<>(service.get(code,lang)), HttpStatus.OK);
+    @GetMapping("/getOneComment/{id}")
+    public ResponseEntity<Data<CommentLocalizationDTO>> get(@PathVariable  Long  id,@RequestHeader("accept-language") String lang) {
+        return new ResponseEntity<>(new Data<>(service.getMy(id,lang)), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Data<List<CommentGetDTO>>> list(CommentCriteria criteria, String lang) {
-       return null;
+    @GetMapping("/listComment")
+    public ResponseEntity<Data<List<CommentLocalizationDTO>>> list(@Valid  CommentCriteria criteria,@RequestHeader("accept-language") String lang) {
+        return  new ResponseEntity<>(new Data<>(service.listMy(criteria,lang)),HttpStatus.OK);
     }
 
     @GetMapping("getAllByCourse/{id}")

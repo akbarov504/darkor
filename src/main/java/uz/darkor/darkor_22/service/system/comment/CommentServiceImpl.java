@@ -21,7 +21,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import java.util.*;
 
 @Service
-public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRepository> implements CommentService {
+public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRepository>{
 
     private final CourseRepository courseRepository;
 
@@ -33,6 +33,13 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
 
     public CommentLocalizationDTO createMy(CommentCreateDTO DTO, String lang) {
         Comment comment = mapper.fromCreateDTO(DTO);
+        if (Objects.nonNull(DTO.getCourse())){
+            Optional<Course> byId = courseRepository.findById(DTO.getCourse().getId());
+            if (byId.isEmpty()) throw new NotFoundException("course not found please try again");
+            comment.setCourse(byId.get());
+        }else {
+            comment.setCourse(null);
+        }
         Comment save = repository.save(comment);
         return mapper.toGetDTO(save).getLocalizationDto(lang);
     }
@@ -62,9 +69,13 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
     }
 
     public List<CommentLocalizationDTO> listMy(CommentCriteria criteria, String language) {
+        List<CommentLocalizationDTO> commentDtos = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Comment> all = repository.findAll(request).stream().toList();
-        return getLocalizedDtos(mapper.toListDTO(all));
+        for (Comment e : all) {
+            commentDtos.add(mapper.toGetDTO(e).getLocalizationDto(language));
+        }
+        return commentDtos;
     }
 
 
@@ -75,30 +86,6 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
         return getLocalizedDtos(mapper.toListDTO(comments));
     }
 
-    @Override
-    public CommentGetDTO create(CommentCreateDTO DTO) {
-        return null;
-    }
-
-    @Override
-    public CommentGetDTO update(CommentUpdateDTO DTO) {
-        return null;
-    }
-
-    @Override
-    public Boolean delete(UUID key) {
-        return repository.deleteByCode(key);
-    }
-
-    @Override
-    public CommentGetDTO get(UUID key, String language) {
-      return null;
-    }
-
-    @Override
-    public List<CommentGetDTO> list(CommentCriteria criteria, String language) {
-return null;
-    }
 
     public Long getSize() {
         return repository.count();
