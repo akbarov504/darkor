@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import uz.darkor.darkor_22.dto.system.faq.FAQGetDTO;
 import uz.darkor.darkor_22.entity.Auditable;
 import uz.darkor.darkor_22.entity.course.Course;
@@ -17,9 +18,10 @@ import javax.persistence.ManyToOne;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Where(clause = "is_deleted = false")
 public class FAQ extends Auditable {
     @Column(nullable = false)
-    private String questionUZ;
+    private String questionUz;
 
     @Column(nullable = false)
     private String questionRu;
@@ -28,7 +30,7 @@ public class FAQ extends Auditable {
     private String questionEn;
 
     @Column(nullable = false)
-    private String answerUZ;
+    private String answerUz;
 
     @Column(nullable = false)
     private String answerRu;
@@ -38,14 +40,4 @@ public class FAQ extends Auditable {
 
     @ManyToOne
     private Course course;
-
-
-    public FAQGetDTO getLocalizationDto(String lang) {
-        if (lang.equals("uz")) {
-            return FAQGetDTO.builder().question(this.questionUZ).answer(this.answerUZ).course(this.course).build();
-        } else if (lang.equals("ru")) {
-            return FAQGetDTO.builder().question(this.questionRu).answer(this.answerRu).course(this.course).build();
-        }
-        return FAQGetDTO.builder().question(this.questionEn).answer(this.answerEn).course(this.course).build();
-    }
 }

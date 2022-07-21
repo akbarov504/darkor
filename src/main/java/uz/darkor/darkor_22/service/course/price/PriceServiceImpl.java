@@ -1,5 +1,6 @@
 package uz.darkor.darkor_22.service.course.price;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.price.PriceCriteria;
 import uz.darkor.darkor_22.dto.course.price.PriceCreateDTO;
@@ -59,7 +60,8 @@ public class PriceServiceImpl extends AbstractService<PriceMapper, PriceReposito
 
     @Override
     public List<PriceLocalizedDTO> list(PriceCriteria criteria, String language) {
-        List<Price> prices = repository.findAll();
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        List<Price> prices = repository.findAll(request).getContent();
         return getLocalizedPriceDTOList(prices, language);
     }
 

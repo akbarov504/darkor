@@ -1,5 +1,6 @@
 package uz.darkor.darkor_22.service.course.skill;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import uz.darkor.darkor_22.criteria.skill.SkillCriteria;
 import uz.darkor.darkor_22.dto.course.skill.SkillCreateDTO;
@@ -68,7 +69,8 @@ public class SkillServiceImpl extends AbstractService<SkillMapper, SkillReposito
 
     @Override
     public List<SkillLocalizedDTO> list(SkillCriteria criteria, String language) {
-        List<Skill> skills = repository.findAll();
+        PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
+        List<Skill> skills = repository.findAll(request).getContent();
         return getLocalizedDTOs(skills, language);
     }
 
