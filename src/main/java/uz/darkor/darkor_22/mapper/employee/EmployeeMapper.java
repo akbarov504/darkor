@@ -10,6 +10,6 @@ import uz.darkor.darkor_22.mapper.GenericMapper;
 import uz.darkor.darkor_22.mapper.course.CourseMapper;
 import uz.darkor.darkor_22.mapper.system.file.FileMapper;
 
-@Mapper(componentModel = "spring",uses={FileMapper.class, CourseMapper.class,EmployeeDetailMapper.class})
+@Mapper(componentModel = "spring",uses={FileMapper.class, CourseMapper.class, EmployeeDetailMapper.class})
 public interface EmployeeMapper extends GenericMapper<EmployeeCreateDTO, EmployeeUpdateDTO, EmployeeGetDTO, Employee> {
 }

@@ -5,6 +5,7 @@ import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.auth.employee.EmployeeGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseGetDTO;
 import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
+import uz.darkor.darkor_22.dto.course.price.PriceLocalizedDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import java.util.List;
 
@@ -20,8 +21,6 @@ public class CourseDetailLocalizationDTO implements BaseDTO {
  private String titleDescription;
  private String bodyDescription;
  private List<FileDTO> file;
-// private PriceLocalizationDTO  todo price Localiztion dto ni qo'shish
+ private PriceLocalizedDTO price;
  private CourseLocalizationDTO course;
- private List<EmployeeGetDTO> employees;
-
 }

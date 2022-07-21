@@ -14,6 +14,7 @@ import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.course.course.CourseServiceImpl;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class CourseControllerImpl extends AbstractController<CourseServiceImpl> 
 //    }
 
     @GetMapping("list/")
-    public ResponseEntity<Data<List<CourseLocalizationDTO>>> listMy(@RequestBody CourseCriteria criteria, @RequestHeader("accept-language") String lang) {
+    public ResponseEntity<Data<List<CourseLocalizationDTO>>> listMy(@Valid CourseCriteria criteria, @RequestHeader("accept-language") String lang) {
         return new ResponseEntity<>(new Data<>(service.list(criteria, lang)), HttpStatus.OK);
     }
 

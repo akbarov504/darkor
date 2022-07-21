@@ -77,13 +77,16 @@ public class CourseServiceImpl extends AbstractService<CourseMapper, CourseRepos
 
     @Override
     public List<CourseLocalizationDTO> list(CourseCriteria criteria, String language) {
-        List<CourseLocalizationDTO> courseGetDTOS = new ArrayList<>();
+        List<CourseLocalizationDTO> courseLocalizationDTOS = new ArrayList<>();
         PageRequest request = PageRequest.of(criteria.getPage(), criteria.getSize());
         List<Course> courses = repository.findAll(request).stream().toList();
-        for (Course c : courses) {
-            courseGetDTOS.add(mapper.toGetDTO(c).getLocalizationDto(language));
+
+        List<CourseGetDTO> courseGetDTOS = mapper.toListDTO(courses);
+
+        for (CourseGetDTO c : courseGetDTOS) {
+            courseLocalizationDTOS.add(c.getLocalizationDto(language));
         }
-        return courseGetDTOS;
+        return courseLocalizationDTOS;
     }
 
 
