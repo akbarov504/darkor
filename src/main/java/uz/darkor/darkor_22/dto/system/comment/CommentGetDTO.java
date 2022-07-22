@@ -21,6 +21,7 @@ import java.util.UUID;
 public class CommentGetDTO extends GenericDTO {
 
     private Long id;
+
     private Byte stars;
 
     private String bodyUz;
@@ -43,11 +44,11 @@ public class CommentGetDTO extends GenericDTO {
     public CommentLocalizationDTO getLocalizationDto(String lang) {
 
         if (lang.equals("uz")) {
-            return CommentLocalizationDTO.builder().stars(this.stars).body(this.bodyUz).fullName(this.fullNameUz).gallery(this.image).course(this.course.getLocalizationDto("uz")).build();
+            return CommentLocalizationDTO.builder().id(this.id).stars(this.stars).body(this.bodyUz).fullName(this.fullNameUz).image(this.image).course(this.course.getLocalizationDto("uz")).build();
         } else if (lang.equals("ru")) {
-            return CommentLocalizationDTO.builder().stars(this.stars).body(this.bodyRu).fullName(this.fullNameRu).gallery(this.image).course(this.course.getLocalizationDto("ru")).build();
+            return CommentLocalizationDTO.builder().id(this.id).stars(this.stars).body(this.bodyRu).fullName(this.fullNameRu).image(this.image).course(this.course.getLocalizationDto("ru")).build();
         }
-        return CommentLocalizationDTO.builder().stars(this.stars).body(this.bodyEn).fullName(this.fullNameEn).gallery(this.image).course(this.course.getLocalizationDto("en")).build();
+        return CommentLocalizationDTO.builder().id(this.id).stars(this.stars).body(this.bodyEn).fullName(this.fullNameEn).image(this.image).course(this.course.getLocalizationDto("en")).build();
     }
 
 }

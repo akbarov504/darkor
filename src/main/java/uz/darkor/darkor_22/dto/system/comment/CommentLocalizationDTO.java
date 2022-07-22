@@ -16,15 +16,15 @@ public class CommentLocalizationDTO implements BaseDTO {
     private Byte stars;
     private String body;
     private String fullName;
-    private FileDTO gallery;
+    private FileDTO image;
     private CourseLocalizationDTO course;
 
-    public CommentLocalizationDTO(Long id, Byte stars, String body, String fullName, FileDTO gallery, CourseLocalizationDTO course) {
+    public CommentLocalizationDTO(Long id, Byte stars, String body, String fullName, FileDTO image, CourseLocalizationDTO course) {
         this.id = id;
         this.stars = stars;
         this.body = body;
         this.fullName = fullName;
-        this.gallery = gallery;
+        this.image = image;
         this.course = course;
     }
 }

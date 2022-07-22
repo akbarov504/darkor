@@ -27,7 +27,7 @@ public class CommentControllerImpl extends AbstractController<CommentServiceImpl
     }
 
     @PostMapping("/addComment")
-    public ResponseEntity<Data<CommentLocalizationDTO>> create(@RequestBody CommentCreateDTO DTO,@RequestHeader("accept-language") String lang) {
+    public ResponseEntity<Data<CommentLocalizationDTO>> create(@RequestBody @Valid CommentCreateDTO DTO, @RequestHeader("accept-language") String lang) {
         return new ResponseEntity<>(new Data<>(service.createMy(DTO,lang)), HttpStatus.OK);
     }
 

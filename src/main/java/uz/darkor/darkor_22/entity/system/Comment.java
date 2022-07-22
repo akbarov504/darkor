@@ -37,7 +37,7 @@ public class Comment extends Auditable {
     @Column(nullable = false)
     private String fullNameEn;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Gallery image;
 
     @ManyToOne()

@@ -83,7 +83,7 @@ public class CommentServiceImpl extends AbstractService<CommentMapper, CommentRe
         Optional<Course> course = courseRepository.findById(id);
         if (course.isEmpty()) throw new NotFoundException("Comments course not found. Please enter correct code !");
         List<Comment> comments = repository.findAllByCourse(course.get());
-        return getLocalizedDtos(mapper.toListDTO(comments));
+        return getLocalizedDtos(mapper.toGetListDtoMy(comments));
     }
 
 

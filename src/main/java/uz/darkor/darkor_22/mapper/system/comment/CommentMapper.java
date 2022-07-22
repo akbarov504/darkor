@@ -7,10 +7,17 @@ import uz.darkor.darkor_22.dto.system.comment.CommentGetDTO;
 import uz.darkor.darkor_22.dto.system.comment.CommentUpdateDTO;
 import uz.darkor.darkor_22.entity.system.Comment;
 import uz.darkor.darkor_22.mapper.GenericMapper;
+import uz.darkor.darkor_22.mapper.course.CourseMapper;
 import uz.darkor.darkor_22.mapper.system.file.FileMapper;
+import java.util.List;
 
-
-@Mapper(componentModel = "spring", uses = {FileMapper.class})
+@Mapper(componentModel = "spring", uses = {FileMapper.class, CourseMapper.class})
 public interface CommentMapper extends GenericMapper<CommentCreateDTO, CommentUpdateDTO, CommentGetDTO, Comment> {
+
+//    CommentGetDTO toGetDtoMY(Comment entity);
+//
+//    Comment fromCreateDtoMy(CommentCreateDTO dto);
+
+    List<CommentGetDTO> toGetListDtoMy(List<Comment> entities);
 
 }
