@@ -13,6 +13,7 @@ import uz.darkor.darkor_22.response.Data;
 import uz.darkor.darkor_22.service.course.course.courseDetails.CourseDetailsServiceImpl;
 import uz.darkor.darkor_22.utils.BaseUtils;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,8 +42,8 @@ public class CourseDetailControllerImpl extends AbstractController<CourseDetails
         return new ResponseEntity<>(new Data<>(delete), HttpStatus.OK);
     }
 
-    @GetMapping("get/{id}")
-    public ResponseEntity<Data<CourseDetailLocalizationDTO>> getMy(@PathVariable Long id, @RequestHeader("accept-language") String lang) {
+    @RequestMapping(value ="get/", method = RequestMethod.GET)
+    public ResponseEntity<Data<CourseDetailLocalizationDTO>> getMy(Long id, @RequestHeader("accept-language") String lang) {
         CourseDetailLocalizationDTO courseDetailLocalizationDTO = service.get(id, lang);
         return new ResponseEntity<>(new Data<>(courseDetailLocalizationDTO), HttpStatus.OK);
     }

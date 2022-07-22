@@ -98,7 +98,9 @@ public class CourseDetailsServiceImpl extends AbstractService<CourseDetailsMappe
 
     @Override
     public CourseDetailLocalizationDTO get(Long key, String language) {
-        return null;
+        Optional<CourseDetail> byCourse = repository.findById(key);
+        if (byCourse.isEmpty()) throw new NotFoundException("course detail not found");
+        return mapper.toGetDTO(byCourse.get()).getLocalizationDto(language);
     }
 
     @Override
