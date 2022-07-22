@@ -116,7 +116,7 @@ public class AuthUserServiceImpl extends AbstractService<AuthUserMapper, AuthUse
     public ResponseEntity<Data<SessionDto>> getToken(LoginDto dto) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
-            HttpPost httppost = new HttpPost(BaseUtils.PATH + "/login");
+            HttpPost httppost = new HttpPost("http://localhost:8080"+BaseUtils.PATH + "/login");
             byte[] bytes = objectMapper.writeValueAsBytes(dto);
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
             httppost.addHeader("Content-Type", "application/x-www-form-urlencoded");

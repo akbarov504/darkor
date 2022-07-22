@@ -34,7 +34,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     public CustomAuthenticationFilter(AuthenticationManager manager) {
         this.authenticationManager = manager;
-        super.setFilterProcessesUrl(BaseUtils.PATH+"/login");
+        super.setFilterProcessesUrl(BaseUtils.PATH+"/auth/login");
     }
 
     @Override
