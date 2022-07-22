@@ -31,7 +31,7 @@ import java.util.Objects;
 public class FileService extends AbstractService<FileMapper, FileRepository> {
 
     private static String extensions = "{jpg};{png};{PNG};{JPG};{mp4};{MP4};{webm);{WEBM};{flv};{vob};{avi};{gif};{mov}";
-    String uploadDirectory = "E:\\uploads\\";
+    String uploadDirectory = "/root/uploads/";
 
 
 //    @Value("${path.request}")
@@ -59,7 +59,7 @@ public class FileService extends AbstractService<FileMapper, FileRepository> {
 
             Files.copy(file.getInputStream(), path);
 
-            String url = "http://localhost:8080" + BaseUtils.PATH.concat("/download/".concat(generatedName));
+            String url = "http://172.105.136.151:8080" + BaseUtils.PATH.concat("/download/".concat(generatedName));
 
             Gallery gallery = new Gallery(file.getSize(),
                     originalFilename,
