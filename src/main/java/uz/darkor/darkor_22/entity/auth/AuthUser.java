@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.darkor.darkor_22.entity.Auditable;
+import uz.darkor.darkor_22.enums.AuthRole;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -20,7 +22,5 @@ public class AuthUser extends Auditable {
     private String email;
     private String verificationCode;
     private String phoneNumber;
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private AuthRole role;
 }
