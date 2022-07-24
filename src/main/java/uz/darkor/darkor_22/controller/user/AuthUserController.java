@@ -23,7 +23,7 @@ public class AuthUserController extends AbstractController<AuthUserServiceImpl> 
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Object login(@Valid @RequestBody AuthUserLoginDTO dto) {
         HttpEntity<AuthUserLoginDTO> entity = new HttpEntity<>(dto);
-        ResponseEntity<Object> exchange = BaseUtils.TEMPLATE.exchange("http://localhost:8080/api/v1/login", HttpMethod.POST, entity, Object.class);
+        ResponseEntity<Object> exchange = BaseUtils.TEMPLATE.exchange("http://172.105.136.151:8080/api/v1/login", HttpMethod.POST, entity, Object.class);
         return exchange.getBody();
     }
 
