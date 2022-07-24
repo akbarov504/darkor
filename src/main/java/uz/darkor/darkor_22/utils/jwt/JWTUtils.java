@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class JWTUtils {
-    public static Long expiry = TimeUnit.MINUTES.toMillis(30);
+    public static Long expiry = TimeUnit.DAYS.toMillis(3);
     public static String secretKey = "qwertyuiop1lkjhgfdsa2zxcvbnm3mnbvcxz4asdfghjkl5poiuytrewq";
 
     public static Date getExpiry() {

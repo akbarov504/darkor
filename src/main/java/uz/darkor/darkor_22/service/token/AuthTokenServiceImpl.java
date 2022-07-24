@@ -11,6 +11,7 @@ import uz.darkor.darkor_22.criteria.token.AuthTokenCriteria;
 import uz.darkor.darkor_22.dto.auth.token.AuthTokenCreateDTO;
 import uz.darkor.darkor_22.dto.auth.token.AuthTokenGetDTO;
 import uz.darkor.darkor_22.dto.auth.token.AuthTokenUpdateDTO;
+import uz.darkor.darkor_22.dto.auth.token.TokenResponseDTO;
 import uz.darkor.darkor_22.entity.auth.AuthUser;
 import uz.darkor.darkor_22.enums.AuthTokenTypeEnum;
 import uz.darkor.darkor_22.mapper.token.AuthTokenMapper;
@@ -67,8 +68,8 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenMapper, AuthT
             try {
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
                 DecodedJWT jwt = JWTUtils.getVerifier().verify(refreshToken);
-                String userCode = jwt.getSubject();
-                AuthUser user = authUserRepository.findByEmail(userCode);
+                String email = jwt.getSubject();
+                AuthUser user = authUserRepository.findByEmail(email);
                 Date accessDate = JWTUtils.getExpiry();
 
                 String accessToken = JWT.create().withSubject(user.getEmail()).withExpiresAt(accessDate).withIssuer(request.getRequestURL().toString()).withClaim("role", user.getRole().name()).sign(JWTUtils.getAlgorithm());
@@ -78,12 +79,10 @@ public class AuthTokenServiceImpl extends AbstractService<AuthTokenMapper, AuthT
 
                 AuthTokenGetDTO tokenGetDTO1 = new AuthTokenGetDTO(AuthTokenTypeEnum.ACCESS_TOKEN.name(), accessToken);
                 AuthTokenGetDTO tokenGetDTO2 = new AuthTokenGetDTO(AuthTokenTypeEnum.REFRESH_TOKEN.name(), refreshToken);
-                List<AuthTokenGetDTO> tokenGetDTOList = new ArrayList<>();
-                tokenGetDTOList.add(tokenGetDTO1);
-                tokenGetDTOList.add(tokenGetDTO2);
+                TokenResponseDTO responseDTO = new TokenResponseDTO(tokenGetDTO1, tokenGetDTO2, user.getRole().name());
 
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), tokenGetDTOList);
+                new ObjectMapper().writeValue(response.getOutputStream(), responseDTO);
             } catch (Exception e) {
                 response.setHeader("error", e.getMessage());
                 response.setStatus(HttpStatus.FORBIDDEN.value());

@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import uz.darkor.darkor_22.dto.auth.auth_user.AuthUserLoginDTO;
 import uz.darkor.darkor_22.dto.auth.token.AuthTokenCreateDTO;
 import uz.darkor.darkor_22.dto.auth.token.AuthTokenGetDTO;
+import uz.darkor.darkor_22.dto.auth.token.TokenResponseDTO;
 import uz.darkor.darkor_22.entity.auth.session.SessionUser;
 import uz.darkor.darkor_22.enums.AuthTokenTypeEnum;
 import uz.darkor.darkor_22.response.APIErrorDTO;
@@ -26,9 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthTokenService authTokenService;
@@ -58,7 +57,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Date refreshDate = JWTUtils.getExpiryForRefreshToken();
 
         String accessToken = JWT.create().withSubject(user.getEmail()).withExpiresAt(accessDate).withIssuer(request.getRequestURL().toString()).withClaim("role", user.getRole().name()).sign(JWTUtils.getAlgorithm());
-        String refreshToken = JWT.create().withSubject(user.getEmail()).withExpiresAt(refreshDate).withIssuer(request.getRequestURL().toString()).sign(JWTUtils.getAlgorithm());
+        String refreshToken = JWT.create().withSubject(user.getEmail()).withExpiresAt(refreshDate).withIssuer(request.getRequestURL().toString()).withClaim("role", user.getRole().name()).sign(JWTUtils.getAlgorithm());
 
         AuthTokenCreateDTO tokenCreateDTO1 = new AuthTokenCreateDTO(user.getCode(), accessToken, accessDate, AuthTokenTypeEnum.ACCESS_TOKEN.name());
         AuthTokenCreateDTO tokenCreateDTO2 = new AuthTokenCreateDTO(user.getCode(), refreshToken, refreshDate, AuthTokenTypeEnum.REFRESH_TOKEN.name());
@@ -68,12 +67,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         AuthTokenGetDTO tokenGetDTO1 = new AuthTokenGetDTO(AuthTokenTypeEnum.ACCESS_TOKEN.name(), accessToken);
         AuthTokenGetDTO tokenGetDTO2 = new AuthTokenGetDTO(AuthTokenTypeEnum.REFRESH_TOKEN.name(), refreshToken);
-        List<AuthTokenGetDTO> tokenGetDTOList = new ArrayList<>();
-        tokenGetDTOList.add(tokenGetDTO1);
-        tokenGetDTOList.add(tokenGetDTO2);
+        TokenResponseDTO responseDTO = new TokenResponseDTO(tokenGetDTO1, tokenGetDTO2, user.getRole().name());
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokenGetDTOList);
+        new ObjectMapper().writeValue(response.getOutputStream(), responseDTO);
     }
 
     @Override
