@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/course/*")
 public class CourseControllerImpl extends AbstractController<CourseServiceImpl> implements CourseController {

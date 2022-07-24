@@ -1,5 +1,6 @@
 package uz.darkor.darkor_22.controller.token;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/auth/")
 public class AuthTokenController extends AbstractController<AuthTokenServiceImpl> {

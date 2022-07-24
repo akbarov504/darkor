@@ -5,6 +5,7 @@ import uz.darkor.darkor_22.dto.BaseDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,6 +16,7 @@ import java.util.List;
 public class CourseLocalizationDTO implements BaseDTO {
 
     private Long id;
+    private UUID code;
     private String name;
     private String description;
     private List<FileDTO> galleries;

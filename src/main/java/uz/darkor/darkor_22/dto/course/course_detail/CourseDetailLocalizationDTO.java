@@ -8,6 +8,7 @@ import uz.darkor.darkor_22.dto.course.course.CourseLocalizationDTO;
 import uz.darkor.darkor_22.dto.course.price.PriceLocalizedDTO;
 import uz.darkor.darkor_22.dto.system.gallery.FileDTO;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,6 +19,7 @@ import java.util.List;
 public class CourseDetailLocalizationDTO implements BaseDTO {
 
  private Long id;
+ private UUID code;
  private String titleDescription;
  private String bodyDescription;
  private List<FileDTO> file;

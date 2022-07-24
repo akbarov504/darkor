@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping("/partner/*")
 public class PartnerControllerImpl extends AbstractController<PartnerServiceImpl>{

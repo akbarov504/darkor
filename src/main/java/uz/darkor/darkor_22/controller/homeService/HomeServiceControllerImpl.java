@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH+"/homeService/*")
 public class HomeServiceControllerImpl extends AbstractController<HomeSerServiceImpl>{

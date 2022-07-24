@@ -16,6 +16,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/courseDetails/*")
 public class CourseDetailControllerImpl extends AbstractController<CourseDetailsServiceImpl> implements CourseDetailController {

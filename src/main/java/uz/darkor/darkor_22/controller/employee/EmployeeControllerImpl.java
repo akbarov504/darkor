@@ -18,6 +18,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/employee/*")
 public class EmployeeControllerImpl extends AbstractController<EmployeeService> implements EmployeeController {

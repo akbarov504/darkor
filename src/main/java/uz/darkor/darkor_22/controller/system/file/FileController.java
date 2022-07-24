@@ -16,6 +16,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import javax.transaction.Transactional;
 import java.io.IOException;
 
+@CrossOrigin(value = "*")
 @RestController
 @Transactional
 public class FileController extends AbstractController<FileService> {

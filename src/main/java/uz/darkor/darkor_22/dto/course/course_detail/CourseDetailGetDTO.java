@@ -43,10 +43,10 @@ public class CourseDetailGetDTO extends GenericDTO {
 
     public CourseDetailLocalizationDTO getLocalizationDto(String lang) {
         if (lang.equals("uz")) {
-            return CourseDetailLocalizationDTO.builder().id(this.id).titleDescription(this.titleDescriptionUz).bodyDescription(this.bodyDescriptionUz).file(this.fileUz).course(this.course.getLocalizationDto("uz")).price(this.price.getLocalizationDto("uz")).build();
+            return CourseDetailLocalizationDTO.builder().id(this.id).code(getCode()).titleDescription(this.titleDescriptionUz).bodyDescription(this.bodyDescriptionUz).file(this.fileUz).course(this.course.getLocalizationDto("uz")).price(this.price.getLocalizationDto("uz")).build();
         } else if (lang.equals("ru")) {
-            return CourseDetailLocalizationDTO.builder().id(this.id).titleDescription(this.titleDescriptionRu).bodyDescription(this.bodyDescriptionRu).file(this.fileRu).course(this.course.getLocalizationDto("ru")).price(this.price.getLocalizationDto("ru")).build();
+            return CourseDetailLocalizationDTO.builder().id(this.id).code(getCode()).titleDescription(this.titleDescriptionRu).bodyDescription(this.bodyDescriptionRu).file(this.fileRu).course(this.course.getLocalizationDto("ru")).price(this.price.getLocalizationDto("ru")).build();
         }
-        return CourseDetailLocalizationDTO.builder().id(this.id).titleDescription(this.titleDescriptionEn).bodyDescription(this.bodyDescriptionEn).file(this.fileEn).course(this.course.getLocalizationDto("en")).price(this.price.getLocalizationDto("en")).build();
+        return CourseDetailLocalizationDTO.builder().id(this.id).code(getCode()).titleDescription(this.titleDescriptionEn).bodyDescription(this.bodyDescriptionEn).file(this.fileEn).course(this.course.getLocalizationDto("en")).price(this.price.getLocalizationDto("en")).build();
     }
 }

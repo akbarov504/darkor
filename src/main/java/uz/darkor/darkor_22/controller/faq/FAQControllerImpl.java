@@ -2,6 +2,7 @@ package uz.darkor.darkor_22.controller.faq;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.darkor.darkor_22.controller.AbstractController;
@@ -16,6 +17,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/faq/*")
 public class FAQControllerImpl extends AbstractController<FAQServiceImpl> implements FAQController {

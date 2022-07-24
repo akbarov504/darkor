@@ -17,6 +17,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(BaseUtils.PATH + "/skill/*")
 public class SkillControllerImpl extends AbstractController<SkillService>

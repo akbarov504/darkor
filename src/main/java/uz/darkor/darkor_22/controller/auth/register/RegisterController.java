@@ -4,10 +4,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.darkor.darkor_22.controller.AbstractController;
 import uz.darkor.darkor_22.criteria.auth.register.RegisterCriteria;
 import uz.darkor.darkor_22.dto.auth.register.RegisterCreateDTO;
@@ -19,6 +16,7 @@ import uz.darkor.darkor_22.utils.BaseUtils;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(value = "*")
 @RestController
 @RequestMapping(value = BaseUtils.PATH + "/register/*")
 public class RegisterController extends AbstractController<RegisterService> {
